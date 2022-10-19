@@ -1,10 +1,25 @@
 import 'package:erik_haydar/helper/enums/button_enum.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 
 import '../../util/color_resources.dart';
+import '../../util/images.dart';
 import '../../util/styles.dart';
 
 class BaseUI {
+  appBar(BuildContext context) {
+    return AppBar(
+      backgroundColor: ColorResources.COLOR_WHITE,
+      centerTitle: true,
+      elevation: 0.0,
+      leading: IconButton(
+        alignment: Alignment.center,
+        icon: SvgPicture.asset(Images.back_icon),
+        onPressed: () => Navigator.of(context).pop(),
+      ),
+      
+    );
+  }
   Widget buttonsType(TypeButton typeButton, BuildContext context,
       VoidCallback? onTap, String text) {
     final ButtonStyle yellowStyle = TextButton.styleFrom(

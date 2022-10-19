@@ -4,6 +4,10 @@
   "login": "Tizimga kirish",
   "password": "Parol",
   "enter": "Kirish",
-  "register": "Ro’yxatdan o’tish"
+  "register": "Ro’yxatdan o’tish",
+  "send_sms": "Raqaminga 4 xonalik kod\nyuborildi!",
+  "confirm": "Tasdiqlash",
+  "enter_code": "Kodni kiriting",
+  "enter_personal_data": "Shaxsiy ma’lumotlaringizni kiriting"
 
 }

@@ -10,6 +10,20 @@ const boldTitle = TextStyle(
   height: 1.4,
   color: ColorResources.COLOR_BLACK
 );
+const boldTitlePhone = TextStyle(
+  fontFamily: 'Inter',
+  fontSize: Dimensions.FONT_SIZE_28,
+  fontWeight: FontWeight.w600,
+  height: 2.0,
+  color: ColorResources.COLOR_BLACK
+);
+const boldTitlePhoneSub = TextStyle(
+  fontFamily: 'Inter',
+  fontSize: Dimensions.FONT_SIZE_18,
+  fontWeight: FontWeight.w400,
+  height: 1.4,
+  color: ColorResources.COLOR_737373
+);
 
 const titleTextField = TextStyle(
   fontFamily: 'Inter',

@@ -5,6 +5,7 @@ class ColorResources {
 
   static const Color COLOR_F4F4F4 = Color(0xFFF4F4F4);
   static const Color COLOR_737373 = Color(0xFF737373);
+  static const Color COLOR_009C10 = Color(0xFF009C10);
   static const Color COLOR_GRAY = Color(0xFFBABAC0);
   static const Color COLOR_BLUE = Color(0xFF336FEE);
   static const Color COLOR_GRAY_TEXT = Color(0xFF767676);

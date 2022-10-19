@@ -5,14 +5,8 @@ import '../util/color_resources.dart';
 import '../util/dimensions.dart';
 
 ThemeData light = ThemeData(
-  fontFamily: 'Roboto',
-  appBarTheme: const AppBarTheme(
-    systemOverlayStyle: SystemUiOverlayStyle(
-      statusBarColor: ColorResources.COLOR_PPIMARY,
-      statusBarIconBrightness: Brightness.light,
-      statusBarBrightness: Brightness.light,
-    ),
-  ),
+  fontFamily: 'Inter',
+  
   primaryColor: ColorResources.COLOR_PPIMARY,
   brightness: Brightness.light,
   cardColor: Colors.white,

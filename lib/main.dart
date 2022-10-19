@@ -4,10 +4,7 @@ import 'package:erik_haydar/provider/localization_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:erik_haydar/theme/light_theme.dart';
 import 'package:erik_haydar/util/app_constants.dart';
-import 'package:erik_haydar/util/color_resources.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
-
 import 'package:provider/provider.dart';
 import 'di_container.dart' as di;
 import 'localization/app_localization.dart';
@@ -43,7 +40,7 @@ class _MyAppState extends State<MyApp> {
 
   @override
   Widget build(BuildContext context) {
-    // FlutterStatusbarcolor.setStatusBarColor(ColorResources.COLOR_PPIMARY);
+    // FlutterStatusbarcolor.setStatusBarColor(ColorResources.COLOR_WHITE);
     List<Locale> locals = [];
     for (var language in AppConstants.languages) {
       locals.add(
