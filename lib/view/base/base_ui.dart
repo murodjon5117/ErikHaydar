@@ -17,9 +17,9 @@ class BaseUI {
         icon: SvgPicture.asset(Images.back_icon),
         onPressed: () => Navigator.of(context).pop(),
       ),
-      
     );
   }
+
   Widget buttonsType(TypeButton typeButton, BuildContext context,
       VoidCallback? onTap, String text) {
     final ButtonStyle yellowStyle = TextButton.styleFrom(
@@ -51,13 +51,22 @@ class BaseUI {
     switch (typeButton) {
       case TypeButton.filled:
         return ElevatedButton(
-            style: yellowStyle, onPressed: onTap, child: Text(text,style: filledButtonTextStyle,));
+            style: yellowStyle,
+            onPressed: onTap,
+            child: Text(
+              text,
+              style: filledButtonTextStyle,
+            ));
       case TypeButton.text:
         return ElevatedButton(
-            style: textStyle, onPressed: onTap, child: Text(text,style:textButtonTextStyle));
+            style: textStyle,
+            onPressed: onTap,
+            child: Text(text, style: textButtonTextStyle));
       case TypeButton.border:
         return ElevatedButton(
-            style: borderStyle, onPressed: onTap, child: Text(text));
+            style: borderStyle,
+            onPressed: onTap,
+            child: Text(text, style: textButtonTextStyle));
     }
   }
 }

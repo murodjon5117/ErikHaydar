@@ -8,6 +8,17 @@
   "send_sms": "Raqaminga 4 xonalik kod\nyuborildi!",
   "confirm": "Tasdiqlash",
   "enter_code": "Kodni kiriting",
+  "name": "Ism",
+  "hint_name": "Ismingizni kiriting",
+  "surname": "Familiya",
+  "hint_surname": "Familiyangizni kiriting",
+  "date": "Tug’ilgan sanangiz",
+  "hint_date": "Tug’ilgan sanangiz kiriting",
+  "city": "Qaysi viloyatdansiz?",
+  "hint_city": "Viloyatni tanlang",
+  "gender": "Jinsingiz",
+  "hint_password": "Parolni kiriting",
+  "repeat_password": "Parolni qaytaring",
   "enter_personal_data": "Shaxsiy ma’lumotlaringizni kiriting"
 
 }

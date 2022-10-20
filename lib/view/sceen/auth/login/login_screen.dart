@@ -151,8 +151,7 @@ class _LoginScreenState extends State<LoginScreen> {
                             TextFormField(
                               validator: (value) {
                                 if (value == null ||
-                                    value.isEmpty ||
-                                    value.isEmpty) {
+                                    value.isEmpty ) {
                                   return getTranslated('password', context);
                                 }
                                 return null;
