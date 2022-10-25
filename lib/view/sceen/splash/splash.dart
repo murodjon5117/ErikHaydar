@@ -1,10 +1,11 @@
+import 'package:erik_haydar/view/base/base_ui.dart';
 import 'package:erik_haydar/view/sceen/auth/login/login_screen.dart';
-import 'package:erik_haydar/view/sceen/onboarding/onboarding.dart';
+import 'package:erik_haydar/view/sceen/auth/register/register_screen.dart';
 import 'package:flutter/material.dart';
 
-import '../../../util/color_resources.dart';
-
 class SplashScreen extends StatefulWidget {
+  const SplashScreen({super.key});
+
   @override
   State<SplashScreen> createState() => _SplashScreenState();
 }
@@ -16,7 +17,7 @@ class _SplashScreenState extends State<SplashScreen> {
       Navigator.of(context, rootNavigator: true).pushAndRemoveUntil(
         MaterialPageRoute(
           builder: (BuildContext context) {
-            return onBoardingPage();
+            return RegisterScreen();
           },
         ),
         (_) => false,
@@ -27,12 +28,8 @@ class _SplashScreenState extends State<SplashScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return const Scaffold(
-      body: Center(
-          child: CircularProgressIndicator(
-        strokeWidth: 2,
-        color: ColorResources.COLOR_PPIMARY,
-      )),
+    return Scaffold(
+      body: BaseUI().progressIndicator(),
     );
   }
 }
