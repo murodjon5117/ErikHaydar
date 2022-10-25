@@ -15,7 +15,6 @@ class onBoardingPage extends StatefulWidget {
   onBoardingPageState createState() => onBoardingPageState();
 }
 
-// ------------------ Custom config ------------------
 class onBoardingPageState extends State<onBoardingPage>
     with TickerProviderStateMixin {
   @override
