@@ -1,6 +1,8 @@
 import 'dart:io';
 import 'dart:ui';
 import 'package:erik_haydar/provider/localization_provider.dart';
+import 'package:erik_haydar/provider/login_provider.dart';
+import 'package:erik_haydar/provider/register_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:erik_haydar/theme/light_theme.dart';
 import 'package:erik_haydar/util/app_constants.dart';
@@ -15,12 +17,15 @@ Future<void> main() async {
   HttpOverrides.global = MyHttpOverrides();
   WidgetsFlutterBinding.ensureInitialized();
 
-
   await di.init();
   runApp(MultiProvider(
     providers: [
       ChangeNotifierProvider(
           create: (context) => di.sl<LocalizationProvider>()),
+      ChangeNotifierProvider(
+          create: (context) => di.sl<RegisterProvider>()),
+      ChangeNotifierProvider(
+          create: (context) => di.sl<LoginProvider>()),
     ],
     child: const MyApp(),
   ));
@@ -53,10 +58,7 @@ class _MyAppState extends State<MyApp> {
     }
     return MaterialApp(
       home: SplashScreen(),
-
-      // initialRoute: Routes.getMainRoute(),
-      // onGenerateRoute: RouterHelper.router.generator,
-      title: 'Texnomart',
+      title: 'Erik',
       debugShowCheckedModeBanner: false,
       navigatorKey: MyApp.navigatorKey,
       theme: light,

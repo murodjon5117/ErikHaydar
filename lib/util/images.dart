@@ -8,4 +8,5 @@ class Images {
 
   //for Images
   static const String image = 'assets/image/placeholder_image.png';
+  static const String login_image = 'assets/image/login_photo.png';
 }

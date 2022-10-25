@@ -1,6 +1,7 @@
 import 'package:erik_haydar/helper/enums/button_enum.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:lottie/lottie.dart';
 
 import '../../util/color_resources.dart';
 import '../../util/images.dart';
@@ -19,8 +20,16 @@ class BaseUI {
       ),
     );
   }
+  Widget progressIndicator() {
+    return Center(
+      child: SizedBox(
+          height: 100,
+          width: 150,
+          child: Lottie.asset('assets/json/animation_loading.json')),
+    );
+  }
 
-  Widget buttonsType(TypeButton typeButton, BuildContext context,
+  Widget buttonsType( TypeButton typeButton, BuildContext context,
       VoidCallback? onTap, String text) {
     final ButtonStyle yellowStyle = TextButton.styleFrom(
       backgroundColor: ColorResources.COLOR_PPIMARY,

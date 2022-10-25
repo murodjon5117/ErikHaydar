@@ -1,11 +1,12 @@
 {
   "app_name": "Texnomart",
   "phone_number": "Telefon raqamingiz",
+  "hint_phone_number": "Telefon raqamingizni kiriting",
   "login": "Tizimga kirish",
   "password": "Parol",
   "enter": "Kirish",
   "register": "Ro’yxatdan o’tish",
-  "send_sms": "Raqaminga 4 xonalik kod\nyuborildi!",
+  "send_sms": "Raqaminga 5 xonalik kod\nyuborildi!",
   "confirm": "Tasdiqlash",
   "enter_code": "Kodni kiriting",
   "name": "Ism",

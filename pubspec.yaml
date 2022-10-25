@@ -22,6 +22,15 @@ dependencies:
     sdk: flutter
   introduction_screen: ^3.0.2
   otp_text_field: ^1.1.3
+  lottie: ^1.4.0
+  device_info_plus: ^7.0.1
+  http: ^0.13.5
+  image_picker: ^0.8.5+3
+
+  # firebase_messaging: ^14.0.2
+  # firebase_core: ^2.1.0
+
+
 
 dev_dependencies:
   flutter_test:
@@ -36,6 +45,7 @@ flutter:
     - assets/icon/
     - assets/image/
     - assets/language/
+    - assets/json/
 
   fonts:
     - family: Inter

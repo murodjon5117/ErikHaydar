@@ -1,6 +1,5 @@
 import 'package:erik_haydar/util/images.dart';
 import 'package:erik_haydar/view/sceen/auth/login/login_screen.dart';
-import 'package:erik_haydar/view/sceen/dashboard_screen.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:introduction_screen/introduction_screen.dart';
