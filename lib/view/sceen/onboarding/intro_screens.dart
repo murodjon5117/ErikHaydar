@@ -286,7 +286,7 @@ class _IntroScreensState extends State<IntroScreens>
             Positioned(
               left: 0,
               right: 0,
-              bottom: 100,
+              bottom: 91,
               child: Padding(
                 padding:
                     const EdgeInsets.symmetric(horizontal: 20.0, vertical: 4.0),

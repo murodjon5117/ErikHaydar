@@ -2,6 +2,7 @@ import 'dart:developer';
 
 import 'package:erik_haydar/util/images.dart';
 import 'package:erik_haydar/view/sceen/auth/login/login_screen.dart';
+import 'package:erik_haydar/view/sceen/dashboard/dashboard_screen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -22,13 +23,13 @@ class onBoardingPageState extends State<onBoardingPage>
     var screens = IntroScreens(
       onDone: () => Navigator.of(context).push(
         MaterialPageRoute(
-          builder: (context) => LoginScreen(),
+          builder: (context) => const Dashboard(),
         ),
       ),
-      onSkip: () => print('Skipping the intro slides'),
-      footerBgColor: Color.fromARGB(255, 222, 219, 217).withOpacity(.8),
+      // onSkip: () => print('Skipping the intro slides'),
+      footerBgColor: const Color.fromARGB(255, 222, 219, 217).withOpacity(.8),
       // backFooterColor: const Color(0xFFCC4242),
-      activeDotColor: Color(0xFFCC4242),
+      activeDotColor: const Color(0xFFCC4242),
       footerRadius: 24.0,
 //      indicatorType: IndicatorType.CIRCLE,
       slides: [

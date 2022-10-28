@@ -39,7 +39,7 @@ class IntroScreen extends StatelessWidget {
           imageAsset!,
           fit: BoxFit.cover,
           width: double.infinity,
-          height: 440,
+          height: 444,
         )
       ],
     );

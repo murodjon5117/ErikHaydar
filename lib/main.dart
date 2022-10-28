@@ -21,10 +21,8 @@ Future<void> main() async {
     providers: [
       ChangeNotifierProvider(
           create: (context) => di.sl<LocalizationProvider>()),
-      ChangeNotifierProvider(
-          create: (context) => di.sl<RegisterProvider>()),
-      ChangeNotifierProvider(
-          create: (context) => di.sl<LoginProvider>()),
+      ChangeNotifierProvider(create: (context) => di.sl<RegisterProvider>()),
+      ChangeNotifierProvider(create: (context) => di.sl<LoginProvider>()),
     ],
     child: const MyApp(),
   ));
