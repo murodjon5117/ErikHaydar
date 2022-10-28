@@ -41,12 +41,27 @@ const filledButtonTextStyle = TextStyle(
   color: ColorResources.COLOR_WHITE
 );
 
+const profileNumber = TextStyle(
+  fontFamily: 'Inter',
+  fontSize: Dimensions.FONT_SIZE_16,
+  fontWeight: FontWeight.w500,
+  height: 1.1,
+  color: ColorResources.COLOR_BLACK
+);
+
 const textButtonTextStyle = TextStyle(
   fontFamily: 'Inter',
   fontSize: Dimensions.FONT_SIZE_16,
   fontWeight: FontWeight.w400,
   height: 1.1,
   color: ColorResources.COLOR_PPIMARY
+);
+
+const profileTitle = TextStyle(
+  fontFamily: 'Inter',
+  fontSize: Dimensions.FONT_SIZE_12,
+  fontWeight: FontWeight.w400,
+  color: ColorResources.COLOR_BBB5B5
 );
 
 const searchHint = TextStyle(

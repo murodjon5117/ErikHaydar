@@ -26,6 +26,7 @@ dependencies:
   device_info_plus: ^7.0.1
   http: ^0.13.5
   image_picker: ^0.8.5+3
+  carousel_slider: ^4.1.1
 
   # firebase_messaging: ^14.0.2
   # firebase_core: ^2.1.0

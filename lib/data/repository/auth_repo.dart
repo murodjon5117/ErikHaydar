@@ -1,3 +1,4 @@
+import 'package:dio/dio.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
 import 'dart:io';
@@ -15,10 +16,8 @@ class AuthRepo {
 
   Future<ApiResponse> enterPhone(dynamic data) async {
     try {
-      final response = await dioClient.post(
-        AppConstants.ENTER_PHONE,
-        data: data
-      );
+      final response =
+          await dioClient.post(AppConstants.ENTER_PHONE, data: data);
       return ApiResponse.withSuccess(response);
     } catch (e) {
       return ApiResponse.withError(ApiErrorHandler.getMessage(e));
@@ -27,10 +26,7 @@ class AuthRepo {
 
   Future<ApiResponse> login(dynamic data) async {
     try {
-      final response = await dioClient.post(
-        AppConstants.LOGIN,
-        data: data
-      );
+      final response = await dioClient.post(AppConstants.LOGIN, data: data);
       return ApiResponse.withSuccess(response);
     } catch (e) {
       return ApiResponse.withError(ApiErrorHandler.getMessage(e));
@@ -39,10 +35,8 @@ class AuthRepo {
 
   Future<ApiResponse> verifyPhone(dynamic data) async {
     try {
-      final response = await dioClient.post(
-        AppConstants.VERIFY_PHONE,
-        data: data
-      );
+      final response =
+          await dioClient.post(AppConstants.VERIFY_PHONE, data: data);
       return ApiResponse.withSuccess(response);
     } catch (e) {
       return ApiResponse.withError(ApiErrorHandler.getMessage(e));
@@ -59,18 +53,62 @@ class AuthRepo {
       return ApiResponse.withError(ApiErrorHandler.getMessage(e));
     }
   }
-  Future<http.StreamedResponse> fullRegistration(
-      File img,
-      Map<String,String> userData) async {
-    http.MultipartRequest request = http.MultipartRequest('POST',
-        Uri.parse('${AppConstants.BASE_URL}${AppConstants.FULL_REGISTER}'));
-    request.headers.addAll(userData);
-    request.files.add(http.MultipartFile(
-        'img', img.readAsBytes().asStream(), img.lengthSync(),
-        filename: img.path.split('/').last));
 
-    http.StreamedResponse response = await request.send();
-    return response;
+  Future<ApiResponse> fullRegistration(
+      File? img,
+      String phone,
+      String code,
+      String firstName,
+      String lastName,
+      String password,
+      String passwordRepeat,
+      String bornDate,
+      String regionId,
+      String genderId,
+      String deviceId,
+      String deviceName,
+      String deviceToken) async {
+    FormData formData = FormData();
+    if (img != null) {
+      String fileName = img.path.split('/').last;
+      formData = FormData.fromMap({
+        'img': await MultipartFile.fromFile(img.path, filename: fileName),
+        'phone': phone,
+        'code': code,
+        'firstname': firstName,
+        'lastname': lastName,
+        'password': password,
+        'password_repeat': passwordRepeat,
+        'region_id': regionId,
+        'born_date': bornDate,
+        'gender_id': genderId,
+        'device_id': deviceId,
+        'device_name': deviceName,
+        'device_token': deviceToken
+      });
+    } else {
+      formData = FormData.fromMap({
+        'phone': phone,
+        'code': code,
+        'firstname': firstName,
+        'lastname': lastName,
+        'password': password,
+        'password_repeat': passwordRepeat,
+        'region_id': regionId,
+        'born_date': bornDate,
+        'gender_id': genderId,
+        'device_id': deviceId,
+        'device_name': deviceName,
+        'device_token': deviceToken
+      });
+    }
+
+    try {
+      final response =
+          await dioClient.post(AppConstants.FULL_REGISTER, data: formData);
+      return ApiResponse.withSuccess(response);
+    } catch (e) {
+      return ApiResponse.withError(ApiErrorHandler.getMessage(e));
+    }
   }
-
 }

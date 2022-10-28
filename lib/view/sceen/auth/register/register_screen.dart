@@ -5,8 +5,6 @@ import 'package:erik_haydar/view/sceen/auth/sms/sms_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
-
 import '../../../../helper/enums/button_enum.dart';
 import '../../../../localization/language_constrants.dart';
 import '../../../../util/color_resources.dart';

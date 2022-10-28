@@ -1,6 +1,7 @@
 import 'package:erik_haydar/view/base/base_ui.dart';
 import 'package:erik_haydar/view/sceen/auth/login/login_screen.dart';
 import 'package:erik_haydar/view/sceen/auth/register/register_screen.dart';
+import 'package:erik_haydar/view/sceen/profile/profile_acreen.dart';
 import 'package:flutter/material.dart';
 
 class SplashScreen extends StatefulWidget{
@@ -18,7 +19,7 @@ class _SplashScreenState extends State<SplashScreen> {
           Navigator.of(context, rootNavigator: true).pushAndRemoveUntil(
           MaterialPageRoute(
             builder: (BuildContext context) {
-              return RegisterScreen();
+              return LoginScreen();
             },
           ),
           (_) => false,

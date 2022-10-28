@@ -2,6 +2,7 @@ import 'dart:io';
 import 'dart:ui';
 import 'package:erik_haydar/provider/localization_provider.dart';
 import 'package:erik_haydar/provider/login_provider.dart';
+import 'package:erik_haydar/provider/profile_provider.dart';
 import 'package:erik_haydar/provider/register_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:erik_haydar/theme/light_theme.dart';
@@ -12,7 +13,6 @@ import 'di_container.dart' as di;
 import 'localization/app_localization.dart';
 import 'view/sceen/splash/splash.dart';
 
-
 Future<void> main() async {
   HttpOverrides.global = MyHttpOverrides();
   WidgetsFlutterBinding.ensureInitialized();
@@ -22,10 +22,9 @@ Future<void> main() async {
     providers: [
       ChangeNotifierProvider(
           create: (context) => di.sl<LocalizationProvider>()),
-      ChangeNotifierProvider(
-          create: (context) => di.sl<RegisterProvider>()),
-      ChangeNotifierProvider(
-          create: (context) => di.sl<LoginProvider>()),
+      ChangeNotifierProvider(create: (context) => di.sl<RegisterProvider>()),
+      ChangeNotifierProvider(create: (context) => di.sl<LoginProvider>()),
+      ChangeNotifierProvider(create: (context) => di.sl<ProfileProvider>()),
     ],
     child: const MyApp(),
   ));
@@ -41,8 +40,6 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-  
-
   @override
   Widget build(BuildContext context) {
     // FlutterStatusbarcolor.setStatusBarColor(ColorResources.COLOR_WHITE);

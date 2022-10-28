@@ -1,8 +1,12 @@
 import 'dart:io';
 
 import 'package:dio/dio.dart';
+import 'package:erik_haydar/data/model/response/body/user_info_model.dart';
+import 'package:erik_haydar/helper/shared_pres.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import '../../../util/app_constants.dart';
+import '../../model/response/body/info_model.dart';
 import '../exception/pretty_dio_logger.dart';
 import 'logging_interceptor.dart';
 
@@ -11,11 +15,13 @@ class DioClient {
   final LoggingInterceptor? loggingInterceptor;
   final SharedPreferences? sharedPreferences;
   Dio dio = Dio();
-  String token = '';
-
+  UserInfoData user = UserInfoData();
   DioClient(this.baseUrl, Dio dioC,
       {this.loggingInterceptor, this.sharedPreferences}) {
-    // token = sharedPreferences?.getString(AppConstants.TOKEN) ?? '';
+    // try {
+    //   user = UserInfoData.fromJson(SharedPref().read(AppConstants.USER_DATA));
+    // } catch (Excepetion) {}
+
     dio = dioC;
     dio
       ..interceptors.add(PrettyDioLogger(
@@ -33,7 +39,7 @@ class DioClient {
       ..httpClientAdapter
       ..options.headers = {
         'Content-Type': 'application/json; charset=UTF-8',
-        'token': token,
+        // 'Authorization': 'Bearer ${user.authKey}',
       };
     dio.interceptors.add(loggingInterceptor!);
   }
