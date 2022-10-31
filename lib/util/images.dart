@@ -17,4 +17,9 @@ class Images {
   static const String person_icon = 'assets/icon/person.svg';
   static const String home_icon = 'assets/icon/home.svg';
   static const String play_icon = 'assets/icon/play.svg';
+  static const String search_icon = 'assets/icon/search.svg';
+  static const String notif_icon = 'assets/icon/notification.svg';
+  static const String user_icon = 'assets/icon/user.svg';
+  static const String comment_icon = 'assets/icon/comment.svg';
+  static const String eye_icon = 'assets/icon/Eye.svg';
 }

@@ -1,5 +1,6 @@
 import 'package:bottom_bar/bottom_bar.dart';
 import 'package:erik_haydar/util/images.dart';
+import 'package:erik_haydar/view/sceen/home/home_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 
@@ -21,9 +22,10 @@ class _DashboardState extends State<Dashboard> {
     return Scaffold(
       backgroundColor: Colors.white70,
       body: PageView(
+        allowImplicitScrolling: false,
         controller: _pageController,
         children: [
-          Container(color: Colors.blue),
+          HomeScreen(),
           Container(color: Colors.red),
           Container(color: Colors.greenAccent.shade700),
           Container(color: Colors.orange),

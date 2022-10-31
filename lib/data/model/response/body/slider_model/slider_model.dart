@@ -3,14 +3,16 @@ class SliderModel {
   String? title;
   String? url;
   Film? film;
+  String? link;
 
-  SliderModel({this.id, this.title, this.url, this.film});
+  SliderModel({this.id, this.title, this.url, this.film, this.link});
 
   SliderModel.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     title = json['title'];
     url = json['url'];
     film = json['film'] != null ? Film.fromJson(json['film']) : null;
+    link = json['link'];
   }
 
   Map<String, dynamic> toJson() {
@@ -21,6 +23,7 @@ class SliderModel {
     if (film != null) {
       data['film'] = film!.toJson();
     }
+    data['link'] = link;
     return data;
   }
 }
@@ -33,8 +36,8 @@ class Film {
   int? likesCount;
   int? dislikesCount;
   String? image;
-  String? year;
-  List<String>? genres;
+  bool? isFree;
+  String? qualityText;
 
   Film(
       {this.id,
@@ -44,8 +47,8 @@ class Film {
       this.likesCount,
       this.dislikesCount,
       this.image,
-      this.year,
-      this.genres});
+      this.isFree,
+      this.qualityText});
 
   Film.fromJson(Map<String, dynamic> json) {
     id = json['id'];
@@ -55,17 +58,12 @@ class Film {
     likesCount = json['likesCount'];
     dislikesCount = json['dislikesCount'];
     image = json['image'];
-    year = json['year'];
-    if (json['genres'] != null) {
-      genres = <String>[];
-      json['genres'].forEach((v) {
-        genres!.add(v);
-      });
-    }
+    isFree = json['isFree'];
+    qualityText = json['qualityText'];
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
+    final Map<String, dynamic> data = <String, dynamic>{};
     data['id'] = id;
     data['name'] = name;
     data['description'] = description;
@@ -73,10 +71,8 @@ class Film {
     data['likesCount'] = likesCount;
     data['dislikesCount'] = dislikesCount;
     data['image'] = image;
-    data['year'] = year;
-    if (genres != null) {
-      data['genres'] = genres!.map((v) => v.toString()).toList();
-    }
+    data['isFree'] = isFree;
+    data['qualityText'] = qualityText;
     return data;
   }
 }

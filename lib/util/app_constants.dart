@@ -10,6 +10,8 @@ class AppConstants {
   static const GET_CITY = '/auth/register/regions';
   static const FULL_REGISTER = '/auth/register/register';
 
+  //Home Page
+  static const SLIDER = '/slider/index';
   //Shared Key
   static const String TOKEN = 'token';
 
