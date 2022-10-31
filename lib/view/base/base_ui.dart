@@ -43,6 +43,12 @@ class BaseUI {
       padding: EdgeInsets.zero,
       elevation: 0.0,
     );
+    final ButtonStyle cancelStyle = TextButton.styleFrom(
+      backgroundColor: ColorResources.COLOR_F7F7F9,
+      minimumSize: Size(MediaQuery.of(context).size.width, 48),
+      padding: EdgeInsets.zero,
+      elevation: 0.0,
+    );
     final ButtonStyle textStyle = TextButton.styleFrom(
       backgroundColor: ColorResources.COLOR_WHITE,
       minimumSize: Size(MediaQuery.of(context).size.width, 48),
@@ -205,6 +211,14 @@ class BaseUI {
                 style: textButtonTextStyle.copyWith(
                     color: ColorResources.COLOR_BLACK,
                     fontSize: Dimensions.FONT_SIZE_12)));
+      case TypeButton.cancel:
+        return ElevatedButton(
+            style: cancelStyle,
+            onPressed: onTap,
+            child: Text(
+              text,
+              style: textButtonTextStyle.copyWith(color: ColorResources.COLOR_BLACK),
+            ));
     }
   }
 }

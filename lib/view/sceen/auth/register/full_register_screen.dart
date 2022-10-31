@@ -1,6 +1,6 @@
 import 'dart:io';
 
-import 'package:erik_haydar/view/sceen/profile/profile_acreen.dart';
+import 'package:erik_haydar/view/sceen/profile/profile_screen.dart';
 import 'package:image_picker/image_picker.dart';
 
 import 'package:erik_haydar/helper/enums/button_enum.dart';

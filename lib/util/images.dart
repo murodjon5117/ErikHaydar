@@ -15,6 +15,13 @@ class Images {
   static const String phone = 'assets/icon/phone.svg';
   static const String edit = 'assets/icon/edit.svg';
   static const String key = 'assets/icon/key.svg';
+  static const String payme = 'assets/icon/payme.svg';
+  static const String click = 'assets/icon/click.svg';
+  static const String apelsin = 'assets/icon/apelsin.svg';
+  static const String x = 'assets/icon/x.svg';
+  static const String buyTarif = 'assets/icon/buy_tarif.svg';
+  static const String successDialog = 'assets/icon/succes_dialog.svg';
+  static const String expired = 'assets/icon/expired.svg';
 
   //for Images
   static const String image = 'assets/image/placeholder_image.png';

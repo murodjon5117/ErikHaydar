@@ -7,5 +7,6 @@ enum TypeButton {
   downloaded,
   tarif,
   tarifBorder,
+  cancel,
   ; 
 }

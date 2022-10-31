@@ -6,7 +6,7 @@ class UserInfoModelProfile {
   String? img;
   String? balance;
   String? activeTariff;
-  Null? activeTariffId;
+  num? activeTariffId;
   String? expiredAt;
   String? status;
   int? noticeStatus;

@@ -1,9 +1,16 @@
+import 'package:erik_haydar/data/model/response/body/info_model.dart';
+import 'package:erik_haydar/view/sceen/profile/change_phone/edit_phone_number_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 
 import '../../../../util/images.dart';
+import '../../../../util/route.dart';
 
 class PhotoAndPopupMenu extends StatelessWidget {
+  final UserInfoModelProfile userinfo;
+
+  const PhotoAndPopupMenu({super.key, required this.userinfo});
+
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -26,6 +33,10 @@ class PhotoAndPopupMenu extends StatelessWidget {
                   icon: SvgPicture.asset(Images.menu_image),
                   onSelected: (value) {
                     if (value == Options.phoneNumber.index) {
+                      Navigator.of(
+                        context,
+                        rootNavigator: true,
+                      ).push(createRoute(EditPhoneNumber()));
                     } else if (value == Options.userInfo.index) {
                     } else if (value == Options.password.index) {
                     } else {}

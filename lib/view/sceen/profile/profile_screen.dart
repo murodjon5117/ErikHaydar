@@ -1,7 +1,10 @@
+import 'package:erik_haydar/data/model/response/body/info_model.dart';
 import 'package:erik_haydar/helper/enums/button_enum.dart';
+import 'package:erik_haydar/localization/language_constrants.dart';
 import 'package:erik_haydar/provider/profile_provider.dart';
 import 'package:erik_haydar/util/dimensions.dart';
 import 'package:erik_haydar/view/base/base_ui.dart';
+import 'package:erik_haydar/view/sceen/profile/widget/buttons.dart';
 import 'package:erik_haydar/view/sceen/profile/widget/photo_popupmenu.dart';
 import 'package:erik_haydar/view/sceen/profile/widget/slider.dart';
 import 'package:flutter/material.dart';
@@ -21,45 +24,50 @@ class _ProfileScreenState extends State<ProfileScreen> {
   @override
   void initState() {
     Provider.of<ProfileProvider>(context, listen: false).getUserInfo(context);
+    Provider.of<ProfileProvider>(context, listen: false).getTarifs(context);
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-    var profileProvider = Provider.of<ProfileProvider>(context);
-    return Scaffold(
-      backgroundColor: ColorResources.COLOR_WHITE,
-      body: SafeArea(
-        child: RefreshIndicator(
-          onRefresh: () async {
-            setState(() {
-              profileProvider.getUserInfo(context);
-            });
-          },
-          child: SingleChildScrollView(
-            child: Stack(
-              children: [
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: [
-                    PhotoAndPopupMenu(),
-                    _userInfo(),
-                    _tarif(),
-                    _buttons(),
-                    Carousel()
-                  ],
-                ),
-                profileProvider.isLoading
-                    ? Positioned(
-                        left: 0,
-                        right: 0,
-                        bottom: 0,
-                        top: 0,
-                        child: BaseUI().progressIndicator(),
-                      )
-                    : const SizedBox()
-              ],
+    return Consumer<ProfileProvider>(
+      builder: (context, value, child) => Scaffold(
+        backgroundColor: ColorResources.COLOR_WHITE,
+        body: SafeArea(
+          child: RefreshIndicator(
+            onRefresh: () async {
+              setState(() {
+                value.getUserInfo(context);
+                value.getTarifs(context);
+              });
+            },
+            child: SingleChildScrollView(
+              child: Stack(
+                children: [
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      PhotoAndPopupMenu(
+                        userinfo: value.userInfo,
+                      ),
+                      _userInfo(value.userInfo),
+                      _tarif(value.userInfo),
+                      ProfileButtons(),
+                      Carousel()
+                    ],
+                  ),
+                  value.isLoading
+                      ? Positioned(
+                          left: 0,
+                          right: 0,
+                          bottom: 0,
+                          top: 0,
+                          child: BaseUI().progressIndicator(),
+                        )
+                      : const SizedBox()
+                ],
+              ),
             ),
           ),
         ),
@@ -67,20 +75,20 @@ class _ProfileScreenState extends State<ProfileScreen> {
     );
   }
 
-  Widget _userInfo() {
+  Widget _userInfo(UserInfoModelProfile userinfo) {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 16),
       child: Column(
         children: [
           Text(
-            'ID 12356',
+            'ID ${userinfo.id}',
             style: titleTextField,
           ),
           const SizedBox(
             height: 8,
           ),
           Text(
-            'Eshonov Fakhriyor',
+            '${userinfo.lastname} ${userinfo.firstname}',
             style: boldTitle.copyWith(fontSize: Dimensions.FONT_SIZE_24),
           ),
           const SizedBox(
@@ -90,12 +98,12 @@ class _ProfileScreenState extends State<ProfileScreen> {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text(
-                'Telefon raqamingiz',
+                getTranslated('phone_number', context),
                 style:
                     profileNumber.copyWith(color: ColorResources.COLOR_BBB5B5),
               ),
               Text(
-                '+998 97 628 28 82',
+                '${userinfo.username}',
                 style: profileNumber,
               ),
             ],
@@ -105,7 +113,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
     );
   }
 
-  Widget _tarif() {
+  Widget _tarif(UserInfoModelProfile userinfo) {
     return Padding(
       padding: const EdgeInsets.fromLTRB(16, 18, 16, 24),
       child: Column(
@@ -131,7 +139,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         height: 16,
                       ),
                       Text(
-                        '100 000 UZS',
+                        userinfo.balance ?? '',
                         style:
                             profileNumber.copyWith(fontWeight: FontWeight.w600),
                       ),
@@ -139,7 +147,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         height: 8,
                       ),
                       Text(
-                        'Sizning xisobingiz',
+                        getTranslated('your_balance', context),
                         style: profileTitle,
                       ),
                       const SizedBox(
@@ -170,7 +178,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         height: 16,
                       ),
                       Text(
-                        'Premium',
+                        userinfo.activeTariff ?? '',
                         style: profileNumber.copyWith(
                             fontWeight: FontWeight.w600,
                             color: ColorResources.COLOR_PPIMARY),
@@ -179,7 +187,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         height: 8,
                       ),
                       Text(
-                        'Tarif',
+                        getTranslated('tarif', context),
                         style: profileTitle,
                       ),
                       const SizedBox(
@@ -197,35 +205,13 @@ class _ProfileScreenState extends State<ProfileScreen> {
           Row(
             mainAxisAlignment: MainAxisAlignment.end,
             children: [
-              Text('Muddati', style: profileTitle),
-              SizedBox(
+              Text(getTranslated('expired_at', context), style: profileTitle),
+              const SizedBox(
                 width: 10,
               ),
-              Text('10.10.2022 gacha'),
+              Text(userinfo.expiredAt ?? ''),
             ],
           )
-        ],
-      ),
-    );
-  }
-
-  Widget _buttons() {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 16),
-      child: Column(
-        children: [
-          BaseUI().buttonsType(
-              TypeButton.filledIcon, context, () {}, 'Hisobni to’ldirish'),
-          const SizedBox(
-            height: 24,
-          ),
-          BaseUI().buttonsType(
-              TypeButton.downloaded, context, () {}, 'Yuklanganlar'),
-          const SizedBox(
-            height: 12,
-          ),
-          BaseUI()
-              .buttonsType(TypeButton.settings, context, () {}, 'Sozlamalar'),
         ],
       ),
     );
