@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:erik_haydar/view/sceen/profile/profile_screen.dart';
 import 'package:image_picker/image_picker.dart';
 
 import 'package:erik_haydar/helper/enums/button_enum.dart';
@@ -14,6 +15,9 @@ import 'package:erik_haydar/view/base/custom_text_field.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:provider/provider.dart';
+
+import '../../../../util/route.dart';
+import '../../dashboard_screen.dart';
 
 class FullRegisterScreen extends StatefulWidget {
   final String phone;
@@ -224,8 +228,32 @@ class _FullRegisterScreenState extends State<FullRegisterScreen> {
                                       ),
                                       BaseUI().buttonsType(
                                           TypeButton.filled, context, () {
-                                        if (_formKey.currentState!
-                                            .validate()) {}
+                                        if (_formKey.currentState!.validate()) {
+                                          value
+                                              .savePhoto(
+                                                  context,
+                                                  image,
+                                                  widget.phone,
+                                                  widget.code,
+                                                  _nameController.text,
+                                                  _surNameController.text,
+                                                  _passwordController.text,
+                                                  _repeatPasswordController
+                                                      .text,
+                                                  _dateController.text,
+                                                  '121212122',
+                                                  'deviceName',
+                                                  'deviceToken')
+                                              .then((result) {
+                                            if (result == true) {
+                                              Navigator.of(
+                                                context,
+                                                rootNavigator: true,
+                                              ).push(createRoute(
+                                                  ProfileScreen()));
+                                            }
+                                          });
+                                        }
                                       }, getTranslated('confirm', context))
                                     ],
                                   ),
@@ -235,6 +263,9 @@ class _FullRegisterScreenState extends State<FullRegisterScreen> {
                           ),
                           Positioned(
                               left: 0, top: 13, right: 0, child: _setPhoto()),
+                          value.isLoading
+                              ? BaseUI().progressIndicator()
+                              : const SizedBox()
                         ],
                       ),
                     ),
@@ -318,14 +349,23 @@ class _FullRegisterScreenState extends State<FullRegisterScreen> {
           height: 85,
           child: Stack(
             children: [
-              CircleAvatar(
-                  radius: 45,
-                  
-                  backgroundColor: ColorResources.COLOR_WHITE,
-                  child: image == null
-                      ? SvgPicture.asset(Images.user_photo)
-                      : Image.file(image!,
-                          width: 85, height: 85, fit: BoxFit.cover)),
+              Material(
+                elevation: 0,
+                shape: const CircleBorder(),
+                child: GestureDetector(
+                  onTap: () {},
+                  child: CircleAvatar(
+                    backgroundColor: ColorResources.COLOR_WHITE,
+                    radius: 45.0,
+                    child: image == null
+                        ? SvgPicture.asset(Images.user_photo)
+                        : ClipOval(
+                            child: Image.file(image!,
+                                width: 85, height: 85, fit: BoxFit.cover),
+                          ),
+                  ),
+                ),
+              ),
               Positioned(
                   bottom: 0,
                   right: 0,

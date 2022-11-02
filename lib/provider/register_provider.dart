@@ -1,16 +1,15 @@
-import 'dart:convert';
 import 'dart:io';
 
 import 'package:erik_haydar/data/model/response/body/cities_model.dart';
 import 'package:erik_haydar/data/model/response/body/user_info_model.dart';
-import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:http/http.dart' as http;
 
 import '../data/model/response/base/api_response.dart';
 import '../data/model/response/base/base_model.dart';
 import '../data/repository/auth_repo.dart';
 import '../helper/api_checker.dart';
+import '../helper/shared_pres.dart';
 import '../util/app_constants.dart';
 
 class RegisterProvider extends ChangeNotifier {
@@ -33,7 +32,7 @@ class RegisterProvider extends ChangeNotifier {
       baseResponse =
           BaseResponse.fromJson(apiResponse.response?.data, (data) => dynamic);
     } else {
-      ApiChecker.checkApi(context, apiResponse);
+      ApiChecker.checkApi(apiResponse, context);
     }
     _isLoading = false;
     notifyListeners();
@@ -57,7 +56,7 @@ class RegisterProvider extends ChangeNotifier {
       baseResponse =
           BaseResponse.fromJson(apiResponse.response?.data, (data) => dynamic);
     } else {
-      ApiChecker.checkApi(context, apiResponse);
+      ApiChecker.checkApi(apiResponse, context);
     }
     _isLoading = false;
     notifyListeners();
@@ -81,7 +80,7 @@ class RegisterProvider extends ChangeNotifier {
           apiResponse.response?.data, (data) => CitiesModel.fromJson(data));
       _cityList.addAll(response.data?.regions ?? []);
     } else {
-      ApiChecker.checkApi(context, apiResponse);
+      ApiChecker.checkApi(apiResponse, context);
     }
     _isLoading = false;
     notifyListeners();
@@ -106,16 +105,14 @@ class RegisterProvider extends ChangeNotifier {
   //full registration
   Future<bool> savePhoto(
       BuildContext context,
-      File img,
+      File? img,
       String phone,
       String code,
       String firstName,
       String lastName,
       String password,
       String passwordRepeat,
-      String regionId,
       String bornDate,
-      String genderId,
       String deviceId,
       String deviceName,
       String deviceToken) async {
@@ -128,26 +125,42 @@ class RegisterProvider extends ChangeNotifier {
       'lastname': lastName,
       'password': password,
       'password_repeat': passwordRepeat,
-      'region_id': regionId,
+      'region_id': _cityId.toString(),
       'born_date': bornDate,
-      'gender_id': genderId,
+      'gender_id': _genderId.toString(),
       'device_id': deviceId,
       'device_name': deviceName,
       'device_token': deviceToken
     };
+
     bool status = false;
-    http.StreamedResponse response =
-        await authRepo.fullRegistration(img, userData);
-    Map map = jsonDecode(await response.stream.bytesToString());
-    if (response.statusCode == 200 && map['status'] == 200) {
-      UserInfoData result = UserInfoData.fromJson(map['data']);
-      print(result.toJson());
+    ApiResponse apiResponse = await authRepo.fullRegistration(
+        img,
+        phone,
+        code,
+        firstName,
+        lastName,
+        password,
+        passwordRepeat,
+        bornDate,
+        _cityId.toString(),
+        _genderId.toString(),
+        deviceId,
+        deviceName,
+        deviceToken);
+    if (apiResponse.response?.statusCode == 200 &&
+        apiResponse.response?.data['status'] == 200) {
+      var response = BaseResponse<UserInfoData>.fromJson(
+          apiResponse.response?.data, (data) => UserInfoData.fromJson(data));
+      SharedPref().save(AppConstants.USER_DATA, response.data?.toJson());
+      sharedPreferences.setString(
+          AppConstants.TOKEN, response.data?.authKey ?? '');
       status = true;
     } else {
       status = false;
-      ApiChecker.checkApiForRegister(
-          context, map['message'] ?? response.reasonPhrase.toString());
+      ApiChecker.checkApi(apiResponse, context);
     }
+    _isLoading = false;
     notifyListeners();
     return status;
   }

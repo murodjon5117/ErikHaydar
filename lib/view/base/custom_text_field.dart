@@ -1,3 +1,4 @@
+import 'package:erik_haydar/localization/language_constrants.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
@@ -68,6 +69,11 @@ class CustomTextField extends StatelessWidget {
                   return hint;
                 }
                 return null;
+              case TextFieldType.summa:
+                if (value == null || value.isEmpty || value.length < 4) {
+                  return hint;
+                }
+                return null;
             }
           },
           controller: controller,
@@ -122,6 +128,8 @@ class CustomTextField extends StatelessWidget {
         return ColorResources.COLOR_CFCBCB;
       case TextFieldType.selected:
         return ColorResources.COLOR_4A4949;
+      case TextFieldType.summa:
+        return ColorResources.COLOR_CFCBCB;
     }
   }
 
@@ -135,6 +143,8 @@ class CustomTextField extends StatelessWidget {
         return hint;
       case TextFieldType.selected:
         return hint;
+      case TextFieldType.summa:
+        return '(120 000)';
     }
   }
 
@@ -143,27 +153,21 @@ class CustomTextField extends StatelessWidget {
       case TextFieldType.phone:
         return TextInputType.phone;
       case TextFieldType.password:
-        print(type);
         return TextInputType.visiblePassword;
       case TextFieldType.text:
         return TextInputType.text;
       case TextFieldType.selected:
         return TextInputType.text;
+      case TextFieldType.summa:
+        return TextInputType.number;
     }
   }
 }
 
 enum TextFieldType {
-  phone("phone"),
-  password("password"),
-  text("text"),
-  selected("select");
-
-  final String type;
-
-  const TextFieldType(this.type);
-
-  factory TextFieldType.fromType(String type) {
-    return values.firstWhere((element) => element.type == type);
-  }
+  phone,
+  password,
+  text,
+  summa,
+  selected;
 }

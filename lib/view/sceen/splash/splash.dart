@@ -3,6 +3,7 @@ import 'package:erik_haydar/view/sceen/auth/login/login_screen.dart';
 import 'package:erik_haydar/view/sceen/auth/register/register_screen.dart';
 import 'package:erik_haydar/view/sceen/onboarding/onboarding.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:erik_haydar/view/sceen/profile/profile_screen.dart';
 import 'package:flutter/material.dart';
 
 class SplashScreen extends StatefulWidget {

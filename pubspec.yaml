@@ -23,6 +23,7 @@ dependencies:
   google_fonts: ^3.0.1
   http: ^0.13.5
   image_picker: ^0.8.5+3
+  url_launcher: ^6.1.6
   lottie: ^1.4.0
   mask_text_input_formatter: ^2.4.0
   otp_text_field: ^1.1.3
