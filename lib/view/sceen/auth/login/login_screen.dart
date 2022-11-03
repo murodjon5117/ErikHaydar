@@ -5,6 +5,7 @@ import 'package:erik_haydar/localization/language_constrants.dart';
 import 'package:erik_haydar/provider/login_provider.dart';
 import 'package:erik_haydar/util/images.dart';
 import 'package:erik_haydar/view/base/base_ui.dart';
+import 'package:erik_haydar/view/sceen/dashboard/dashboard_screen.dart';
 import 'package:erik_haydar/view/sceen/dashboard_screen.dart';
 import 'package:erik_haydar/view/sceen/profile/profile_screen.dart';
 import 'package:flutter/material.dart';
@@ -150,15 +151,14 @@ class _LoginScreenState extends State<LoginScreen> {
                                                   _passwordController.text,
                                                   deviceId,
                                                   deviceName,
-                                                  deviceToken,
-                                                  context)
+                                                  deviceToken)
                                               .then((result) {
                                             if (result.status == 200) {
                                               Navigator.of(
                                                 context,
                                                 rootNavigator: true,
                                               ).push(createRoute(
-                                                  ProfileScreen()));
+                                                  DashBoardScreen()));
                                             }
                                           });
                                         }

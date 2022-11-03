@@ -27,4 +27,17 @@ class HomeRepo {
       return ApiResponse.withError(ApiErrorHandler.getMessage(e));
     }
   }
+
+  Future<ApiResponse> getHomeData() async {
+    try {
+      final response = await dioClient.post(AppConstants.homeData,
+          options: Options(headers: {
+            'Authorization':
+                'Bearer ${sharedPreferences.getString(AppConstants.TOKEN)}'
+          }));
+      return ApiResponse.withSuccess(response);
+    } catch (e) {
+      return ApiResponse.withError(ApiErrorHandler.getMessage(e));
+    }
+  }
 }

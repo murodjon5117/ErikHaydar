@@ -23,8 +23,8 @@ class ProfileScreen extends StatefulWidget {
 class _ProfileScreenState extends State<ProfileScreen> {
   @override
   void initState() {
-    Provider.of<ProfileProvider>(context, listen: false).getUserInfo(context);
-    Provider.of<ProfileProvider>(context, listen: false).getTarifs(context);
+    Provider.of<ProfileProvider>(context, listen: false).getUserInfo();
+    Provider.of<ProfileProvider>(context, listen: false).getTarifs();
     super.initState();
   }
 
@@ -37,8 +37,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
           child: RefreshIndicator(
             onRefresh: () async {
               setState(() {
-                value.getUserInfo(context);
-                value.getTarifs(context);
+                value.getUserInfo();
+                value.getTarifs();
               });
             },
             child: SingleChildScrollView(

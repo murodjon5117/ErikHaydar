@@ -55,7 +55,7 @@ const itemWidgetTextStyle = TextStyle(
     fontFamily: 'Inter',
     fontSize: Dimensions.FONT_SIZE_12,
     fontWeight: FontWeight.w400,
-    height: 0.84,
+    // height: 0.84,
     color: ColorResources.COLOR_BLACK);
 
 const profileTitle = TextStyle(

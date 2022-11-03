@@ -1,6 +1,6 @@
 import 'dart:io';
 import 'dart:ui';
-import 'package:erik_haydar/provider/home_provider/home_provider.dart';
+import 'package:erik_haydar/provider/home_provider.dart';
 import 'package:erik_haydar/provider/localization_provider.dart';
 import 'package:erik_haydar/provider/login_provider.dart';
 import 'package:erik_haydar/provider/profile_provider.dart';

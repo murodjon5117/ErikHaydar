@@ -1,7 +1,7 @@
 class Images {
   //for Icons
   static const String back_icon = 'assets/icon/back_icon.svg';
-  static const String user_photo = 'assets/assets/icon/user_photo.svg';
+  static const String user_photo = 'assets/icon/user_photo.svg';
   static const String plus = 'assets/icon/plus.svg';
   static const String prefix_icon = 'assets/icon/prefix_icon.svg';
   static const String close_image = 'assets/icon/close_icon.svg';
@@ -27,6 +27,13 @@ class Images {
   static const String erik3 = 'assets/image/3.png';
   static const String erik4 = 'assets/image/4.png';
   static const String arrow_right = 'assets/icon/arrow_right.svg';
+  static const String activeHome = 'assets/icon/active_home.svg';
+  static const String inactiveCategory = 'assets/icon/inactive_category.svg';
+  static const String activeCategory = 'assets/icon/active_category.svg';
+  static const String inactiveFavorite = 'assets/icon/inactive_favorite.svg';
+  static const String activeFavorite = 'assets/icon/active_favorite.svg';
+  static const String inactiveProfile = 'assets/icon/inactive_profile.svg';
+  static const String activeProfile = 'assets/icon/active_profile.svg';
   //for Images
   static const String image = 'assets/image/placeholder_image.png';
   static const String login_image = 'assets/image/login_photo.png';
@@ -39,4 +46,6 @@ class Images {
   static const String user_icon = 'assets/icon/user.svg';
   static const String comment_icon = 'assets/icon/comment.svg';
   static const String eye_icon = 'assets/icon/Eye.svg';
+  static const String unliked = 'assets/icon/unliked.svg';
+  static const String placeholderImage = 'assets/image/placeholder_image.png';
 }

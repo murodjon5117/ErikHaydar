@@ -153,7 +153,7 @@ class ProfileButtons extends StatelessWidget {
                                     () {
                                   if (_formKey.currentState!.validate()) {
                                     value
-                                        .pay(context, _summaCOntroller.text)
+                                        .pay( _summaCOntroller.text)
                                         .then((result) {
                                       if (result.isNotEmpty) {
                                         launchUrlString(result);

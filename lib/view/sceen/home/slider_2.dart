@@ -1,7 +1,7 @@
 import 'dart:math';
 
 import 'package:erik_haydar/data/model/response/body/slider_model/slider_model.dart';
-import 'package:erik_haydar/provider/home_provider/home_provider.dart';
+import 'package:erik_haydar/provider/home_provider.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/container.dart';

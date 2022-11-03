@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:erik_haydar/helper/enums/button_enum.dart';
 import 'package:erik_haydar/util/dimensions.dart';
 import 'package:flutter/material.dart';
@@ -18,6 +19,27 @@ class BaseUI {
         alignment: Alignment.center,
         icon: SvgPicture.asset(Images.back_icon),
         onPressed: () => Navigator.of(context).pop(),
+      ),
+    );
+  }
+
+  Widget imageNetwork(String url) {
+    return CachedNetworkImage(
+      imageUrl: url,
+      fit: BoxFit.contain,
+      imageBuilder: (context, imageProvider) => Container(
+        decoration: BoxDecoration(
+            image: DecorationImage(
+              image: imageProvider,
+              fit: BoxFit.cover,
+            ),
+            borderRadius: BorderRadius.circular(8)),
+      ),
+      placeholder: (context, url) => Image.asset(
+        Images.placeholderImage,
+      ),
+      errorWidget: (context, url, error) => Image.asset(
+        Images.placeholderImage,
       ),
     );
   }
@@ -217,7 +239,8 @@ class BaseUI {
             onPressed: onTap,
             child: Text(
               text,
-              style: textButtonTextStyle.copyWith(color: ColorResources.COLOR_BLACK),
+              style: textButtonTextStyle.copyWith(
+                  color: ColorResources.COLOR_BLACK),
             ));
     }
   }

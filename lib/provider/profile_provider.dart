@@ -24,9 +24,7 @@ class ProfileProvider extends ChangeNotifier {
   UserInfoModelProfile _userInfo = UserInfoModelProfile();
   UserInfoModelProfile get userInfo => _userInfo;
 
-  Future<void> getUserInfo(
-    BuildContext context,
-  ) async {
+  Future<void> getUserInfo() async {
     _isLoading = true;
     ApiResponse apiResponse = await repo.getUserInfo();
     _userInfo = UserInfoModelProfile();
@@ -37,18 +35,16 @@ class ProfileProvider extends ChangeNotifier {
           (data) => UserInfoModelProfile.fromJson(data));
       _userInfo = response.data ?? UserInfoModelProfile();
     } else {
-      ApiChecker.checkApi(apiResponse, context);
+      ApiChecker.checkApi(apiResponse);
     }
     _isLoading = false;
     notifyListeners();
   }
 
-  List<TarifModel> _tarifs = [];
+  final List<TarifModel> _tarifs = [];
   List<TarifModel> get tarifs => _tarifs;
 
-  Future<void> getTarifs(
-    BuildContext context,
-  ) async {
+  Future<void> getTarifs() async {
     _isLoading = true;
     ApiResponse apiResponse = await repo.getTarif();
     _tarifs.clear();
@@ -57,13 +53,13 @@ class ProfileProvider extends ChangeNotifier {
       apiResponse.response?.data['data']
           .forEach((items) => _tarifs.add(TarifModel.fromJson(items)));
     } else {
-      ApiChecker.checkApi(apiResponse, context);
+      ApiChecker.checkApi(apiResponse);
     }
     _isLoading = false;
     notifyListeners();
   }
 
-  Future<String> pay(BuildContext context, String amount) async {
+  Future<String> pay(String amount) async {
     String url = '';
     _isLoading = true;
     notifyListeners();
@@ -75,14 +71,14 @@ class ProfileProvider extends ChangeNotifier {
           apiResponse.response?.data, (data) => UrlLaunch.fromJson(data));
       url = response.data?.url ?? '';
     } else {
-      ApiChecker.checkApi(apiResponse, context);
+      ApiChecker.checkApi(apiResponse);
     }
     _isLoading = false;
     notifyListeners();
     return url;
   }
 
-  Future<BaseResponse> buyTarif(BuildContext context, int id) async {
+  Future<BaseResponse> buyTarif(int id) async {
     _isLoading = true;
     notifyListeners();
     BaseResponse baseResponse = BaseResponse();
@@ -93,7 +89,7 @@ class ProfileProvider extends ChangeNotifier {
       baseResponse =
           BaseResponse.fromJson(apiResponse.response?.data, (data) => dynamic);
     } else {
-      ApiChecker.checkApi(apiResponse, context);
+      ApiChecker.checkApi(apiResponse);
     }
     _isLoading = false;
     notifyListeners();
@@ -130,6 +126,4 @@ class ProfileProvider extends ChangeNotifier {
     }
     notifyListeners();
   }
-
-  sendPayment(BuildContext context) {}
 }

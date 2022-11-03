@@ -59,7 +59,7 @@ class _FullRegisterScreenState extends State<FullRegisterScreen> {
 
   @override
   void initState() {
-    Provider.of<RegisterProvider>(context, listen: false).getCities(context);
+    Provider.of<RegisterProvider>(context, listen: false).getCities();
     _nameController = TextEditingController();
     _surNameController = TextEditingController();
     _dateController = TextEditingController();
@@ -231,7 +231,6 @@ class _FullRegisterScreenState extends State<FullRegisterScreen> {
                                         if (_formKey.currentState!.validate()) {
                                           value
                                               .savePhoto(
-                                                  context,
                                                   image,
                                                   widget.phone,
                                                   widget.code,

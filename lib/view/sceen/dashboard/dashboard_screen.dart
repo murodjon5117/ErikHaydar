@@ -1,6 +1,7 @@
 import 'package:bottom_bar/bottom_bar.dart';
 import 'package:erik_haydar/util/images.dart';
 import 'package:erik_haydar/view/sceen/home/home_screen.dart';
+import 'package:erik_haydar/view/sceen/profile/profile_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 
@@ -28,7 +29,7 @@ class _DashboardState extends State<Dashboard> {
           HomeScreen(),
           Container(color: Colors.red),
           Container(color: Colors.greenAccent.shade700),
-          Container(color: Colors.orange),
+          ProfileScreen(),
         ],
         onPageChanged: (index) {
           setState(() => _currentPage = index);

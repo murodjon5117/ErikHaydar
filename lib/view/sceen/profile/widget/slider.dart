@@ -319,7 +319,7 @@ class Carousel extends StatelessWidget {
                                       child: BaseUI().buttonsType(
                                           TypeButton.filled, context, () {
                                         value
-                                            .buyTarif(context, model.id ?? 0)
+                                            .buyTarif(model.id ?? 0)
                                             .then((result) {
                                           if (result.status == 200) {
                                             _showSuccessDialog(context);

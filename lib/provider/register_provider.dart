@@ -20,7 +20,7 @@ class RegisterProvider extends ChangeNotifier {
   bool get isLoading => _isLoading;
 
   //for enter phone
-  Future<BaseResponse> enterPhone(String phone, BuildContext context) async {
+  Future<BaseResponse> enterPhone(String phone) async {
     _isLoading = true;
     notifyListeners();
     var data = {'phone': phone};
@@ -32,7 +32,7 @@ class RegisterProvider extends ChangeNotifier {
       baseResponse =
           BaseResponse.fromJson(apiResponse.response?.data, (data) => dynamic);
     } else {
-      ApiChecker.checkApi(apiResponse, context);
+      ApiChecker.checkApi(apiResponse);
     }
     _isLoading = false;
     notifyListeners();
@@ -40,11 +40,7 @@ class RegisterProvider extends ChangeNotifier {
   }
 
   //sms verify
-  Future<BaseResponse> verifyPhone(
-    String phone,
-    String smsCode,
-    BuildContext context,
-  ) async {
+  Future<BaseResponse> verifyPhone(String phone, String smsCode) async {
     _isLoading = true;
     notifyListeners();
     var data = {'phone': phone, 'code': smsCode};
@@ -56,7 +52,7 @@ class RegisterProvider extends ChangeNotifier {
       baseResponse =
           BaseResponse.fromJson(apiResponse.response?.data, (data) => dynamic);
     } else {
-      ApiChecker.checkApi(apiResponse, context);
+      ApiChecker.checkApi(apiResponse);
     }
     _isLoading = false;
     notifyListeners();
@@ -67,9 +63,7 @@ class RegisterProvider extends ChangeNotifier {
   final List<Regions> _cityList = [];
   List<Regions> get cityList => _cityList;
 
-  Future<void> getCities(
-    BuildContext context,
-  ) async {
+  Future<void> getCities() async {
     _isLoading = true;
     _cityList.clear();
     ApiResponse apiResponse = await authRepo.getCities();
@@ -80,7 +74,7 @@ class RegisterProvider extends ChangeNotifier {
           apiResponse.response?.data, (data) => CitiesModel.fromJson(data));
       _cityList.addAll(response.data?.regions ?? []);
     } else {
-      ApiChecker.checkApi(apiResponse, context);
+      ApiChecker.checkApi(apiResponse);
     }
     _isLoading = false;
     notifyListeners();
@@ -104,7 +98,6 @@ class RegisterProvider extends ChangeNotifier {
 
   //full registration
   Future<bool> savePhoto(
-      BuildContext context,
       File? img,
       String phone,
       String code,
@@ -158,7 +151,7 @@ class RegisterProvider extends ChangeNotifier {
       status = true;
     } else {
       status = false;
-      ApiChecker.checkApi(apiResponse, context);
+      ApiChecker.checkApi(apiResponse);
     }
     _isLoading = false;
     notifyListeners();
