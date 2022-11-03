@@ -4,42 +4,37 @@ import 'package:flutter/material.dart';
 import 'color_resources.dart';
 
 const boldTitle = TextStyle(
-  fontFamily: 'Inter',
-  fontSize: Dimensions.FONT_SIZE_20,
-  fontWeight: FontWeight.w600,
-  height: 1.4,
-  color: ColorResources.COLOR_BLACK
-);
+    fontFamily: 'Inter',
+    fontSize: Dimensions.FONT_SIZE_20,
+    fontWeight: FontWeight.w600,
+    height: 1.4,
+    color: ColorResources.COLOR_BLACK);
 const boldTitlePhone = TextStyle(
-  fontFamily: 'Inter',
-  fontSize: Dimensions.FONT_SIZE_28,
-  fontWeight: FontWeight.w600,
-  height: 2.0,
-  color: ColorResources.COLOR_BLACK
-);
+    fontFamily: 'Inter',
+    fontSize: Dimensions.FONT_SIZE_28,
+    fontWeight: FontWeight.w600,
+    height: 2.0,
+    color: ColorResources.COLOR_BLACK);
 const boldTitlePhoneSub = TextStyle(
-  fontFamily: 'Inter',
-  fontSize: Dimensions.FONT_SIZE_18,
-  fontWeight: FontWeight.w400,
-  height: 1.4,
-  color: ColorResources.COLOR_737373
-);
+    fontFamily: 'Inter',
+    fontSize: Dimensions.FONT_SIZE_18,
+    fontWeight: FontWeight.w400,
+    height: 1.4,
+    color: ColorResources.COLOR_737373);
 
 const titleTextField = TextStyle(
-  fontFamily: 'Inter',
-  fontSize: Dimensions.FONT_SIZE_14,
-  fontWeight: FontWeight.w400,
-  height: 1.0,
-  color: ColorResources.COLOR_737373
-);
+    fontFamily: 'Inter',
+    fontSize: Dimensions.FONT_SIZE_14,
+    fontWeight: FontWeight.w400,
+    height: 1.0,
+    color: ColorResources.COLOR_737373);
 
 const filledButtonTextStyle = TextStyle(
-  fontFamily: 'Inter',
-  fontSize: Dimensions.FONT_SIZE_16,
-  fontWeight: FontWeight.w400,
-  height: 1.1,
-  color: ColorResources.COLOR_WHITE
-);
+    fontFamily: 'Inter',
+    fontSize: Dimensions.FONT_SIZE_16,
+    fontWeight: FontWeight.w400,
+    height: 1.1,
+    color: ColorResources.COLOR_WHITE);
 
 const profileNumber = TextStyle(
   fontFamily: 'Inter',
@@ -50,12 +45,18 @@ const profileNumber = TextStyle(
 );
 
 const textButtonTextStyle = TextStyle(
-  fontFamily: 'Inter',
-  fontSize: Dimensions.FONT_SIZE_16,
-  fontWeight: FontWeight.w400,
-  height: 1.1,
-  color: ColorResources.COLOR_PPIMARY
-);
+    fontFamily: 'Inter',
+    fontSize: Dimensions.FONT_SIZE_16,
+    fontWeight: FontWeight.w400,
+    height: 1.1,
+    color: ColorResources.COLOR_PPIMARY);
+
+const itemWidgetTextStyle = TextStyle(
+    fontFamily: 'Inter',
+    fontSize: Dimensions.FONT_SIZE_12,
+    fontWeight: FontWeight.w400,
+    height: 0.84,
+    color: ColorResources.COLOR_BLACK);
 
 const profileTitle = TextStyle(
   fontFamily: 'Inter',
@@ -458,7 +459,7 @@ const orderStatusStyle = TextStyle(
     letterSpacing: 0.4,
     color: ColorResources.COLOR_BLACK);
 
-    const orderStatusDataStyle = TextStyle(
+const orderStatusDataStyle = TextStyle(
     height: 1.0,
     fontFamily: 'Roboto-Reqular',
     fontSize: Dimensions.FONT_SIZE_14,

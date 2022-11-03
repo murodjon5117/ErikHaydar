@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 
 class ColorResources {
-  
-
   static const Color COLOR_E2E2E5 = Color(0xFFE2E2E5);
   static const Color COLOR_F7F7F9 = Color(0xFFF7F7F9);
   static const Color COLOR_CDD1D7 = Color(0xFFCDD1D7);
@@ -55,6 +53,8 @@ class ColorResources {
   static const Color COMPARE_TABLE_COLOR = Color(0xFFF7F5F5);
   static const Color ICON_COLOR = Color(0xFFD5D8DF);
 
+  //Bottom Navigation color
+  static const Color BOTTOM_COLOR = Color(0xFFCC4242);
   // static const Color CATEGORIES_HOVER_COLOR = Color(0xFFC5DCFA);
 
   static const Map<int, Color> colorMap = {

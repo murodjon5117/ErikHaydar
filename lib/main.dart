@@ -1,5 +1,6 @@
 import 'dart:io';
 import 'dart:ui';
+import 'package:erik_haydar/provider/home_provider/home_provider.dart';
 import 'package:erik_haydar/provider/localization_provider.dart';
 import 'package:erik_haydar/provider/login_provider.dart';
 import 'package:erik_haydar/provider/profile_provider.dart';
@@ -13,6 +14,7 @@ import 'di_container.dart' as di;
 import 'localization/app_localization.dart';
 import 'view/sceen/splash/splash.dart';
 
+
 Future<void> main() async {
   HttpOverrides.global = MyHttpOverrides();
   WidgetsFlutterBinding.ensureInitialized();
@@ -24,6 +26,7 @@ Future<void> main() async {
           create: (context) => di.sl<LocalizationProvider>()),
       ChangeNotifierProvider(create: (context) => di.sl<RegisterProvider>()),
       ChangeNotifierProvider(create: (context) => di.sl<LoginProvider>()),
+      ChangeNotifierProvider(create: (context) => di.sl<HomeProvider>()),
       ChangeNotifierProvider(create: (context) => di.sl<ProfileProvider>()),
     ],
     child: const MyApp(),
@@ -54,7 +57,7 @@ class _MyAppState extends State<MyApp> {
       );
     }
     return MaterialApp(
-      home: SplashScreen(),
+      home: const SplashScreen(),
       title: 'Erik',
       debugShowCheckedModeBanner: false,
       navigatorKey: MyApp.navigatorKey,

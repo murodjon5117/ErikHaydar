@@ -16,6 +16,8 @@ class AppConstants {
   static const PAY_APELSIN = '/tariff-manager/payment/get-apelsin-url';
   static const BUY_TARIF = '/tariff-manager/tariff/purchase';
 
+  //Home Page
+  static const SLIDER = '/slider/index';
   //Shared Key
   static const String TOKEN = 'token';
   static const String IS_LOGIN = 'isLogin';

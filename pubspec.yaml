@@ -1,47 +1,42 @@
 name: erik_haydar
 description: A new Flutter project.
 
-publish_to: 'none' 
+publish_to: "none"
 
 version: 1.0.0+1
 
 environment:
-  sdk: '>=2.18.2 <3.0.0'
+  sdk: ">=2.18.2 <3.0.0"
 
 dependencies:
+  bottom_bar: ^2.0.2
+  carousel_slider: ^4.1.1
+  cupertino_icons: ^1.0.2
+  device_info_plus: ^7.0.1
+  dio: ^4.0.4
   flutter:
     sdk: flutter
-  get_it: ^7.2.0 
-  dio: ^4.0.4
-  flutter_svg: ^0.22.0
-  shared_preferences: ^2.0.5
-  provider: ^6.0.2
-  mask_text_input_formatter: ^2.4.0
-  cupertino_icons: ^1.0.2
   flutter_localizations:
     sdk: flutter
-  introduction_screen: ^3.0.2
-  otp_text_field: ^1.1.3
-  lottie: ^1.4.0
-  device_info_plus: ^7.0.1
+  flutter_svg: ^1.1.5
+  get_it: ^7.2.0
+  google_fonts: ^3.0.1
   http: ^0.13.5
   image_picker: ^0.8.5+3
   carousel_slider: ^4.1.1
   url_launcher: ^6.1.6
-
-  # firebase_messaging: ^14.0.2
-  # firebase_core: ^2.1.0
-
-
+  lottie: ^1.4.0
+  mask_text_input_formatter: ^2.4.0
+  otp_text_field: ^1.1.3
+  provider: ^6.0.4
+  shared_preferences: ^2.0.15
 
 dev_dependencies:
+  flutter_lints: ^2.0.0
   flutter_test:
     sdk: flutter
 
-  flutter_lints: ^2.0.0
-
 flutter:
-
   uses-material-design: true
   assets:
     - assets/icon/
@@ -55,16 +50,16 @@ flutter:
         - asset: assets/fonts/Inter-ExtraLight.ttf
           weight: 200
         - asset: assets/fonts/Inter-Light.ttf
-          weight: 300  
+          weight: 300
         - asset: assets/fonts/Inter-Regular.ttf
-          weight: 400  
+          weight: 400
         - asset: assets/fonts/Inter-Medium.ttf
-          weight: 500  
+          weight: 500
         - asset: assets/fonts/Inter-SemiBold.ttf
           weight: 600
         - asset: assets/fonts/Inter-Bold.ttf
-          weight: 700 
+          weight: 700
         - asset: assets/fonts/Inter-ExtraBold.ttf
-          weight: 800 
+          weight: 800
         - asset: assets/fonts/Inter-Black.ttf
-          weight: 900      
+          weight: 900
