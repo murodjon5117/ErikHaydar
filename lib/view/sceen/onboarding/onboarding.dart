@@ -23,7 +23,7 @@ class onBoardingPageState extends State<onBoardingPage>
     var screens = IntroScreens(
       onDone: () => Navigator.of(context).push(
         MaterialPageRoute(
-          builder: (context) => const Dashboard(),
+          builder: (context) => LoginScreen(),
         ),
       ),
       // onSkip: () => print('Skipping the intro slides'),

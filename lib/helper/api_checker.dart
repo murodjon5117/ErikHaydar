@@ -1,15 +1,15 @@
-
+import 'package:erik_haydar/main.dart';
 import 'package:flutter/material.dart';
 
 import '../data/model/response/base/api_response.dart';
 
 class ApiChecker {
-   static void checkApi(ApiResponse apiResponse,BuildContext context)  {
+  static void checkApi(ApiResponse apiResponse) {
     if (apiResponse.error == 'Unauthorized') {
       // Provider.of<ProfileProvider>(context, listen: false).deleteToken();
     }
     showDialog(
-      context: context,
+      context: MyApp.navigatorKey.currentContext!,
       builder: (BuildContext context) {
         return AlertDialog(
           title: Text("Xatolik"),
@@ -43,6 +43,5 @@ class ApiChecker {
     //               ],
     //             ))
     //     .then((result) => print(result));
-  
   }
 }

@@ -288,21 +288,7 @@ class Carousel extends StatelessWidget {
                               const SizedBox(
                                 height: 18,
                               ),
-                              Row(
-                                children: [
-                                  SvgPicture.asset(Images.expired),
-                                  const SizedBox(
-                                    width: 10,
-                                  ),
-                                  Text(
-                                    model.expiredAt ?? '',
-                                    style: profileNumber,
-                                  ),
-                                ],
-                              ),
-                              const SizedBox(
-                                height: 18,
-                              ),
+                              
                               Row(
                                 children: [
                                   Expanded(
@@ -319,7 +305,7 @@ class Carousel extends StatelessWidget {
                                       child: BaseUI().buttonsType(
                                           TypeButton.filled, context, () {
                                         value
-                                            .buyTarif(context, model.id ?? 0)
+                                            .buyTarif(model.id ?? 0)
                                             .then((result) {
                                           if (result.status == 200) {
                                             _showSuccessDialog(context);

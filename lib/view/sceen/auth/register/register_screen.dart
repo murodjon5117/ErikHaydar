@@ -108,7 +108,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                       value
                                           .enterPhone(
                                               _phoneNumberController.text,
-                                              context)
+                                              )
                                           .then((result) {
                                         if (result.status == 200) {
                                           Navigator.of(

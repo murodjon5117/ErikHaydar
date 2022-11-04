@@ -1,6 +1,7 @@
 import 'package:erik_haydar/view/base/base_ui.dart';
 import 'package:erik_haydar/view/sceen/auth/login/login_screen.dart';
 import 'package:erik_haydar/view/sceen/auth/register/register_screen.dart';
+import 'package:erik_haydar/view/sceen/dashboard/dashboard_screen.dart';
 import 'package:erik_haydar/view/sceen/onboarding/onboarding.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:erik_haydar/view/sceen/profile/profile_screen.dart';
@@ -20,7 +21,7 @@ class _SplashScreenState extends State<SplashScreen> {
       Navigator.of(context, rootNavigator: true).pushAndRemoveUntil(
         CupertinoPageRoute(
           builder: (BuildContext context) {
-            return const onBoardingPage();
+            return const DashBoardScreen();
           },
         ),
         (_) => false,

@@ -147,7 +147,7 @@ class _SmsScreenState extends State<SmsScreen>
                   child: BaseUI().buttonsType(TypeButton.filled, context, () {
                     if (_otpCode.length == 5) {
                       value
-                          .verifyPhone(widget.phoneNumber, _otpCode, context)
+                          .verifyPhone(widget.phoneNumber, _otpCode)
                           .then((result) {
                         if (result.status == 200) {
                           Navigator.of(

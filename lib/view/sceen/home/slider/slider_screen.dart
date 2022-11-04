@@ -1,5 +1,5 @@
 import 'package:carousel_slider/carousel_slider.dart';
-import 'package:erik_haydar/provider/home_provider/home_provider.dart';
+import 'package:erik_haydar/provider/home_provider.dart';
 import 'package:erik_haydar/view/base/base_ui.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';

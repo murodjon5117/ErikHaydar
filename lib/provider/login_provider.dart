@@ -20,7 +20,7 @@ class LoginProvider extends ChangeNotifier {
 
   //for login
   Future<BaseResponse> login(String phone, String password, String deviceId,
-      String deviceName, String deviceToken, BuildContext context) async {
+      String deviceName, String deviceToken) async {
     _isLoading = true;
     notifyListeners();
     var data = {
@@ -42,7 +42,7 @@ class LoginProvider extends ChangeNotifier {
           AppConstants.TOKEN, baseResponse.data?.authKey ?? '');
       print(baseResponse.data?.toJson());
     } else {
-      ApiChecker.checkApi(apiResponse, context);
+      ApiChecker.checkApi(apiResponse);
     }
     _isLoading = false;
     notifyListeners();
