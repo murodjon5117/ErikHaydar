@@ -28,7 +28,7 @@ class HomeProvider extends ChangeNotifier {
           .forEach((category) => _slider.add(SliderModel.fromJson(category)));
       print('object $_slider');
     } else {
-      ApiChecker.checkApi(context, apiResponse);
+      ApiChecker.checkApi(apiResponse, context);
     }
     _isLoading = false;
     notifyListeners();

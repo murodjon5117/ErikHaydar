@@ -78,9 +78,9 @@ class _HomeScreenState extends State<HomeScreen> {
             children: [
               UserData().padding('Salom', "Fakhriyor"),
               const SliderScreen(),
-              const HomeCategoriesScreen(),
-              const HomeCategoriesScreen(),
-              const HomeCategoriesScreen(),
+              // const HomeCategoriesScreen(),
+              // const HomeCategoriesScreen(),
+              // const HomeCategoriesScreen(),
             ],
           ),
         ),
