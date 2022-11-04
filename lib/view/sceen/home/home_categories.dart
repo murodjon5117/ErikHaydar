@@ -36,6 +36,7 @@ class HomeCategoriesScreen extends StatelessWidget {
           SizedBox(
             height: 210,
             child: ListView.separated(
+              physics: const ClampingScrollPhysics(),
               itemCount: films.films?.length ?? 0,
               shrinkWrap: true,
               scrollDirection: Axis.horizontal,

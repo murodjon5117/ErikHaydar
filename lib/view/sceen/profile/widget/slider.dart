@@ -288,21 +288,7 @@ class Carousel extends StatelessWidget {
                               const SizedBox(
                                 height: 18,
                               ),
-                              Row(
-                                children: [
-                                  SvgPicture.asset(Images.expired),
-                                  const SizedBox(
-                                    width: 10,
-                                  ),
-                                  Text(
-                                    model.expiredAt ?? '',
-                                    style: profileNumber,
-                                  ),
-                                ],
-                              ),
-                              const SizedBox(
-                                height: 18,
-                              ),
+                              
                               Row(
                                 children: [
                                   Expanded(

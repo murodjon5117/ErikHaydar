@@ -1,6 +1,7 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:erik_haydar/data/model/response/base/api_response.dart';
 import 'package:erik_haydar/data/model/response/body/home_model.dart';
+import 'package:erik_haydar/data/model/response/body/music_model.dart';
 import 'package:erik_haydar/data/model/response/body/slider_model/slider_model.dart';
 import 'package:erik_haydar/helper/api_checker.dart';
 import 'package:flutter/material.dart';
@@ -36,7 +37,7 @@ class HomeProvider extends ChangeNotifier {
   List<HomeModel> _homeDataList = [];
   List<HomeModel> get homeDataList => _homeDataList;
 
-  Future<void> getHomeData() async {
+  Future<void> getHomeFilm() async {
     _isLoading = true;
     ApiResponse apiResponse = await repo.getHomeData();
     _homeDataList.clear();
@@ -44,7 +45,25 @@ class HomeProvider extends ChangeNotifier {
         apiResponse.response?.data['status'] == 200) {
       apiResponse.response?.data['data']
           .forEach((list) => _homeDataList.add(HomeModel.fromJson(list)));
-          print(_homeDataList.length);
+      print(_homeDataList.length);
+    } else {
+      ApiChecker.checkApi(apiResponse);
+    }
+    _isLoading = false;
+    notifyListeners();
+  }
+
+  List<MusicModel> _homeMusicList = [];
+  List<MusicModel> get homeMusicList => _homeMusicList;
+
+  Future<void> getHomeMusic() async {
+    _isLoading = true;
+    ApiResponse apiResponse = await repo.getHomeMusic();
+    _homeMusicList.clear();
+    if (apiResponse.response?.statusCode == 200 &&
+        apiResponse.response?.data['status'] == 200) {
+      apiResponse.response?.data['data']
+          .forEach((list) => _homeMusicList.add(MusicModel.fromJson(list)));
     } else {
       ApiChecker.checkApi(apiResponse);
     }

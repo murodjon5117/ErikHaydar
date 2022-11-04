@@ -18,7 +18,8 @@ class AppConstants {
 
   //Home Page
   static const SLIDER = '/slider/index';
-  static const homeData = '/film-manager/film-type/index';
+  static const homeFilm = '/film-manager/film-type/index';
+  static const homeMusic = '/film-manager/music/home';
   //Shared Key
   static const String TOKEN = 'token';
   static const String IS_LOGIN = 'isLogin';

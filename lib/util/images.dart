@@ -44,8 +44,9 @@ class Images {
   static const String search_icon = 'assets/icon/search.svg';
   static const String notif_icon = 'assets/icon/notification.svg';
   static const String user_icon = 'assets/icon/user.svg';
-  static const String comment_icon = 'assets/icon/comment.svg';
-  static const String eye_icon = 'assets/icon/Eye.svg';
+  static const String commentIcon = 'assets/icon/comment.svg';
+  static const String eyeIcon = 'assets/icon/Eye.svg';
   static const String unliked = 'assets/icon/unliked.svg';
+  static const String playRed = 'assets/icon/play_red.svg';
   static const String placeholderImage = 'assets/image/placeholder_image.png';
 }

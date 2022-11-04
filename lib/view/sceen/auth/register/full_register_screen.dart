@@ -17,7 +17,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:provider/provider.dart';
 
 import '../../../../util/route.dart';
-import '../../dashboard_screen.dart';
+import '../../dashboard/dashboard_screen.dart';
 
 class FullRegisterScreen extends StatefulWidget {
   final String phone;

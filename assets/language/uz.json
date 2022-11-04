@@ -42,6 +42,10 @@
   "new_phone_number": "Yangi telefon raqamini kiriting!",
   "edit_phone_number": "Telefon raqamini tahrirlash",
   "success_buyed": "Tarif muvaffaqiyatli sotib olindi!!",
+  "free": "Bepul",
+  "premium": "Premium",
+  "musics": "Musiqalar",
+  "category": "Kategoriya",
   "exit": "Akkauntdan chiqish"
 
 }

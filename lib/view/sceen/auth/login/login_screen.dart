@@ -6,7 +6,7 @@ import 'package:erik_haydar/provider/login_provider.dart';
 import 'package:erik_haydar/util/images.dart';
 import 'package:erik_haydar/view/base/base_ui.dart';
 import 'package:erik_haydar/view/sceen/dashboard/dashboard_screen.dart';
-import 'package:erik_haydar/view/sceen/dashboard_screen.dart';
+import 'package:erik_haydar/view/sceen/dashboard/dashboard_screen.dart';
 import 'package:erik_haydar/view/sceen/profile/profile_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
