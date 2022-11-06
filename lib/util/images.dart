@@ -34,8 +34,8 @@ class Images {
   static const String activeFavorite = 'assets/icon/active_favorite.svg';
   static const String inactiveProfile = 'assets/icon/inactive_profile.svg';
   static const String activeProfile = 'assets/icon/active_profile.svg';
-  // static const String erik1 = 'assets/image/1.png';
-  // static const String erik2 = 'assets/image/2.png';
+  static const String back_left_black = 'assets/icon/back_left_black.svg';
+  static const String mute_icon = 'assets/icon/mute.svg';
   // static const String erik3 = 'assets/image/3.png';
   // static const String erik4 = 'assets/image/4.png';
   // static const String arrow_right = 'assets/icon/arrow_right.svg';

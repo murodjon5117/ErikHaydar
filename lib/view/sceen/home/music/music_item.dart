@@ -20,7 +20,7 @@ class MusicItem extends StatelessWidget {
       height: 119,
       width: 335,
       decoration: BoxDecoration(
-          boxShadow: [
+          boxShadow: const [
             BoxShadow(
               offset: Offset(2, 2),
               color: ColorResources.COLOR_EBE9E9,

@@ -1,7 +1,9 @@
 import 'package:chewie/chewie.dart';
+import 'package:erik_haydar/util/images.dart';
 import 'package:erik_haydar/view/base/base_ui.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:video_player/video_player.dart';
 
 class MediaPlayer extends StatefulWidget {
@@ -96,12 +98,32 @@ class _MediaPlayerState extends State<MediaPlayer> with WidgetsBindingObserver {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.black,
       body: SafeArea(
         child:
             _chewieController != null && _controller.value.isInitialized != null
-                ? AspectRatio(
-                    aspectRatio: _controller.value.aspectRatio,
-                    child: Chewie(controller: _chewieController!))
+                ? Stack(
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.all(20),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            SvgPicture.asset(
+                              Images.back_left_black,
+                              color: Colors.white,
+                            ),
+                            SvgPicture.asset(Images.mute_icon),
+                          ],
+                        ),
+                      ),
+                      Center(
+                        child: AspectRatio(
+                            aspectRatio: _controller.value.aspectRatio,
+                            child: Chewie(controller: _chewieController!)),
+                      ),
+                    ],
+                  )
                 : BaseUI().progressIndicator(),
       ),
     );

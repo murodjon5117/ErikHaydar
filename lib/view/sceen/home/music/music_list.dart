@@ -29,7 +29,12 @@ class HomeMusicList extends StatelessWidget {
                 EdgeInsets.only(top: 12, bottom: 12, left: setPadding(index)),
             child: MusicItem(musicModel: list[index]),
           );
-        }, separatorBuilder: (BuildContext context, int index) { return const SizedBox(width: 12,); },
+        },
+        separatorBuilder: (BuildContext context, int index) {
+          return const SizedBox(
+            width: 12,
+          );
+        },
       ),
     );
   }
