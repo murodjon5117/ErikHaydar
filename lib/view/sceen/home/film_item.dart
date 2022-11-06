@@ -19,7 +19,7 @@ class FilmItem extends StatelessWidget {
       height: 201,
       width: 162,
       decoration: BoxDecoration(
-          boxShadow: [
+          boxShadow: const [
             BoxShadow(
               offset: Offset(2, 2),
               color: ColorResources.COLOR_EBE9E9,

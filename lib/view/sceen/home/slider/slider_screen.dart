@@ -19,7 +19,7 @@ class SliderScreen extends StatelessWidget {
                   borderRadius: BorderRadius.circular(12),
                   clipBehavior: Clip.antiAliasWithSaveLayer,
                   child: Image.network(
-                    "${value.slider[index].url}",
+                    value.slider[index].url ?? '',
                     fit: BoxFit.cover,
                   ),
                 );

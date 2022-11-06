@@ -249,7 +249,7 @@ class _FullRegisterScreenState extends State<FullRegisterScreen> {
                                                 context,
                                                 rootNavigator: true,
                                               ).push(createRoute(
-                                                  ProfileScreen()));
+                                                  DashBoardScreen()));
                                             }
                                           });
                                         }

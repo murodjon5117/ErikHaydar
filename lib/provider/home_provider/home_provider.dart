@@ -5,7 +5,7 @@ import 'package:erik_haydar/data/model/response/body/slider_model/slider_model.d
 import 'package:erik_haydar/helper/api_checker.dart';
 import 'package:flutter/material.dart';
 
-import 'package:erik_haydar/data/repository/home_repo/home_repo.dart';
+import '../../data/repository/home_repo.dart';
 
 class HomeProvider extends ChangeNotifier {
   HomeProvider({
@@ -28,7 +28,7 @@ class HomeProvider extends ChangeNotifier {
           .forEach((category) => _slider.add(SliderModel.fromJson(category)));
       print('object $_slider');
     } else {
-      ApiChecker.checkApi(apiResponse, context);
+      ApiChecker.checkApi(apiResponse);
     }
     _isLoading = false;
     notifyListeners();
