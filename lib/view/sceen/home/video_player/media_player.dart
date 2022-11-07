@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:chewie/chewie.dart';
 import 'package:erik_haydar/util/images.dart';
 import 'package:erik_haydar/view/base/base_ui.dart';
@@ -50,11 +52,13 @@ class _MediaPlayerState extends State<MediaPlayer> with WidgetsBindingObserver {
         'https://hamshira.biznesgoya.uz/uploads/media/stream/1/6f9e961dc1b1ea58daf6469956ae7a48/4474efb04d27d874331982f1a8b77c2c.m3u8');
     _attachListenerToController();
     _controller.setLooping(true);
+
     _controller.initialize().then((_) => setState(() {
           //isloaded = true;
           _chewieController = ChewieController(
             videoPlayerController: _controller,
             allowFullScreen: true,
+            allowMuting: true,
             autoPlay: true,
             looping: true,
             zoomAndPan: true,
@@ -62,6 +66,16 @@ class _MediaPlayerState extends State<MediaPlayer> with WidgetsBindingObserver {
           );
         }));
     _chewieController?.play();
+  }
+
+  bool isMusicOn = true;
+  void soundToggle() {
+    setState(() {
+      isMusicOn == false
+          ? _controller.setVolume(0.0)
+          : _controller.setVolume(1.0);
+      isMusicOn = !isMusicOn;
+    });
   }
 
   _attachListenerToController() {
@@ -109,19 +123,97 @@ class _MediaPlayerState extends State<MediaPlayer> with WidgetsBindingObserver {
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            SvgPicture.asset(
-                              Images.back_left_black,
-                              color: Colors.white,
+                            GestureDetector(
+                              onTap: () {
+                                Navigator.pop(context);
+                              },
+                              child: SvgPicture.asset(
+                                Images.back_left_black,
+                                color: Colors.white,
+                              ),
                             ),
-                            SvgPicture.asset(Images.mute_icon),
+                            GestureDetector(
+                                onTap: () {
+                                  setState(() {
+                                    soundToggle();
+                                  });
+                                },
+                                child: SvgPicture.asset(Images.mute_icon)),
                           ],
                         ),
                       ),
                       Center(
-                        child: AspectRatio(
-                            aspectRatio: _controller.value.aspectRatio,
-                            child: Chewie(controller: _chewieController!)),
+                        child: _controller.value.isInitialized
+                            ? Stack(
+                                alignment: Alignment.center,
+                                children: [
+                                  AspectRatio(
+                                    aspectRatio: _controller.value.aspectRatio,
+                                    child: VideoPlayer(_controller),
+                                  ),
+                                  _controller.value.isPlaying == true
+                                      ? Visibility(
+                                          visible: false,
+                                          child: Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.center,
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.center,
+                                            children: [
+                                              GestureDetector(
+                                                onTap: () {
+                                                  setState(() {
+                                                    _controller.value.isPlaying
+                                                        ? _controller.pause()
+                                                        : _controller.play();
+                                                  });
+                                                },
+                                                child: Icon(
+                                                  _controller.value.isPlaying
+                                                      ? Icons.pause
+                                                      : Icons.play_arrow,
+                                                  color: Colors.white,
+                                                ),
+                                              )
+                                            ],
+                                          ),
+                                        )
+                                      : Visibility(
+                                          visible: true,
+                                          child: Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.center,
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.center,
+                                            children: [
+                                              GestureDetector(
+                                                onTap: () {
+                                                  setState(() {
+                                                    _controller.value.isPlaying
+                                                        ? _controller.pause()
+                                                        : _controller.play();
+                                                  });
+                                                },
+                                                child: Icon(
+                                                  _controller.value.isPlaying
+                                                      ? Icons.pause
+                                                      : Icons.play_arrow,
+                                                  color: Colors.white,
+                                                ),
+                                              )
+                                            ],
+                                          ),
+                                        ),
+                                ],
+                              )
+                            : Container(),
                       ),
+
+                      // Center(
+                      //   child: AspectRatio(
+                      //       aspectRatio: _controller.value.aspectRatio,
+                      //       child: Chewie(controller: _chewieController!)),
+                      // ),
                     ],
                   )
                 : BaseUI().progressIndicator(),
