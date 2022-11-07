@@ -13,7 +13,6 @@ const boldTitlePhone = TextStyle(
     fontFamily: 'Inter',
     fontSize: Dimensions.FONT_SIZE_28,
     fontWeight: FontWeight.w600,
-    height: 2.0,
     color: ColorResources.COLOR_BLACK);
 const boldTitlePhoneSub = TextStyle(
     fontFamily: 'Inter',
