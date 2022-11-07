@@ -1,34 +1,95 @@
 import 'package:erik_haydar/localization/language_constrants.dart';
+import 'package:erik_haydar/util/color_resources.dart';
 import 'package:erik_haydar/util/dimensions.dart';
 import 'package:erik_haydar/util/styles.dart';
+import 'package:erik_haydar/view/sceen/category/videos/videos_screen.dart';
 import 'package:flutter/material.dart';
 
 class CategoryScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: LayoutBuilder(
-        builder: (p0, p1) => Scaffold(
-          body: SingleChildScrollView(
-            child: ConstrainedBox(
-              constraints: BoxConstraints(
-                minHeight: p1.maxHeight,
+    return DefaultTabController(
+      length: 2,
+      child: Scaffold(
+        backgroundColor: ColorResources.COLOR_WHITE,
+        appBar: AppBar(
+          centerTitle: false,
+          elevation: 0.0,
+          backgroundColor: ColorResources.COLOR_WHITE,
+          title: Text(
+            getTranslated('category', context),
+            style: boldTitlePhone.copyWith(fontSize: Dimensions.FONT_SIZE_24),
+          ),
+          bottom: TabBar(
+            padding: const EdgeInsets.fromLTRB(20, 20, 20, 0),
+            labelColor: ColorResources.COLOR_WHITE,
+            unselectedLabelColor: ColorResources.COLOR_BLACK,
+            splashBorderRadius: BorderRadius.circular(50),
+            indicator: BoxDecoration(
+                borderRadius: BorderRadius.circular(50), // Creates border
+                color: ColorResources
+                    .COLOR_PPIMARY), //Change background color from here
+            tabs: [
+              Padding(
+                padding: const EdgeInsets.symmetric(vertical: 9),
+                child: Text(getTranslated('videos', context)),
               ),
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  Text(
-                    getTranslated('category', context),
-                    style: boldTitlePhone.copyWith(
-                        fontSize: Dimensions.FONT_SIZE_24),
-                  ),
-                  // DefaultTabController(length: 2, child: child)
-                ],
+              Padding(
+                padding: const EdgeInsets.symmetric(vertical: 9),
+                child: Text(getTranslated('musics', context)),
               ),
-            ),
+            ],
           ),
         ),
+        body: TabBarView(
+          children: [
+            VideosScreen(list: ['Kinolar', 'Seriallar','Konsertlar','Kliplar','Kliplar']),
+            Icon(Icons.directions_bike),
+          ],
+        ),
+        // body: Padding(
+        //   padding: const EdgeInsets.symmetric(horizontal: 20),
+        //   child: Column(
+        //     mainAxisSize: MainAxisSize.min,
+        //     crossAxisAlignment: CrossAxisAlignment.start,
+        //     children: [
+        //       // const SizedBox(
+        //       //   height: 18,
+        //       // ),
+        //       // Container(
+        //       //   decoration: BoxDecoration(
+        //       //       color: ColorResources.COLOR_F4F4F4,
+        //       //       borderRadius: BorderRadius.circular(50)),
+        //       //   child: TabBar(
+        //       //     padding: const EdgeInsets.all(4),
+        //       //     labelColor: ColorResources.COLOR_WHITE,
+        //       //     unselectedLabelColor: ColorResources.COLOR_BLACK,
+        //       //     splashBorderRadius: BorderRadius.circular(50),
+        //       //     indicator: BoxDecoration(
+        //       //         borderRadius: BorderRadius.circular(50), // Creates border
+        //       //         color: ColorResources
+        //       //             .COLOR_PPIMARY), //Change background color from here
+        //       //     tabs: [
+        //       //       Padding(
+        //       //         padding: const EdgeInsets.symmetric(vertical: 9),
+        //       //         child: Text('Videolar'),
+        //       //       ),
+        //       //       Padding(
+        //       //         padding: const EdgeInsets.symmetric(vertical: 9),
+        //       //         child: Text('Musiqalar'),
+        //       //       ),
+        //       //     ],
+        //       //   ),
+        //       // ),
+        //       // TabBarView(
+        //       //   children: [
+        //       //     Icon(Icons.directions_transit, size: 350),
+        //       //     Icon(Icons.directions_car, size: 350),
+        //       //   ],
+        //       // ),
+        //     ],
+        //   ),
+        // ),
       ),
     );
   }
