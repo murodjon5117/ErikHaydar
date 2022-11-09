@@ -21,7 +21,7 @@ class _SplashScreenState extends State<SplashScreen> {
       Navigator.of(context, rootNavigator: true).pushAndRemoveUntil(
         CupertinoPageRoute(
           builder: (BuildContext context) {
-            return const DashBoardScreen();
+            return  DashBoardScreen();
           },
         ),
         (_) => false,

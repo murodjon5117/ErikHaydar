@@ -2,7 +2,7 @@ import '../data/model/util_model/language_model.dart';
 
 class AppConstants {
   static const APP_NAME = 'ERIK HAYDAR';
-  static const BASE_URL = 'https://erik.safowater.com/api';
+  static const BASE_URL = 'https://hamshira.biznesgoya.uz/api';
   static const ENTER_PHONE = '/auth/register/phone';
   static const GET_USER_INFO = '/profile-manager/profile/index';
   static const GET_TARIFS = '/tariff-manager/tariff/index';
@@ -15,6 +15,9 @@ class AppConstants {
   static const PAY_CLICK = '/tariff-manager/payment/get-click-url';
   static const PAY_APELSIN = '/tariff-manager/payment/get-apelsin-url';
   static const BUY_TARIF = '/tariff-manager/tariff/purchase';
+  static const filmCategory = '/film-manager/film-category/index';
+  static const filmCategoryPage = '/film-manager/film-category/films';
+  static const filterType = '/film-manager/film-type/types';
 
   //Home Page
   static const SLIDER = '/slider/index';

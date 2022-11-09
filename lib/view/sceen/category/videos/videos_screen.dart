@@ -1,9 +1,11 @@
+import 'package:erik_haydar/data/model/response/body/films_category_model.dart';
+import 'package:erik_haydar/view/sceen/category/videos/item_videos_screen.dart';
 import 'package:flutter/material.dart';
 
 import '../../../../util/color_resources.dart';
 
 class VideosScreen extends StatefulWidget {
-  final List<String> list;
+  final List<Items> list;
 
   const VideosScreen({super.key, required this.list});
   @override
@@ -38,7 +40,7 @@ class _VideosScreenState extends State<VideosScreen>
 
   Tab getTab(int widgetNumber) {
     return Tab(
-      text: widget.list[widgetNumber],
+      text: widget.list[widgetNumber].name,
     );
   }
 
@@ -51,7 +53,7 @@ class _VideosScreenState extends State<VideosScreen>
   }
 
   Widget getWidget(int i) {
-    return Text(i.toString());
+    return ItemVideosScreen(item: widget.list[i]);
   }
 
   @override
@@ -65,9 +67,10 @@ class _VideosScreenState extends State<VideosScreen>
     return DefaultTabController(
       length: widget.list.length,
       child: Scaffold(
+        backgroundColor: ColorResources.COLOR_WHITE,
         appBar: AppBar(
           title: TabBar(
-            indicatorWeight: 3,
+              indicatorWeight: 3,
               padding: const EdgeInsets.symmetric(horizontal: 20),
               labelColor: ColorResources.COLOR_PPIMARY,
               indicatorColor: ColorResources.COLOR_PPIMARY,

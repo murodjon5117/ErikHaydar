@@ -1,7 +1,9 @@
 import 'package:dio/dio.dart';
 import 'package:erik_haydar/data/repository/auth_repo.dart';
+import 'package:erik_haydar/data/repository/category_repo.dart';
 import 'package:erik_haydar/data/repository/profile_repo.dart';
 import 'package:erik_haydar/data/repository/home_repo.dart';
+import 'package:erik_haydar/provider/category_provider.dart';
 import 'package:erik_haydar/provider/home_provider.dart';
 import 'package:erik_haydar/provider/localization_provider.dart';
 import 'package:erik_haydar/provider/login_provider.dart';
@@ -35,6 +37,8 @@ Future<void> init() async {
       () => ProfileRepo(dioClient: sl(), sharedPreferences: sl()));
   sl.registerLazySingleton(
       () => HomeRepo(dioClient: sl(), sharedPreferences: sl()));
+  sl.registerLazySingleton(
+      () => CategoryRepo(dioClient: sl(), sharedPreferences: sl()));
   //Provider
   sl.registerFactory(() => LocalizationProvider(sharedPreferences: sl()));
   sl.registerFactory(() => HomeProvider(repo: sl()));
@@ -46,5 +50,6 @@ Future<void> init() async {
 
   sl.registerFactory(
       () => ProfileProvider(sharedPreferences: sl(), repo: sl()));
-}
 
+  sl.registerFactory(() => CategoryProvider(repo: sl()));
+}

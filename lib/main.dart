@@ -1,5 +1,6 @@
 import 'dart:io';
 import 'dart:ui';
+import 'package:erik_haydar/provider/category_provider.dart';
 import 'package:erik_haydar/provider/home_provider.dart';
 import 'package:erik_haydar/provider/localization_provider.dart';
 import 'package:erik_haydar/provider/login_provider.dart';
@@ -14,7 +15,6 @@ import 'di_container.dart' as di;
 import 'localization/app_localization.dart';
 import 'view/sceen/splash/splash.dart';
 
-
 Future<void> main() async {
   HttpOverrides.global = MyHttpOverrides();
   WidgetsFlutterBinding.ensureInitialized();
@@ -28,6 +28,7 @@ Future<void> main() async {
       ChangeNotifierProvider(create: (context) => di.sl<LoginProvider>()),
       ChangeNotifierProvider(create: (context) => di.sl<HomeProvider>()),
       ChangeNotifierProvider(create: (context) => di.sl<ProfileProvider>()),
+      ChangeNotifierProvider(create: (context) => di.sl<CategoryProvider>()),
     ],
     child: const MyApp(),
   ));

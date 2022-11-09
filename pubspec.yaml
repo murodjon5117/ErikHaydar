@@ -31,6 +31,7 @@ dependencies:
   shared_preferences: ^2.0.15
   persistent_bottom_nav_bar_v2: ^4.2.6
   cached_network_image: ^3.2.2
+  dropdown_button2: ^1.8.9
 
 
 dev_dependencies:
