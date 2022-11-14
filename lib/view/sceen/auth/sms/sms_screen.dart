@@ -1,4 +1,3 @@
-
 import 'package:erik_haydar/helper/enums/button_enum.dart';
 import 'package:erik_haydar/localization/language_constrants.dart';
 import 'package:erik_haydar/provider/register_provider.dart';
@@ -9,6 +8,7 @@ import 'package:flutter/material.dart';
 import 'package:otp_text_field/otp_field.dart';
 import 'package:otp_text_field/otp_field_style.dart';
 import 'package:otp_text_field/style.dart';
+import 'package:persistent_bottom_nav_bar_v2/persistent-tab-view.dart';
 import 'package:provider/provider.dart';
 
 import '../../../../util/route.dart';
@@ -31,7 +31,6 @@ class _SmsScreenState extends State<SmsScreen>
 
   @override
   void initState() {
-    print(Provider.of<RegisterProvider>(context, listen: false).isLoading);
     _otpCode = '';
     _animationController =
         AnimationController(vsync: this, duration: const Duration(seconds: 60));
@@ -118,8 +117,8 @@ class _SmsScreenState extends State<SmsScreen>
                               setState(() {
                                 if (pin.length == 5) {
                                   validator = false;
-                                }else{
-                                  validator=true;
+                                } else {
+                                  validator = true;
                                 }
                               });
                             },
@@ -150,10 +149,14 @@ class _SmsScreenState extends State<SmsScreen>
                           .verifyPhone(widget.phoneNumber, _otpCode)
                           .then((result) {
                         if (result.status == 200) {
-                          Navigator.of(
-                            context,
-                            rootNavigator: true,
-                          ).push(createRoute(FullRegisterScreen(code: _otpCode,phone: widget.phoneNumber,)));
+                          pushNewScreen(context,
+                              screen: FullRegisterScreen(
+                                code: _otpCode,
+                                phone: widget.phoneNumber,
+                              ),
+                              pageTransitionAnimation:
+                                  PageTransitionAnimation.fade);
+                          
                         } else {
                           setState(() {
                             validator = true;
@@ -166,15 +169,7 @@ class _SmsScreenState extends State<SmsScreen>
                       });
                     }
                   }, getTranslated('confirm', context))),
-              Positioned(
-                left: 0,
-                right: 0,
-                bottom: 0,
-                top: 0,
-                child: value.isLoading
-                    ? BaseUI().progressIndicator()
-                    : const SizedBox(),
-              )
+              
             ],
           ),
         ),

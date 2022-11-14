@@ -2,7 +2,7 @@ import '../data/model/util_model/language_model.dart';
 
 class AppConstants {
   static const APP_NAME = 'ERIK HAYDAR';
-  static const BASE_URL = 'https://erik.safowater.com/api';
+  static const BASE_URL = 'https://hamshira.biznesgoya.uz/api';
   static const ENTER_PHONE = '/auth/register/phone';
   static const GET_USER_INFO = '/profile-manager/profile/index';
   static const GET_TARIFS = '/tariff-manager/tariff/index';
@@ -15,14 +15,26 @@ class AppConstants {
   static const PAY_CLICK = '/tariff-manager/payment/get-click-url';
   static const PAY_APELSIN = '/tariff-manager/payment/get-apelsin-url';
   static const BUY_TARIF = '/tariff-manager/tariff/purchase';
+  static const filmCategory = '/film-manager/film-category/index';
+  static const filmCategoryPage = '/film-manager/film-category/films';
+  static const filterType = '/film-manager/film-type/types';
+  static const categoryMusic = '/film-manager/music/index';
+  static const favoritesMusic = '/film-manager/favorite-film/music';
+  static const favoritesFilm = '/film-manager/favorite-film/index';
 
   //Home Page
   static const SLIDER = '/slider/index';
   static const homeFilm = '/film-manager/film-type/index';
   static const homeMusic = '/film-manager/music/home';
+  static const likeForFilm = '/film-manager/film/like';
+  static const dissLikeForFilm = '/film-manager/film/dislike';
+  static const addFavorite = '/film-manager/favorite-film/create';
   //Shared Key
-  static const String TOKEN = 'token';
-  static const String IS_LOGIN = 'isLogin';
+  static const String token = 'token';
+  static const String isLogin = 'isLogin';
+  static const String name = 'name';
+  static const String surName = 'surName';
+  static const String userName = 'userName';
   static const String USER_DATA = 'userData';
   static const LANGUAGE_CODE = 'language_code';
   static const String COUNTRY_CODE = 'country_code';

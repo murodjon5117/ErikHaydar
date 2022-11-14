@@ -7,30 +7,17 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 import 'package:erik_haydar/data/datasource/dio/dio_client.dart';
 
-class HomeRepo {
-  HomeRepo({
+class CategoryRepo {
+  CategoryRepo({
     required this.dioClient,
     required this.sharedPreferences,
   });
   DioClient dioClient;
   SharedPreferences sharedPreferences;
 
-  Future<ApiResponse> getSlider() async {
+  Future<ApiResponse> getFilmsCategory() async {
     try {
-      final response = await dioClient.post(AppConstants.SLIDER,
-          options: Options(headers: {
-            'Accept-Language':
-                sharedPreferences.getString(AppConstants.LANGUAGE_CODE)
-          }));
-      return ApiResponse.withSuccess(response);
-    } catch (e) {
-      return ApiResponse.withError(ApiErrorHandler.getMessage(e));
-    }
-  }
-
-  Future<ApiResponse> getHomeData() async {
-    try {
-      final response = await dioClient.post(AppConstants.homeFilm,
+      final response = await dioClient.post(AppConstants.filmCategory,
           options: Options(headers: {
             'Authorization':
                 'Bearer ${sharedPreferences.getString(AppConstants.token)}'
@@ -41,9 +28,10 @@ class HomeRepo {
     }
   }
 
-  Future<ApiResponse> getHomeMusic() async {
+  Future<ApiResponse> getFilmsCategoryPage(dynamic params) async {
     try {
-      final response = await dioClient.post(AppConstants.homeMusic,
+      final response = await dioClient.post(AppConstants.filmCategoryPage,
+          queryParameters: params,
           options: Options(headers: {
             'Authorization':
                 'Bearer ${sharedPreferences.getString(AppConstants.token)}'
@@ -54,10 +42,10 @@ class HomeRepo {
     }
   }
 
-  Future<ApiResponse> likeForFilm(dynamic data) async {
+  Future<ApiResponse> getCategoryMusic(dynamic params) async {
     try {
-      final response = await dioClient.post(AppConstants.likeForFilm,
-          queryParameters: data,
+      final response = await dioClient.post(AppConstants.categoryMusic,
+          queryParameters: params,
           options: Options(headers: {
             'Authorization':
                 'Bearer ${sharedPreferences.getString(AppConstants.token)}'
@@ -68,10 +56,9 @@ class HomeRepo {
     }
   }
 
-  Future<ApiResponse> dissLikeForFilm(dynamic data) async {
+  Future<ApiResponse> getFilters() async {
     try {
-      final response = await dioClient.post(AppConstants.dissLikeForFilm,
-          queryParameters: data,
+      final response = await dioClient.get(AppConstants.filterType,
           options: Options(headers: {
             'Authorization':
                 'Bearer ${sharedPreferences.getString(AppConstants.token)}'
@@ -81,11 +68,21 @@ class HomeRepo {
       return ApiResponse.withError(ApiErrorHandler.getMessage(e));
     }
   }
-
-  Future<ApiResponse> addFavorite(dynamic data) async {
+  Future<ApiResponse> getFavoritesMusic() async {
     try {
-      final response = await dioClient.post(AppConstants.addFavorite,
-          queryParameters: data,
+      final response = await dioClient.post(AppConstants.favoritesMusic,
+          options: Options(headers: {
+            'Authorization':
+                'Bearer ${sharedPreferences.getString(AppConstants.token)}'
+          }));
+      return ApiResponse.withSuccess(response);
+    } catch (e) {
+      return ApiResponse.withError(ApiErrorHandler.getMessage(e));
+    }
+  }
+  Future<ApiResponse> getFavoritesFilm() async {
+    try {
+      final response = await dioClient.post(AppConstants.favoritesFilm,
           options: Options(headers: {
             'Authorization':
                 'Bearer ${sharedPreferences.getString(AppConstants.token)}'

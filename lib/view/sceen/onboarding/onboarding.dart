@@ -9,14 +9,14 @@ import 'package:flutter/material.dart';
 import 'intro_screen.dart';
 import 'intro_screens.dart';
 
-class onBoardingPage extends StatefulWidget {
-  const onBoardingPage({Key? key}) : super(key: key);
+class OnBoardingPage extends StatefulWidget {
+  const OnBoardingPage({Key? key}) : super(key: key);
 
   @override
-  onBoardingPageState createState() => onBoardingPageState();
+  OnBoardingPageState createState() => OnBoardingPageState();
 }
 
-class onBoardingPageState extends State<onBoardingPage>
+class OnBoardingPageState extends State<OnBoardingPage>
     with TickerProviderStateMixin {
   @override
   Widget build(BuildContext context) {

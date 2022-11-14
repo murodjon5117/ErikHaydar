@@ -3,11 +3,13 @@ import 'package:erik_haydar/util/route.dart';
 import 'package:erik_haydar/view/base/custom_text_field.dart';
 import 'package:erik_haydar/view/sceen/auth/sms/sms_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:persistent_bottom_nav_bar_v2/persistent-tab-view.dart';
 import 'package:provider/provider.dart';
 
 import '../../../../helper/enums/button_enum.dart';
 import '../../../../localization/language_constrants.dart';
 import '../../../../util/color_resources.dart';
+import '../../../../util/images.dart';
 import '../../../../util/styles.dart';
 import '../../../base/base_ui.dart';
 
@@ -36,110 +38,80 @@ class _RegisterScreenState extends State<RegisterScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return 
-    Consumer<RegisterProvider>(
+    return Consumer<RegisterProvider>(
       builder: (context, value, child) => LayoutBuilder(
         builder: (p0, p1) => Scaffold(
-          backgroundColor: ColorResources.COLOR_F4F4F4,
-          body: SizedBox(
-            width: double.infinity,
-            height: double.infinity,
-            child: AbsorbPointer(
-              absorbing: value.isLoading,
-              child: Stack(
+          backgroundColor: ColorResources.COLOR_WHITE,
+          body: Form(
+            key: _formKey,
+            child: SingleChildScrollView(
+              physics: const ClampingScrollPhysics(),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.end,
                 children: [
-                  Positioned(
-                    top: 100,
-                    child: Stack(
+                  Image.asset(
+                      width: double.infinity,
+                      fit: BoxFit.contain,
+                      Images.login_image),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 20),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text('Elmurod Haqnazarov'),
-                        Text('Elmurod Haqnazarov'),
-                      ],
-                    ),
-                  ),
-                  Positioned(
-                    bottom: 0,
-                    left: 0,
-                    right: 0,
-                    child: Wrap(
-                      children: [
-                        Form(
-                          key: _formKey,
-                          child: Container(
-                            width: double.infinity,
-                            decoration: BoxDecoration(
-                                color: ColorResources.COLOR_WHITE,
-                                borderRadius: BorderRadius.circular(30)),
-                            child: Padding(
-                              padding:
-                                  const EdgeInsets.symmetric(horizontal: 16),
-                              child: Column(
-                                mainAxisSize: MainAxisSize.max,
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  const SizedBox(
-                                    height: 34,
-                                  ),
-                                  SizedBox(
-                                      width: double.infinity,
-                                      child: Text(
-                                        getTranslated('register', context),
-                                        style: boldTitle,
-                                        textAlign: TextAlign.center,
-                                      )),
-                                  const SizedBox(
-                                    height: 24,
-                                  ),
-                                  CustomTextField(
-                                      title: getTranslated(
-                                          'phone_number', context),
-                                      hint: getTranslated(
-                                          'hint_phone_number', context),
-                                      controller: _phoneNumberController,
-                                      focusNode: _phoneNumberFocus,
-                                      type: TextFieldType.phone),
-                                  const SizedBox(
-                                    height: 24,
-                                  ),
-                                  BaseUI().buttonsType(
-                                      TypeButton.filled, context, () {
-                                    if (_formKey.currentState!.validate()) {
-                                      if (!mounted) return;
-                                      value
-                                          .enterPhone(
-                                              _phoneNumberController.text,
-                                              )
-                                          .then((result) {
-                                        if (result.status == 200) {
-                                          Navigator.of(
-                                            context,
-                                            rootNavigator: true,
-                                          ).push(createRoute(SmsScreen(phoneNumber: _phoneNumberController.text,)));
-                                        }
-                                      });
-                                    }
-                                  }, getTranslated('register', context)),
-                                  const SizedBox(
-                                    height: 10,
-                                  ),
-                                  BaseUI().buttonsType(TypeButton.text, context,
-                                      () {
-                                    Navigator.pop(context);
-                                  }, getTranslated('enter', context)),
-                                  const SizedBox(
-                                    height: 132,
-                                  )
-                                ],
-                              ),
-                            ),
-                          ),
+                        const SizedBox(
+                          height: 34,
                         ),
+                        SizedBox(
+                            width: double.infinity,
+                            child: Text(
+                              getTranslated('register', context),
+                              style: boldTitle,
+                              textAlign: TextAlign.center,
+                            )),
+                        const SizedBox(
+                          height: 24,
+                        ),
+                        CustomTextField(
+                            title: getTranslated('phone_number', context),
+                            hint: getTranslated('hint_phone_number', context),
+                            controller: _phoneNumberController,
+                            focusNode: _phoneNumberFocus,
+                            type: TextFieldType.phone),
+                        const SizedBox(
+                          height: 24,
+                        ),
+                        BaseUI().buttonsType(TypeButton.filled, context, () {
+                          if (_formKey.currentState!.validate()) {
+                            if (!mounted) return;
+                            value
+                                .enterPhone(
+                              _phoneNumberController.text,
+                            )
+                                .then((result) {
+                              if (result.status == 200) {
+                                pushNewScreen(context,
+                                    screen: SmsScreen(
+                                      phoneNumber: _phoneNumberController.text,
+                                    ),
+                                    pageTransitionAnimation:
+                                        PageTransitionAnimation.fade);
+                              }
+                            });
+                          }
+                        }, getTranslated('register', context)),
+                        const SizedBox(
+                          height: 10,
+                        ),
+                        BaseUI().buttonsType(TypeButton.text, context, () {
+                          Navigator.pop(context);
+                        }, getTranslated('enter', context)),
+                        const SizedBox(
+                          height: 132,
+                        )
                       ],
                     ),
                   ),
-                  value.isLoading
-                      ? BaseUI().progressIndicator()
-                      : const SizedBox()
                 ],
               ),
             ),
@@ -147,6 +119,5 @@ class _RegisterScreenState extends State<RegisterScreen> {
         ),
       ),
     );
-  
   }
 }

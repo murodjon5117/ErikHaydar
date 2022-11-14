@@ -1,6 +1,7 @@
 import 'package:erik_haydar/data/model/response/body/info_model.dart';
 import 'package:erik_haydar/data/model/response/body/tarif_model.dart';
 import 'package:erik_haydar/data/model/response/body/url_launch.dart';
+import 'package:erik_haydar/util/loading_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -18,14 +19,10 @@ class ProfileProvider extends ChangeNotifier {
 
   ProfileProvider({required this.repo, required this.sharedPreferences});
 
-  bool _isLoading = false;
-  bool get isLoading => _isLoading;
-
   UserInfoModelProfile _userInfo = UserInfoModelProfile();
   UserInfoModelProfile get userInfo => _userInfo;
 
   Future<void> getUserInfo() async {
-    _isLoading = true;
     ApiResponse apiResponse = await repo.getUserInfo();
     _userInfo = UserInfoModelProfile();
     if (apiResponse.response?.statusCode == 200 &&
@@ -37,7 +34,6 @@ class ProfileProvider extends ChangeNotifier {
     } else {
       ApiChecker.checkApi(apiResponse);
     }
-    _isLoading = false;
     notifyListeners();
   }
 
@@ -45,7 +41,6 @@ class ProfileProvider extends ChangeNotifier {
   List<TarifModel> get tarifs => _tarifs;
 
   Future<void> getTarifs() async {
-    _isLoading = true;
     ApiResponse apiResponse = await repo.getTarif();
     _tarifs.clear();
     if (apiResponse.response?.statusCode == 200 &&
@@ -55,13 +50,11 @@ class ProfileProvider extends ChangeNotifier {
     } else {
       ApiChecker.checkApi(apiResponse);
     }
-    _isLoading = false;
     notifyListeners();
   }
 
   Future<String> pay(String amount) async {
     String url = '';
-    _isLoading = true;
     notifyListeners();
     var data = {'amount': amount};
     ApiResponse apiResponse = await repo.pay(_activePayType, data);
@@ -73,14 +66,11 @@ class ProfileProvider extends ChangeNotifier {
     } else {
       ApiChecker.checkApi(apiResponse);
     }
-    _isLoading = false;
     notifyListeners();
     return url;
   }
 
   Future<BaseResponse> buyTarif(int id) async {
-    _isLoading = true;
-    notifyListeners();
     BaseResponse baseResponse = BaseResponse();
     var data = {'id': id};
     ApiResponse apiResponse = await repo.buyTarif(data);
@@ -91,7 +81,6 @@ class ProfileProvider extends ChangeNotifier {
     } else {
       ApiChecker.checkApi(apiResponse);
     }
-    _isLoading = false;
     notifyListeners();
     return baseResponse;
   }

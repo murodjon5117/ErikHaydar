@@ -12,6 +12,7 @@ import 'package:erik_haydar/view/sceen/home/slider/slider_2.dart';
 import 'package:erik_haydar/view/sceen/home/slider/slider_screen.dart';
 import 'package:erik_haydar/view/sceen/home/user_data_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:provider/provider.dart';
 
@@ -27,9 +28,12 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   void initState() {
-    Provider.of<HomeProvider>(context, listen: false).getSliderData();
-    Provider.of<HomeProvider>(context, listen: false).getHomeFilm();
-    Provider.of<HomeProvider>(context, listen: false).getHomeMusic();
+    SchedulerBinding.instance.addPostFrameCallback((_) {
+      Provider.of<HomeProvider>(context, listen: false).getSliderData();
+      Provider.of<HomeProvider>(context, listen: false).getHomeFilm();
+      Provider.of<HomeProvider>(context, listen: false).getHomeMusic();
+    });
+
     super.initState();
   }
 
@@ -41,37 +45,33 @@ class _HomeScreenState extends State<HomeScreen> {
       body: SafeArea(
         child: LayoutBuilder(
           builder: (p0, p1) => Consumer<HomeProvider>(
-            builder: (context, value, child) => AbsorbPointer(
-              absorbing: value.isLoading,
-              child: RefreshIndicator(
-                child: SingleChildScrollView(
-                  physics: const ClampingScrollPhysics(),
-                  child: ConstrainedBox(
-                    constraints: BoxConstraints(
-                      minHeight: p1.maxHeight,
-                    ),
-                    child: Column(
-                      mainAxisSize: MainAxisSize.min,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        UserData().padding('Salom', "Fakhriyor"),
-                        const SliderScreen(),
-                        const SizedBox(
-                          height: 35,
-                        ),
-                        HomeListsScreen(
-                            list: value.homeDataList,
-                            music: value.homeMusicList),
-                      ],
-                    ),
+            builder: (context, value, child) => RefreshIndicator(
+              child: SingleChildScrollView(
+                physics: const ClampingScrollPhysics(),
+                child: ConstrainedBox(
+                  constraints: BoxConstraints(
+                    minHeight: p1.maxHeight,
+                  ),
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      UserData().padding('Salom', "Fakhriyor"),
+                      const SliderScreen(),
+                      const SizedBox(
+                        height: 35,
+                      ),
+                      HomeListsScreen(
+                          list: value.homeDataList, music: value.homeMusicList),
+                    ],
                   ),
                 ),
-                onRefresh: () async {
-                  value.getHomeFilm();
-                  value.getSliderData();
-                  value.getHomeMusic();
-                },
               ),
+              onRefresh: () async {
+                value.getHomeFilm();
+                value.getSliderData();
+                value.getHomeMusic();
+              },
             ),
           ),
         ),

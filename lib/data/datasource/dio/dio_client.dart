@@ -2,10 +2,10 @@ import 'dart:io';
 
 import 'package:dio/dio.dart';
 import 'package:erik_haydar/data/model/response/body/user_info_model.dart';
-import 'package:erik_haydar/helper/shared_pres.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../../util/app_constants.dart';
+import '../../../util/loading_dialog.dart';
 import '../../model/response/body/info_model.dart';
 import '../exception/pretty_dio_logger.dart';
 import 'logging_interceptor.dart';
@@ -51,18 +51,23 @@ class DioClient {
     CancelToken? cancelToken,
     ProgressCallback? onReceiveProgress,
   }) async {
+    LoadingOverlay().show();
     try {
       var response = await dio.get(uri,
           queryParameters: queryParametrs,
           options: options,
           cancelToken: cancelToken,
           onReceiveProgress: onReceiveProgress);
+      LoadingOverlay().hide();
       return response;
     } on SocketException catch (e) {
+      LoadingOverlay().hide();
       throw SocketException(e.toString());
     } on FormatException catch (_) {
+      LoadingOverlay().hide();
       throw const FormatException("Unable to process the data");
     } catch (e) {
+      LoadingOverlay().hide();
       rethrow;
     }
   }
@@ -76,6 +81,7 @@ class DioClient {
     ProgressCallback? onSendProgress,
     ProgressCallback? onReceiveProgress,
   }) async {
+    LoadingOverlay().show();
     try {
       var response = await dio.post(
         uri,
@@ -86,10 +92,13 @@ class DioClient {
         onSendProgress: onSendProgress,
         onReceiveProgress: onReceiveProgress,
       );
+      LoadingOverlay().hide();
       return response;
     } on FormatException catch (_) {
+      LoadingOverlay().hide();
       throw const FormatException("Unable to process the data");
     } catch (e) {
+      LoadingOverlay().hide();
       rethrow;
     }
   }

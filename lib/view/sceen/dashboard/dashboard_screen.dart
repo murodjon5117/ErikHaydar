@@ -1,6 +1,6 @@
 import 'package:erik_haydar/util/styles.dart';
 import 'package:erik_haydar/view/sceen/category/category_screen.dart';
-import 'package:erik_haydar/view/sceen/home/video_player/media_player.dart';
+import 'package:erik_haydar/view/sceen/favorite/favorites_screen.dart';
 import 'package:erik_haydar/view/sceen/profile/profile_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
@@ -30,7 +30,7 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
     return [
       HomeScreen(),
       CategoryScreen(),
-      MediaPlayer(),
+      FavoritesScreen(),
       ProfileScreen(),
     ];
   }
@@ -101,9 +101,16 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
       hideNavigationBarWhenKeyboardShows:
           true, // Recommended to set 'resizeToAvoidBottomInset' as true while using this argument. Default is true.
       decoration: NavBarDecoration(
-        borderRadius: BorderRadius.circular(10.0),
-        colorBehindNavBar: Colors.white,
-      ),
+          borderRadius: BorderRadius.circular(10.0),
+          colorBehindNavBar: Colors.white,
+          boxShadow: [
+            BoxShadow(
+              color: Colors.black.withOpacity(0.1),
+              spreadRadius: 3,
+              blurRadius: 5,
+              offset: Offset(0, 3), // changes position of shadow
+            ),
+          ]),
       popAllScreensOnTapOfSelectedTab: true,
       popActionScreens: PopActionScreensType.all,
       itemAnimationProperties: const ItemAnimationProperties(

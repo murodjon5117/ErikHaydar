@@ -1,18 +1,22 @@
 import 'package:dio/dio.dart';
 import 'package:erik_haydar/data/repository/auth_repo.dart';
+import 'package:erik_haydar/data/repository/category_repo.dart';
 import 'package:erik_haydar/data/repository/profile_repo.dart';
 import 'package:erik_haydar/data/repository/home_repo.dart';
+import 'package:erik_haydar/provider/category_provider.dart';
 import 'package:erik_haydar/provider/home_provider.dart';
 import 'package:erik_haydar/provider/localization_provider.dart';
 import 'package:erik_haydar/provider/login_provider.dart';
 import 'package:erik_haydar/provider/profile_provider.dart';
 import 'package:erik_haydar/provider/register_provider.dart';
+import 'package:erik_haydar/provider/user_data_provider.dart';
 import 'package:erik_haydar/util/app_constants.dart';
 import 'package:get_it/get_it.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'data/datasource/dio/dio_client.dart';
 import 'data/datasource/dio/logging_interceptor.dart';
+import 'provider/favorite_provider.dart';
 
 final sl = GetIt.instance;
 Future<void> init() async {
@@ -35,15 +39,17 @@ Future<void> init() async {
       () => ProfileRepo(dioClient: sl(), sharedPreferences: sl()));
   sl.registerLazySingleton(
       () => HomeRepo(dioClient: sl(), sharedPreferences: sl()));
+  sl.registerLazySingleton(
+      () => CategoryRepo(dioClient: sl(), sharedPreferences: sl()));
   //Provider
   sl.registerFactory(() => LocalizationProvider(sharedPreferences: sl()));
+  sl.registerFactory(() => UserDataProvider(sharedPreferences: sl()));
   sl.registerFactory(() => HomeProvider(repo: sl()));
-
   sl.registerFactory(
       () => RegisterProvider(authRepo: sl(), sharedPreferences: sl()));
-
   sl.registerFactory(() => LoginProvider(sharedPreferences: sl(), repo: sl()));
-
   sl.registerFactory(
       () => ProfileProvider(sharedPreferences: sl(), repo: sl()));
+  sl.registerFactory(() => CategoryProvider(repo: sl()));
+  sl.registerFactory(() => FavoriteProvider(repo: sl()));
 }

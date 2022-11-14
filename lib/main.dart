@@ -1,10 +1,13 @@
 import 'dart:io';
 import 'dart:ui';
+import 'package:erik_haydar/provider/category_provider.dart';
+import 'package:erik_haydar/provider/favorite_provider.dart';
 import 'package:erik_haydar/provider/home_provider.dart';
 import 'package:erik_haydar/provider/localization_provider.dart';
 import 'package:erik_haydar/provider/login_provider.dart';
 import 'package:erik_haydar/provider/profile_provider.dart';
 import 'package:erik_haydar/provider/register_provider.dart';
+import 'package:erik_haydar/provider/user_data_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:erik_haydar/theme/light_theme.dart';
 import 'package:erik_haydar/util/app_constants.dart';
@@ -27,6 +30,9 @@ Future<void> main() async {
       ChangeNotifierProvider(create: (context) => di.sl<LoginProvider>()),
       ChangeNotifierProvider(create: (context) => di.sl<HomeProvider>()),
       ChangeNotifierProvider(create: (context) => di.sl<ProfileProvider>()),
+      ChangeNotifierProvider(create: (context) => di.sl<CategoryProvider>()),
+      ChangeNotifierProvider(create: (context) => di.sl<FavoriteProvider>()),
+      ChangeNotifierProvider(create: (context) => di.sl<UserDataProvider>()),
       ChangeNotifierProvider(create: (context) => di.sl<HomeProvider>()),
     ],
     child: const MyApp(),

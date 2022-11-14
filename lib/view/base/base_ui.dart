@@ -1,5 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:erik_haydar/helper/enums/button_enum.dart';
+import 'package:erik_haydar/main.dart';
 import 'package:erik_haydar/util/dimensions.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
@@ -20,6 +21,15 @@ class BaseUI {
         icon: SvgPicture.asset(Images.back_icon),
         onPressed: () => Navigator.of(context).pop(),
       ),
+    );
+  }
+
+  showLoadingDialog() {
+    showDialog(
+      barrierDismissible: true,
+      barrierColor: ColorResources.COLOR_BLACK.withOpacity(0.1),
+      context: MyApp.navigatorKey.currentState!.context,
+      builder: (context) => progressIndicator(),
     );
   }
 

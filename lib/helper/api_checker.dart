@@ -1,12 +1,26 @@
 import 'package:erik_haydar/main.dart';
+import 'package:erik_haydar/provider/user_data_provider.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 import '../data/model/response/base/api_response.dart';
+import '../view/sceen/auth/login/login_screen.dart';
 
 class ApiChecker {
   static void checkApi(ApiResponse apiResponse) {
     if (apiResponse.error == 'Unauthorized') {
-      // Provider.of<ProfileProvider>(context, listen: false).deleteToken();
+      Provider.of<UserDataProvider>(MyApp.navigatorKey.currentContext!,
+              listen: false)
+          .deleteUserData();
+      Navigator.of(MyApp.navigatorKey.currentContext!, rootNavigator: true)
+          .pushAndRemoveUntil(
+        MaterialPageRoute(
+          builder: (BuildContext context) {
+            return const LoginScreen();
+          },
+        ),
+        (_) => false,
+      );
     }
     showDialog(
       context: MyApp.navigatorKey.currentContext!,

@@ -4,15 +4,22 @@ import 'package:erik_haydar/view/base/base_ui.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:provider/provider.dart';
 
-import '../../../util/color_resources.dart';
-import '../../../util/images.dart';
-import '../../../util/styles.dart';
+import '../../../../provider/home_provider.dart';
+import '../../../../util/color_resources.dart';
+import '../../../../util/images.dart';
+import '../../../../util/styles.dart';
 
-class FilmItem extends StatelessWidget {
+class FilmGridItem extends StatefulWidget {
   final Films item;
-  const FilmItem({super.key, required this.item});
+  const FilmGridItem({super.key, required this.item});
 
+  @override
+  State<FilmGridItem> createState() => _FilmGridItemState();
+}
+
+class _FilmGridItemState extends State<FilmGridItem> {
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -21,8 +28,7 @@ class FilmItem extends StatelessWidget {
       decoration: BoxDecoration(
           boxShadow: const [
             BoxShadow(
-              offset: Offset(2, 2),
-              color: ColorResources.COLOR_EBE9E9,
+              color: ColorResources.COLOR_BLACK.withOpacity(0.08),
               blurRadius: 3.0,
               spreadRadius: 1.0,
             )
@@ -40,15 +46,14 @@ class FilmItem extends StatelessWidget {
                 child: SizedBox(
                   height: 100,
                   width: 130,
-                  child: BaseUI().imageNetwork(item.image ?? ''),
+                  child: BaseUI().imageNetwork(widget.item.image ?? ''),
                 ),
               ),
-              Positioned(
-                  left: 8, top: 8, child: SvgPicture.asset(Images.unliked)),
+              Positioned(left: 8, top: 8, child: favorite(context)),
               Positioned(
                   left: 0,
                   top: 81,
-                  child: tipVideo(item.isFree ?? false, context)),
+                  child: tipVideo(widget.item.isFree ?? false, context)),
               Positioned(
                   bottom: 0,
                   left: 12,
@@ -57,7 +62,7 @@ class FilmItem extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        '${item.name} \n',
+                        '${widget.item.name} \n',
                         style: titleTextField.copyWith(
                             color: ColorResources.COLOR_BLACK),
                         maxLines: 2,
@@ -76,7 +81,7 @@ class FilmItem extends StatelessWidget {
                                   width: 8,
                                 ),
                                 Text(
-                                  item.viewsCount.toString(),
+                                  widget.item.viewsCount.toString(),
                                   style: itemWidgetTextStyle,
                                 )
                               ],
@@ -91,7 +96,7 @@ class FilmItem extends StatelessWidget {
                                   width: 8,
                                 ),
                                 Text(
-                                  item.activeCommentsCount.toString(),
+                                  widget.item.activeCommentsCount.toString(),
                                   style: itemWidgetTextStyle,
                                 )
                               ],
@@ -127,5 +132,31 @@ class FilmItem extends StatelessWidget {
                 color: ColorResources.COLOR_WHITE)),
       ),
     );
+  }
+
+  Widget favorite(
+    BuildContext context,
+  ) {
+    return GestureDetector(
+        onTap: () {
+          Provider.of<HomeProvider>(context, listen: false)
+              .addFavorite(widget.item.slug ?? '')
+              .then((value) {
+            if (value.status == 200) {
+              if (widget.item.isUserFavoriteFilm == true) {
+                setState(() {
+                  widget.item.isUserFavoriteFilm = false;
+                });
+              } else {
+                setState(() {
+                  widget.item.isUserFavoriteFilm = true;
+                });
+              }
+            }
+          });
+        },
+        child: SvgPicture.asset(widget.item.isUserFavoriteFilm ?? false
+            ? Images.liked
+            : Images.unliked));
   }
 }

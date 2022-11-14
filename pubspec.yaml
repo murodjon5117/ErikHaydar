@@ -31,6 +31,10 @@ dependencies:
   persistent_bottom_nav_bar_v2: ^4.2.6
   provider: ^6.0.4
   shared_preferences: ^2.0.15
+  persistent_bottom_nav_bar_v2: ^4.2.6
+  cached_network_image: ^3.2.2
+  dropdown_button2: ^1.8.9
+
   url_launcher: ^6.1.6
   video_player: ^2.4.7
 

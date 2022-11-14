@@ -1,3 +1,4 @@
+import 'package:erik_haydar/provider/user_data_provider.dart';
 import 'package:erik_haydar/view/base/base_ui.dart';
 import 'package:erik_haydar/view/sceen/auth/login/login_screen.dart';
 import 'package:erik_haydar/view/sceen/auth/register/register_screen.dart';
@@ -6,6 +7,7 @@ import 'package:erik_haydar/view/sceen/onboarding/onboarding.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:erik_haydar/view/sceen/profile/profile_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
@@ -21,7 +23,10 @@ class _SplashScreenState extends State<SplashScreen> {
       Navigator.of(context, rootNavigator: true).pushAndRemoveUntil(
         CupertinoPageRoute(
           builder: (BuildContext context) {
-            return const DashBoardScreen();
+            return Provider.of<UserDataProvider>(context, listen: false)
+                    .isLogin()
+                ? const DashBoardScreen()
+                : const OnBoardingPage();
           },
         ),
         (_) => false,
