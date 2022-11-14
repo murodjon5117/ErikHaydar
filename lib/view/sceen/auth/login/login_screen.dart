@@ -3,13 +3,13 @@ import 'dart:io';
 import 'package:device_info_plus/device_info_plus.dart';
 import 'package:erik_haydar/localization/language_constrants.dart';
 import 'package:erik_haydar/provider/login_provider.dart';
+import 'package:erik_haydar/provider/user_data_provider.dart';
 import 'package:erik_haydar/util/images.dart';
 import 'package:erik_haydar/view/base/base_ui.dart';
 import 'package:erik_haydar/view/sceen/dashboard/dashboard_screen.dart';
-import 'package:erik_haydar/view/sceen/dashboard/dashboard_screen.dart';
-import 'package:erik_haydar/view/sceen/profile/profile_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:persistent_bottom_nav_bar_v2/persistent-tab-view.dart';
 import 'package:provider/provider.dart';
 
 import '../../../../helper/enums/button_enum.dart';
@@ -20,6 +20,8 @@ import '../../../base/custom_text_field.dart';
 import '../register/register_screen.dart';
 
 class LoginScreen extends StatefulWidget {
+  const LoginScreen({super.key});
+
   @override
   State<LoginScreen> createState() => _LoginScreenState();
 }
@@ -35,6 +37,8 @@ class _LoginScreenState extends State<LoginScreen> {
   final FocusNode _passwordFocus = FocusNode();
   TextEditingController _phoneNumberController = TextEditingController();
   TextEditingController _passwordController = TextEditingController();
+  final ScrollController _controller = ScrollController();
+
   @override
   void initState() {
     initPlatformState();
@@ -53,155 +57,225 @@ class _LoginScreenState extends State<LoginScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Consumer<LoginProvider>(
-      builder: (ctx, value, child) => Scaffold(
+    return Scaffold(
         backgroundColor: ColorResources.COLOR_WHITE,
-        body: AbsorbPointer(
-          absorbing: value.isLoading,
-          child: SizedBox(
-            width: double.infinity,
-            height: double.infinity,
-            child: Stack(
-              children: [
-                Positioned(
-                  left: 0,
-                  right: 0,
-                  child: Stack(
-                    children: [
-                      Image.asset(
-                          width: double.infinity,
-                          fit: BoxFit.fill,
-                          Images.login_image),
-                    ],
-                  ),
-                ),
-                Positioned(
-                  bottom: 30,
-                  left: 0,
-                  right: 0,
-                  child: Wrap(
-                    children: [
-                      Form(
-                        key: _formKey,
-                        child: Container(
-                          width: double.infinity,
-                          decoration: BoxDecoration(
-                              color: ColorResources.COLOR_WHITE,
-                              borderRadius: BorderRadius.circular(30)),
-                          child: Padding(
-                            padding: const EdgeInsets.symmetric(horizontal: 16),
-                            child: Column(
-                              mainAxisSize: MainAxisSize.max,
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                const SizedBox(
-                                  height: 34,
-                                ),
-                                SizedBox(
-                                    width: double.infinity,
-                                    child: Text(
-                                      getTranslated('login', context),
-                                      style: boldTitle,
-                                      textAlign: TextAlign.center,
-                                    )),
-                                const SizedBox(
-                                  height: 24,
-                                ),
-                                CustomTextField(
-                                    title:
-                                        getTranslated('phone_number', context),
-                                    hint: getTranslated(
-                                        'hint_phone_number', context),
-                                    controller: _phoneNumberController,
-                                    focusNode: _phoneNumberFocus,
-                                    type: TextFieldType.phone),
-                                const SizedBox(
-                                  height: 18,
-                                ),
-                                CustomTextField(
-                                    title: getTranslated('password', context),
-                                    hint:
-                                        getTranslated('hint_password', context),
-                                    controller: _passwordController,
-                                    focusNode: _passwordFocus,
-                                    type: TextFieldType.password),
-                                const SizedBox(
-                                  height: 24,
-                                ),
-                                value.isLoading
-                                    ? BaseUI().progressIndicator()
-                                    : BaseUI().buttonsType(
-                                        TypeButton.filled, context, () {
-                                        if (_formKey.currentState!.validate()) {
-                                          if (Platform.isAndroid) {
-                                            deviceName = _deviceData['model'];
-                                            deviceId = _deviceData['id'];
-                                          } else if (Platform.isIOS) {
-                                            deviceName = _deviceData['name'];
-                                            deviceId = _deviceData[
-                                                'identifierForVendor'];
-                                          }
-                                          value
-                                              .login(
-                                                  _phoneNumberController.text
-                                                      .replaceAll(' ', '')
-                                                      .replaceAll(')', '')
-                                                      .replaceAll('(', '')
-                                                      .replaceAll('-', ''),
-                                                  _passwordController.text,
-                                                  deviceId,
-                                                  deviceName,
-                                                  deviceToken)
-                                              .then((result) {
-                                            if (result.status == 200) {
-                                              Navigator.of(
-                                                context,
-                                                rootNavigator: true,
-                                              ).push(createRoute(
-                                                  DashBoardScreen()));
-                                            }
-                                          });
-                                        }
-                                      }, getTranslated('enter', context)),
-                                const SizedBox(
-                                  height: 10,
-                                ),
-                                ElevatedButton(
-                                    onPressed: () {
-                                      Navigator.of(
-                                        context,
-                                        rootNavigator: true,
-                                      ).push(createRoute(RegisterScreen()));
-                                    },
-                                    child: Text(
-                                      'text',
-                                      style: filledButtonTextStyle,
-                                    )),
-                                // BaseUI().buttonsType(TypeButton.text, context,
-                                //     () {
-                                //   // Navigator.of(
-                                //   //   context,
-                                //   //   rootNavigator: true,
-                                //   // ).push(createRoute(RegisterScreen()));
-                                // }, ''),
-                                const SizedBox(
-                                  height: 34,
-                                )
-                              ],
-                            ),
-                          ),
+        body: Consumer<LoginProvider>(
+          builder: (ctx, value, child) => Form(
+            key: _formKey,
+            child: SingleChildScrollView(
+              controller: _controller,
+              physics: const ClampingScrollPhysics(),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  Image.asset(
+                      width: double.infinity,
+                      fit: BoxFit.contain,
+                      Images.login_image),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 20),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        const SizedBox(
+                          height: 34,
                         ),
-                      ),
-                    ],
-                  ),
-                ),
-              ],
+                        SizedBox(
+                            width: double.infinity,
+                            child: Text(
+                              getTranslated('login', context),
+                              style: boldTitle,
+                              textAlign: TextAlign.center,
+                            )),
+                        const SizedBox(
+                          height: 24,
+                        ),
+                        CustomTextField(
+                            title: getTranslated('phone_number', context),
+                            hint: getTranslated('hint_phone_number', context),
+                            controller: _phoneNumberController,
+                            focusNode: _phoneNumberFocus,
+                            type: TextFieldType.phone),
+                        const SizedBox(
+                          height: 18,
+                        ),
+                        CustomTextField(
+                            title: getTranslated('password', context),
+                            hint: getTranslated('hint_password', context),
+                            controller: _passwordController,
+                            focusNode: _passwordFocus,
+                            type: TextFieldType.password),
+                        const SizedBox(
+                          height: 24,
+                        ),
+                        BaseUI().buttonsType(TypeButton.filled, context, () {
+                          if (_formKey.currentState!.validate()) {
+                            if (Platform.isAndroid) {
+                              deviceName = _deviceData['model'];
+                              deviceId = _deviceData['id'];
+                            } else if (Platform.isIOS) {
+                              deviceName = _deviceData['name'];
+                              deviceId = _deviceData['identifierForVendor'];
+                            }
+                            value
+                                .login(
+                                    _phoneNumberController.text
+                                        .replaceAll(' ', '')
+                                        .replaceAll(')', '')
+                                        .replaceAll('(', '')
+                                        .replaceAll('-', ''),
+                                    _passwordController.text,
+                                    deviceId,
+                                    deviceName,
+                                    deviceToken)
+                                .then((result) {
+                              if (result.status == 200) {
+                                Navigator.of(context, rootNavigator: true)
+                                    .pushAndRemoveUntil(
+                                  MaterialPageRoute(
+                                    builder: (BuildContext context) {
+                                      return const DashBoardScreen();
+                                    },
+                                  ),
+                                  (_) => false,
+                                );
+                              }
+                            });
+                          }
+                        }, getTranslated('enter', context)),
+                        const SizedBox(
+                          height: 10,
+                        ),
+                        BaseUI().buttonsType(TypeButton.text, context, () {
+                          pushNewScreen(context,
+                              screen: RegisterScreen(),
+                              pageTransitionAnimation:
+                                  PageTransitionAnimation.fade);
+                        }, getTranslated('register', context)),
+
+                        // BaseUI().buttonsType(TypeButton.text, context,
+                        //     () {
+                        //   // Navigator.of(
+                        //   //   context,
+                        //   //   rootNavigator: true,
+                        //   // ).push(createRoute(RegisterScreen()));
+                        // }, ''),
+                        const SizedBox(
+                          height: 34,
+                        )
+                      ],
+                    ),
+                  )
+                ],
+              ),
             ),
           ),
-        ),
-      ),
-    );
+        ));
   }
+  // @override
+  // Widget build(BuildContext context) {
+  //   return Consumer<LoginProvider>(
+  //     builder: (ctx, value, child) => Scaffold(
+  //       backgroundColor: ColorResources.COLOR_WHITE,
+  //       body: Padding(
+  //         padding: const EdgeInsets.symmetric(horizontal: 16),
+  //         child: SizedBox()
+  //         // Column(
+  //         //   crossAxisAlignment: CrossAxisAlignment.start,
+  //         //   children: [
+  //         //     const SizedBox(
+  //         //       height: 34,
+  //         //     ),
+  //         //     SizedBox(
+  //         //         width: double.infinity,
+  //         //         child: Text(
+  //         //           getTranslated('login', context),
+  //         //           style: boldTitle,
+  //         //           textAlign: TextAlign.center,
+  //         //         )),
+  //         //     const SizedBox(
+  //         //       height: 24,
+  //         //     ),
+  //         //     CustomTextField(
+  //         //         title: getTranslated('phone_number', context),
+  //         //         hint: getTranslated('hint_phone_number', context),
+  //         //         controller: _phoneNumberController,
+  //         //         focusNode: _phoneNumberFocus,
+  //         //         type: TextFieldType.phone),
+  //         //     const SizedBox(
+  //         //       height: 18,
+  //         //     ),
+  //         //     CustomTextField(
+  //         //         title: getTranslated('password', context),
+  //         //         hint: getTranslated('hint_password', context),
+  //         //         controller: _passwordController,
+  //         //         focusNode: _passwordFocus,
+  //         //         type: TextFieldType.password),
+  //         //     const SizedBox(
+  //         //       height: 24,
+  //         //     ),
+  //         //     BaseUI().buttonsType(TypeButton.filled, context, () {
+  //         //       if (_formKey.currentState!.validate()) {
+  //         //         if (Platform.isAndroid) {
+  //         //           deviceName = _deviceData['model'];
+  //         //           deviceId = _deviceData['id'];
+  //         //         } else if (Platform.isIOS) {
+  //         //           deviceName = _deviceData['name'];
+  //         //           deviceId = _deviceData['identifierForVendor'];
+  //         //         }
+  //         //         value
+  //         //             .login(
+  //         //                 _phoneNumberController.text
+  //         //                     .replaceAll(' ', '')
+  //         //                     .replaceAll(')', '')
+  //         //                     .replaceAll('(', '')
+  //         //                     .replaceAll('-', ''),
+  //         //                 _passwordController.text,
+  //         //                 deviceId,
+  //         //                 deviceName,
+  //         //                 deviceToken)
+  //         //             .then((result) {
+  //         //           if (result.status == 200) {
+  //         //             Navigator.of(
+  //         //               context,
+  //         //               rootNavigator: true,
+  //         //             ).push(createRoute(DashBoardScreen()));
+  //         //           }
+  //         //         });
+  //         //       }
+  //         //     }, getTranslated('enter', context)),
+  //         //     const SizedBox(
+  //         //       height: 10,
+  //         //     ),
+  //         //     ElevatedButton(
+  //         //         onPressed: () {
+  //         //           Navigator.of(
+  //         //             context,
+  //         //             rootNavigator: true,
+  //         //           ).push(createRoute(RegisterScreen()));
+  //         //         },
+  //         //         child: Text(
+  //         //           'text',
+  //         //           style: filledButtonTextStyle,
+  //         //         )),
+  //         //     // BaseUI().buttonsType(TypeButton.text, context,
+  //         //     //     () {
+  //         //     //   // Navigator.of(
+  //         //     //   //   context,
+  //         //     //   //   rootNavigator: true,
+  //         //     //   // ).push(createRoute(RegisterScreen()));
+  //         //     // }, ''),
+  //         //     const SizedBox(
+  //         //       height: 34,
+  //         //     )
+  //         //   ],
+  //         // ),
+
+  //       ),
+  //     ),
+  //   );
+  // }
 
   Future<void> initPlatformState() async {
     var deviceData = <String, dynamic>{};

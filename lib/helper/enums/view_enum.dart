@@ -1,0 +1,5 @@
+enum ViewEnum {
+  grid,
+  list,
+  ;
+}

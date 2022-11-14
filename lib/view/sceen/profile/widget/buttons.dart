@@ -46,131 +46,115 @@ class ProfileButtons extends StatelessWidget {
         context: context,
         builder: (BuildContext context) {
           return Consumer<ProfileProvider>(
-            builder: (context, value, child) => AbsorbPointer(
-              absorbing: value.isLoading,
-              child: Stack(
+            builder: (context, value, child) => Dialog(
+              insetPadding: const EdgeInsets.symmetric(horizontal: 20),
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(10.0)), //this right here
+              child: Wrap(
                 children: [
-                  Dialog(
-                    insetPadding: const EdgeInsets.symmetric(horizontal: 20),
-                    shape: RoundedRectangleBorder(
-                        borderRadius:
-                            BorderRadius.circular(10.0)), //this right here
-                    child: Wrap(
+                  Padding(
+                    padding: const EdgeInsets.fromLTRB(24, 16, 16, 16),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Padding(
-                          padding: const EdgeInsets.fromLTRB(24, 16, 16, 16),
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Row(
-                                mainAxisAlignment: MainAxisAlignment.end,
-                                children: [
-                                  IconButton(
-                                      constraints: const BoxConstraints(),
-                                      padding: EdgeInsets.zero,
-                                      onPressed: () {
-                                        Navigator.pop(context);
-                                      },
-                                      icon: SvgPicture.asset(Images.x))
-                                ],
-                              ),
-                              Text(
-                                getTranslated('pay', context),
-                                style: boldTitle,
-                              ),
-                              const SizedBox(
-                                height: 25,
-                              ),
-                              Text(
-                                getTranslated('choose_pay', context),
-                                style: titleTextField,
-                              ),
-                              const SizedBox(
-                                height: 18,
-                              ),
-                            ],
-                          ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.end,
+                          children: [
+                            IconButton(
+                                constraints: const BoxConstraints(),
+                                padding: EdgeInsets.zero,
+                                onPressed: () {
+                                  Navigator.pop(context);
+                                },
+                                icon: SvgPicture.asset(Images.x))
+                          ],
                         ),
-                        Padding(
-                          padding: const EdgeInsets.only(left: 24,right: 24),
-                          child: SizedBox(
-                            height: 70,
-                            child: Center(
-                              child: ListView.separated(
-                                shrinkWrap: true,
-                                itemCount: value.paymentList.length,
-                                scrollDirection: Axis.horizontal,
-                                itemBuilder: (context, index) => GestureDetector(
-                                  onTap: () {
-                                    value
-                                        .setSelected(value.paymentList[index].type);
-                                  },
-                                  child: Container(
-                                    decoration: BoxDecoration(
-                                        color: ColorResources.COLOR_WHITE,
-                                        border: Border.all(
-                                          color: value.paymentList[index].isSlected
-                                              ? ColorResources.COLOR_PPIMARY
-                                              : ColorResources.COLOR_E2E2E5,
-                                          style: BorderStyle.solid,
-                                          width: 1.0,
-                                        ),
-                                        borderRadius: BorderRadius.circular(8)),
-                                    child: Padding(
-                                      padding: const EdgeInsets.symmetric(
-                                          horizontal: 15, vertical: 25),
-                                      child: SvgPicture.asset(
-                                          value.paymentList[index].icon),
-                                    ),
-                                  ),
-                                ),
-                                separatorBuilder:
-                                    (BuildContext context, int index) =>
-                                        const SizedBox(
-                                  width: 10,
-                                ),
-                              ),
-                            ),
-                          ),
+                        Text(
+                          getTranslated('pay', context),
+                          style: boldTitle,
                         ),
-                        Form(
-                          key: _formKey,
-                          child: Padding(
-                            padding: const EdgeInsets.all(24),
-                            child: Column(
-                              children: [
-                                CustomTextField(
-                                    title: getTranslated('set_summa', context),
-                                    hint: getTranslated('minimal_pay', context),
-                                    controller: _summaCOntroller,
-                                    focusNode: _summaFocus,
-                                    type: TextFieldType.summa),
-                                const SizedBox(
-                                  height: 24,
-                                ),
-                                BaseUI().buttonsType(TypeButton.filled, context,
-                                    () {
-                                  if (_formKey.currentState!.validate()) {
-                                    value
-                                        .pay( _summaCOntroller.text)
-                                        .then((result) {
-                                      if (result.isNotEmpty) {
-                                        launchUrlString(result);
-                                      }
-                                    });
-                                  }
-                                }, getTranslated('switch_payment', context))
-                              ],
-                            ),
-                          ),
-                        )
+                        const SizedBox(
+                          height: 25,
+                        ),
+                        Text(
+                          getTranslated('choose_pay', context),
+                          style: titleTextField,
+                        ),
+                        const SizedBox(
+                          height: 18,
+                        ),
                       ],
                     ),
                   ),
-                  value.isLoading
-                      ? Positioned(child: BaseUI().progressIndicator())
-                      : const SizedBox()
+                  Padding(
+                    padding: const EdgeInsets.only(left: 24, right: 24),
+                    child: SizedBox(
+                      height: 70,
+                      child: Center(
+                        child: ListView.separated(
+                          shrinkWrap: true,
+                          itemCount: value.paymentList.length,
+                          scrollDirection: Axis.horizontal,
+                          itemBuilder: (context, index) => GestureDetector(
+                            onTap: () {
+                              value.setSelected(value.paymentList[index].type);
+                            },
+                            child: Container(
+                              decoration: BoxDecoration(
+                                  color: ColorResources.COLOR_WHITE,
+                                  border: Border.all(
+                                    color: value.paymentList[index].isSlected
+                                        ? ColorResources.COLOR_PPIMARY
+                                        : ColorResources.COLOR_E2E2E5,
+                                    style: BorderStyle.solid,
+                                    width: 1.0,
+                                  ),
+                                  borderRadius: BorderRadius.circular(8)),
+                              child: Padding(
+                                padding: const EdgeInsets.symmetric(
+                                    horizontal: 15, vertical: 25),
+                                child: SvgPicture.asset(
+                                    value.paymentList[index].icon),
+                              ),
+                            ),
+                          ),
+                          separatorBuilder: (BuildContext context, int index) =>
+                              const SizedBox(
+                            width: 10,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                  Form(
+                    key: _formKey,
+                    child: Padding(
+                      padding: const EdgeInsets.all(24),
+                      child: Column(
+                        children: [
+                          CustomTextField(
+                              title: getTranslated('set_summa', context),
+                              hint: getTranslated('minimal_pay', context),
+                              controller: _summaCOntroller,
+                              focusNode: _summaFocus,
+                              type: TextFieldType.summa),
+                          const SizedBox(
+                            height: 24,
+                          ),
+                          BaseUI().buttonsType(TypeButton.filled, context, () {
+                            if (_formKey.currentState!.validate()) {
+                              value.pay(_summaCOntroller.text).then((result) {
+                                if (result.isNotEmpty) {
+                                  launchUrlString(result);
+                                }
+                              });
+                            }
+                          }, getTranslated('switch_payment', context))
+                        ],
+                      ),
+                    ),
+                  )
                 ],
               ),
             ),

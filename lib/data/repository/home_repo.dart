@@ -33,7 +33,7 @@ class HomeRepo {
       final response = await dioClient.post(AppConstants.homeFilm,
           options: Options(headers: {
             'Authorization':
-                'Bearer ${sharedPreferences.getString(AppConstants.TOKEN)}'
+                'Bearer ${sharedPreferences.getString(AppConstants.token)}'
           }));
       return ApiResponse.withSuccess(response);
     } catch (e) {
@@ -46,7 +46,49 @@ class HomeRepo {
       final response = await dioClient.post(AppConstants.homeMusic,
           options: Options(headers: {
             'Authorization':
-                'Bearer ${sharedPreferences.getString(AppConstants.TOKEN)}'
+                'Bearer ${sharedPreferences.getString(AppConstants.token)}'
+          }));
+      return ApiResponse.withSuccess(response);
+    } catch (e) {
+      return ApiResponse.withError(ApiErrorHandler.getMessage(e));
+    }
+  }
+
+  Future<ApiResponse> likeForFilm(dynamic data) async {
+    try {
+      final response = await dioClient.post(AppConstants.likeForFilm,
+          queryParameters: data,
+          options: Options(headers: {
+            'Authorization':
+                'Bearer ${sharedPreferences.getString(AppConstants.token)}'
+          }));
+      return ApiResponse.withSuccess(response);
+    } catch (e) {
+      return ApiResponse.withError(ApiErrorHandler.getMessage(e));
+    }
+  }
+
+  Future<ApiResponse> dissLikeForFilm(dynamic data) async {
+    try {
+      final response = await dioClient.post(AppConstants.dissLikeForFilm,
+          queryParameters: data,
+          options: Options(headers: {
+            'Authorization':
+                'Bearer ${sharedPreferences.getString(AppConstants.token)}'
+          }));
+      return ApiResponse.withSuccess(response);
+    } catch (e) {
+      return ApiResponse.withError(ApiErrorHandler.getMessage(e));
+    }
+  }
+
+  Future<ApiResponse> addFavorite(dynamic data) async {
+    try {
+      final response = await dioClient.post(AppConstants.addFavorite,
+          queryParameters: data,
+          options: Options(headers: {
+            'Authorization':
+                'Bearer ${sharedPreferences.getString(AppConstants.token)}'
           }));
       return ApiResponse.withSuccess(response);
     } catch (e) {

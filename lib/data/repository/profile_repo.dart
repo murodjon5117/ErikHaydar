@@ -19,7 +19,7 @@ class ProfileRepo {
       final response = await dioClient.get(AppConstants.GET_USER_INFO,
           options: Options(headers: {
             'Authorization':
-                'Bearer ${sharedPreferences.getString(AppConstants.TOKEN)}'
+                'Bearer ${sharedPreferences.getString(AppConstants.token)}'
           }));
 
       return ApiResponse.withSuccess(response);
@@ -33,7 +33,7 @@ class ProfileRepo {
       final response = await dioClient.get(AppConstants.GET_TARIFS,
           options: Options(headers: {
             'Authorization':
-                'Bearer ${sharedPreferences.getString(AppConstants.TOKEN)}'
+                'Bearer ${sharedPreferences.getString(AppConstants.token)}'
           }));
 
       return ApiResponse.withSuccess(response);
@@ -48,7 +48,7 @@ class ProfileRepo {
           queryParameters: data,
           options: Options(headers: {
             'Authorization':
-                'Bearer ${sharedPreferences.getString(AppConstants.TOKEN)}'
+                'Bearer ${sharedPreferences.getString(AppConstants.token)}'
           }));
 
       return ApiResponse.withSuccess(response);
@@ -63,7 +63,7 @@ class ProfileRepo {
           data: data,
           options: Options(headers: {
             'Authorization':
-                'Bearer ${sharedPreferences.getString(AppConstants.TOKEN)}'
+                'Bearer ${sharedPreferences.getString(AppConstants.token)}'
           }));
 
       return ApiResponse.withSuccess(response);

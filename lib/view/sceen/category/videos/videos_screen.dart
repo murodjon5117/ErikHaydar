@@ -1,13 +1,15 @@
 import 'package:erik_haydar/data/model/response/body/films_category_model.dart';
+import 'package:erik_haydar/provider/category_provider.dart';
 import 'package:erik_haydar/view/sceen/category/videos/item_videos_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 import '../../../../util/color_resources.dart';
 
 class VideosScreen extends StatefulWidget {
-  final List<Items> list;
+  // final List<Items> list;
 
-  const VideosScreen({super.key, required this.list});
+  const VideosScreen({super.key, });
   @override
   State<VideosScreen> createState() => _VideosScreenState();
 }
@@ -20,7 +22,8 @@ class _VideosScreenState extends State<VideosScreen>
 
   @override
   void initState() {
-    _tabs = getTabs(widget.list.length);
+    
+    _tabs = getTabs(Provider.of<CategoryProvider>(context,listen: false).filmsCategory.length);
     _tabController = getTabController();
 
     super.initState();
@@ -40,7 +43,7 @@ class _VideosScreenState extends State<VideosScreen>
 
   Tab getTab(int widgetNumber) {
     return Tab(
-      text: widget.list[widgetNumber].name,
+      text: Provider.of<CategoryProvider>(context,listen: false).filmsCategory[widgetNumber].name,
     );
   }
 
@@ -53,7 +56,7 @@ class _VideosScreenState extends State<VideosScreen>
   }
 
   Widget getWidget(int i) {
-    return ItemVideosScreen(item: widget.list[i]);
+    return ItemVideosScreen(item: Provider.of<CategoryProvider>(context,listen: false).filmsCategory[i]);
   }
 
   @override
@@ -65,7 +68,7 @@ class _VideosScreenState extends State<VideosScreen>
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
-      length: widget.list.length,
+      length: Provider.of<CategoryProvider>(context,listen: false).filmsCategory.length,
       child: Scaffold(
         backgroundColor: ColorResources.COLOR_WHITE,
         appBar: AppBar(

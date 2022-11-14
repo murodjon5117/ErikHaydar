@@ -47,6 +47,9 @@ class Images {
   static const String commentIcon = 'assets/icon/comment.svg';
   static const String eyeIcon = 'assets/icon/Eye.svg';
   static const String unliked = 'assets/icon/unliked.svg';
+  static const String liked = 'assets/icon/liked.svg';
   static const String playRed = 'assets/icon/play_red.svg';
+  static const String showGrid = 'assets/icon/show_grid.svg';
+  static const String showList = 'assets/icon/show_list.svg';
   static const String placeholderImage = 'assets/image/placeholder_image.png';
 }

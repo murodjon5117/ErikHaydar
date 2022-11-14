@@ -20,7 +20,7 @@ class CategoryRepo {
       final response = await dioClient.post(AppConstants.filmCategory,
           options: Options(headers: {
             'Authorization':
-                'Bearer ${sharedPreferences.getString(AppConstants.TOKEN)}'
+                'Bearer ${sharedPreferences.getString(AppConstants.token)}'
           }));
       return ApiResponse.withSuccess(response);
     } catch (e) {
@@ -34,7 +34,21 @@ class CategoryRepo {
           queryParameters: params,
           options: Options(headers: {
             'Authorization':
-                'Bearer ${sharedPreferences.getString(AppConstants.TOKEN)}'
+                'Bearer ${sharedPreferences.getString(AppConstants.token)}'
+          }));
+      return ApiResponse.withSuccess(response);
+    } catch (e) {
+      return ApiResponse.withError(ApiErrorHandler.getMessage(e));
+    }
+  }
+
+  Future<ApiResponse> getCategoryMusic(dynamic params) async {
+    try {
+      final response = await dioClient.post(AppConstants.categoryMusic,
+          queryParameters: params,
+          options: Options(headers: {
+            'Authorization':
+                'Bearer ${sharedPreferences.getString(AppConstants.token)}'
           }));
       return ApiResponse.withSuccess(response);
     } catch (e) {
@@ -47,7 +61,31 @@ class CategoryRepo {
       final response = await dioClient.get(AppConstants.filterType,
           options: Options(headers: {
             'Authorization':
-                'Bearer ${sharedPreferences.getString(AppConstants.TOKEN)}'
+                'Bearer ${sharedPreferences.getString(AppConstants.token)}'
+          }));
+      return ApiResponse.withSuccess(response);
+    } catch (e) {
+      return ApiResponse.withError(ApiErrorHandler.getMessage(e));
+    }
+  }
+  Future<ApiResponse> getFavoritesMusic() async {
+    try {
+      final response = await dioClient.post(AppConstants.favoritesMusic,
+          options: Options(headers: {
+            'Authorization':
+                'Bearer ${sharedPreferences.getString(AppConstants.token)}'
+          }));
+      return ApiResponse.withSuccess(response);
+    } catch (e) {
+      return ApiResponse.withError(ApiErrorHandler.getMessage(e));
+    }
+  }
+  Future<ApiResponse> getFavoritesFilm() async {
+    try {
+      final response = await dioClient.post(AppConstants.favoritesFilm,
+          options: Options(headers: {
+            'Authorization':
+                'Bearer ${sharedPreferences.getString(AppConstants.token)}'
           }));
       return ApiResponse.withSuccess(response);
     } catch (e) {

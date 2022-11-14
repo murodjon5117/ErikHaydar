@@ -1,4 +1,3 @@
-// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:erik_haydar/data/model/response/base/api_response.dart';
 import 'package:erik_haydar/data/model/response/body/home_model.dart';
 import 'package:erik_haydar/data/model/response/body/music_model.dart';
@@ -8,21 +7,20 @@ import 'package:flutter/material.dart';
 
 import 'package:erik_haydar/data/repository/home_repo.dart';
 
+import '../data/model/response/base/base_model.dart';
+
 class HomeProvider extends ChangeNotifier {
   HomeProvider({
     required this.repo,
   });
   HomeRepo repo;
-  bool _isLoading = false;
-  bool get isLoading => _isLoading;
 
   List<SliderModel> _slider = [];
   List<SliderModel> get slider => _slider;
 
   Future<void> getSliderData() async {
-    _isLoading = true;
-    _slider = [];
     ApiResponse apiResponse = await repo.getSlider();
+    _slider.clear();
     if (apiResponse.response?.statusCode == 200 &&
         apiResponse.response?.data['status'] == 200) {
       apiResponse.response?.data['data']
@@ -30,7 +28,6 @@ class HomeProvider extends ChangeNotifier {
     } else {
       ApiChecker.checkApi(apiResponse);
     }
-    _isLoading = false;
     notifyListeners();
   }
 
@@ -38,18 +35,15 @@ class HomeProvider extends ChangeNotifier {
   List<HomeModel> get homeDataList => _homeDataList;
 
   Future<void> getHomeFilm() async {
-    _isLoading = true;
     ApiResponse apiResponse = await repo.getHomeData();
     _homeDataList.clear();
     if (apiResponse.response?.statusCode == 200 &&
         apiResponse.response?.data['status'] == 200) {
       apiResponse.response?.data['data']
           .forEach((list) => _homeDataList.add(HomeModel.fromJson(list)));
-      print(_homeDataList.length);
     } else {
       ApiChecker.checkApi(apiResponse);
     }
-    _isLoading = false;
     notifyListeners();
   }
 
@@ -57,7 +51,6 @@ class HomeProvider extends ChangeNotifier {
   List<MusicModel> get homeMusicList => _homeMusicList;
 
   Future<void> getHomeMusic() async {
-    _isLoading = true;
     ApiResponse apiResponse = await repo.getHomeMusic();
     _homeMusicList.clear();
     if (apiResponse.response?.statusCode == 200 &&
@@ -67,7 +60,48 @@ class HomeProvider extends ChangeNotifier {
     } else {
       ApiChecker.checkApi(apiResponse);
     }
-    _isLoading = false;
     notifyListeners();
+  }
+  Future<BaseResponse> likeForFilm(String slug) async {
+    BaseResponse baseResponse = BaseResponse();
+    var data = {'slug': slug,};
+    ApiResponse apiResponse = await repo.likeForFilm(data);
+    if (apiResponse.response?.statusCode == 200 &&
+        apiResponse.response?.data['status'] == 200) {
+      baseResponse =
+          BaseResponse.fromJson(apiResponse.response?.data, (data) => dynamic);
+    } else {
+      ApiChecker.checkApi(apiResponse);
+    }
+    notifyListeners();
+    return baseResponse;
+  }
+  Future<BaseResponse> dissLikeForFilm(String slug) async {
+    BaseResponse baseResponse = BaseResponse();
+    var data = {'slug': slug,};
+    ApiResponse apiResponse = await repo.dissLikeForFilm(data);
+    if (apiResponse.response?.statusCode == 200 &&
+        apiResponse.response?.data['status'] == 200) {
+      baseResponse =
+          BaseResponse.fromJson(apiResponse.response?.data, (data) => dynamic);
+    } else {
+      ApiChecker.checkApi(apiResponse);
+    }
+    notifyListeners();
+    return baseResponse;
+  }
+  Future<BaseResponse> addFavorite(String slug) async {
+    BaseResponse baseResponse = BaseResponse();
+    var data = {'key': slug,};
+    ApiResponse apiResponse = await repo.addFavorite(data);
+    if (apiResponse.response?.statusCode == 200 &&
+        apiResponse.response?.data['status'] == 200) {
+      baseResponse =
+          BaseResponse.fromJson(apiResponse.response?.data, (data) => dynamic);
+    } else {
+      ApiChecker.checkApi(apiResponse);
+    }
+    notifyListeners();
+    return baseResponse;
   }
 }

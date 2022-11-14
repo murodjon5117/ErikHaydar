@@ -10,9 +10,7 @@ class SliderScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Consumer<HomeProvider>(
-      builder: (context, value, child) => value.isLoading
-          ? BaseUI().progressIndicator()
-          : CarouselSlider.builder(
+      builder: (context, value, child) => CarouselSlider.builder(
               itemCount: value.slider.length,
               itemBuilder: (context, index, realIndex) {
                 return ClipRRect(

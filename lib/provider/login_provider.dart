@@ -1,7 +1,9 @@
 import 'package:erik_haydar/data/repository/auth_repo.dart';
-import 'package:erik_haydar/helper/shared_pres.dart';
+import 'package:erik_haydar/main.dart';
+import 'package:erik_haydar/provider/user_data_provider.dart';
 import 'package:erik_haydar/util/app_constants.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../data/model/response/base/api_response.dart';
@@ -15,13 +17,9 @@ class LoginProvider extends ChangeNotifier {
 
   LoginProvider({required this.repo, required this.sharedPreferences});
 
-  bool _isLoading = false;
-  bool get isLoading => _isLoading;
-
   //for login
   Future<BaseResponse> login(String phone, String password, String deviceId,
       String deviceName, String deviceToken) async {
-    _isLoading = true;
     notifyListeners();
     var data = {
       'username': phone,
@@ -37,14 +35,16 @@ class LoginProvider extends ChangeNotifier {
         apiResponse.response?.data['status'] == 200) {
       baseResponse = BaseResponse<UserInfoData>.fromJson(
           apiResponse.response?.data, (data) => UserInfoData.fromJson(data));
-      SharedPref().save(AppConstants.USER_DATA, baseResponse.data?.toJson());
-      sharedPreferences.setString(
-          AppConstants.TOKEN, baseResponse.data?.authKey ?? '');
-      print(baseResponse.data?.toJson());
+      Provider.of<UserDataProvider>(MyApp.navigatorKey.currentState!.context,
+              listen: false)
+          .saveUserData(
+              baseResponse.data?.authKey ?? '',
+              baseResponse.data?.firstname ?? '',
+              baseResponse.data?.lastname ?? '',
+              baseResponse.data?.username ?? '');
     } else {
       ApiChecker.checkApi(apiResponse);
     }
-    _isLoading = false;
     notifyListeners();
     return baseResponse;
   }

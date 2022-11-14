@@ -1,18 +1,15 @@
 import 'package:erik_haydar/data/model/response/body/info_model.dart';
-import 'package:erik_haydar/helper/enums/button_enum.dart';
 import 'package:erik_haydar/localization/language_constrants.dart';
 import 'package:erik_haydar/provider/profile_provider.dart';
 import 'package:erik_haydar/util/dimensions.dart';
-import 'package:erik_haydar/view/base/base_ui.dart';
 import 'package:erik_haydar/view/sceen/profile/widget/buttons.dart';
 import 'package:erik_haydar/view/sceen/profile/widget/photo_popupmenu.dart';
 import 'package:erik_haydar/view/sceen/profile/widget/slider.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
+import 'package:flutter/scheduler.dart';
 import 'package:provider/provider.dart';
 
 import '../../../util/color_resources.dart';
-import '../../../util/images.dart';
 import '../../../util/styles.dart';
 
 class ProfileScreen extends StatefulWidget {
@@ -23,8 +20,10 @@ class ProfileScreen extends StatefulWidget {
 class _ProfileScreenState extends State<ProfileScreen> {
   @override
   void initState() {
-    Provider.of<ProfileProvider>(context, listen: false).getUserInfo();
-    Provider.of<ProfileProvider>(context, listen: false).getTarifs();
+    SchedulerBinding.instance.addPostFrameCallback((_) {
+      Provider.of<ProfileProvider>(context, listen: false).getUserInfo();
+      Provider.of<ProfileProvider>(context, listen: false).getTarifs();
+    });
     super.initState();
   }
 
@@ -42,30 +41,17 @@ class _ProfileScreenState extends State<ProfileScreen> {
               });
             },
             child: SingleChildScrollView(
-              child: Stack(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.start,
                 children: [
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: [
-                      PhotoAndPopupMenu(
-                        userinfo: value.userInfo,
-                      ),
-                      _userInfo(value.userInfo),
-                      _tarif(value.userInfo),
-                      ProfileButtons(),
-                      Carousel()
-                    ],
+                  PhotoAndPopupMenu(
+                    userinfo: value.userInfo,
                   ),
-                  value.isLoading
-                      ? Positioned(
-                          left: 0,
-                          right: 0,
-                          bottom: 0,
-                          top: 0,
-                          child: BaseUI().progressIndicator(),
-                        )
-                      : const SizedBox()
+                  _userInfo(value.userInfo),
+                  _tarif(value.userInfo),
+                  ProfileButtons(),
+                  Carousel()
                 ],
               ),
             ),

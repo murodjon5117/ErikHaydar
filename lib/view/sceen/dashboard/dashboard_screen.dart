@@ -1,5 +1,6 @@
 import 'package:erik_haydar/util/styles.dart';
 import 'package:erik_haydar/view/sceen/category/category_screen.dart';
+import 'package:erik_haydar/view/sceen/favorite/favorites_screen.dart';
 import 'package:erik_haydar/view/sceen/profile/profile_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
@@ -29,7 +30,7 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
     return [
       HomeScreen(),
       CategoryScreen(),
-      Text('data'),
+      FavoritesScreen(),
       ProfileScreen(),
     ];
   }
