@@ -48,7 +48,7 @@ class _MediaPlayerState extends State<MediaPlayer> with WidgetsBindingObserver {
       DeviceOrientation.portraitUp,
       DeviceOrientation.portraitDown,
     ]);
-    _controller = VideoPlayerController.network(
+    _controller = VideoPlayerController.network(videoPlayerOptions: VideoPlayerOptions(mixWithOthers: true),  
         'https://hamshira.biznesgoya.uz/uploads/media/stream/1/6f9e961dc1b1ea58daf6469956ae7a48/4474efb04d27d874331982f1a8b77c2c.m3u8');
     _attachListenerToController();
     _controller.setLooping(true);
@@ -114,109 +114,133 @@ class _MediaPlayerState extends State<MediaPlayer> with WidgetsBindingObserver {
     return Scaffold(
       backgroundColor: Colors.black,
       body: SafeArea(
-        child:
-            _chewieController != null && _controller.value.isInitialized != null
-                ? Stack(
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.all(20),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            GestureDetector(
-                              onTap: () {
-                                Navigator.pop(context);
-                              },
-                              child: SvgPicture.asset(
-                                Images.back_left_black,
-                                color: Colors.white,
-                              ),
-                            ),
-                            GestureDetector(
-                                onTap: () {
-                                  setState(() {
-                                    soundToggle();
-                                  });
-                                },
-                                child: SvgPicture.asset(Images.mute_icon)),
-                          ],
+        child: _chewieController != null &&
+                _controller.value.isInitialized != null
+            ? Stack(
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.all(20),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        GestureDetector(
+                          onTap: () {
+                            Navigator.pop(context);
+                          },
+                          child: SvgPicture.asset(
+                            Images.back_left_black,
+                            color: Colors.white,
+                          ),
                         ),
-                      ),
-                      Center(
-                        child: _controller.value.isInitialized
-                            ? Stack(
-                                alignment: Alignment.center,
-                                children: [
-                                  AspectRatio(
-                                    aspectRatio: _controller.value.aspectRatio,
-                                    child: VideoPlayer(_controller),
-                                  ),
-                                  _controller.value.isPlaying == true
-                                      ? Visibility(
-                                          visible: false,
-                                          child: Row(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.center,
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.center,
-                                            children: [
-                                              GestureDetector(
-                                                onTap: () {
-                                                  setState(() {
-                                                    _controller.value.isPlaying
-                                                        ? _controller.pause()
-                                                        : _controller.play();
-                                                  });
-                                                },
-                                                child: Icon(
-                                                  _controller.value.isPlaying
-                                                      ? Icons.pause
-                                                      : Icons.play_arrow,
-                                                  color: Colors.white,
-                                                ),
-                                              )
-                                            ],
-                                          ),
-                                        )
-                                      : Visibility(
-                                          visible: true,
-                                          child: Row(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.center,
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.center,
-                                            children: [
-                                              GestureDetector(
-                                                onTap: () {
-                                                  setState(() {
-                                                    _controller.value.isPlaying
-                                                        ? _controller.pause()
-                                                        : _controller.play();
-                                                  });
-                                                },
-                                                child: Icon(
-                                                  _controller.value.isPlaying
-                                                      ? Icons.pause
-                                                      : Icons.play_arrow,
-                                                  color: Colors.white,
-                                                ),
-                                              )
-                                            ],
-                                          ),
-                                        ),
-                                ],
+                        GestureDetector(
+                            onTap: () {
+                              setState(() {
+                                soundToggle();
+                              });
+                            },
+                            child: SvgPicture.asset(Images.mute_icon)),
+                      ],
+                    ),
+                  ),
+                  Center(
+                    child: _controller.value.isInitialized
+                        ? Stack(
+                            alignment: Alignment.center,
+                            children: [
+                              AspectRatio(
+                                aspectRatio: _controller.value.aspectRatio,
+                                child: VideoPlayer(_controller),
+                              ),
+                              // _controller.value.isPlaying == true
+                              Visibility(
+                                visible: true,
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  children: [
+                                    GestureDetector(
+                                      onTap: () {
+                                        Duration currentPosition =
+                                            _controller.value.position;
+                                        Duration targetPosition =
+                                            currentPosition -
+                                                const Duration(seconds: 10);
+                                        _controller.seekTo(targetPosition);
+                                      },
+                                      child: const Icon(
+                                        Icons.arrow_back,
+                                      ),
+                                    ),
+                                    GestureDetector(
+                                      onTap: () {
+                                        setState(() {
+                                          _controller.value.isPlaying
+                                              ? _controller.pause()
+                                              : _controller.play();
+                                        });
+                                      },
+                                      child: Icon(
+                                        _controller.value.isPlaying
+                                            ? Icons.pause
+                                            : Icons.play_arrow,
+                                        color: Colors.white,
+                                      ),
+                                    ),
+                                    GestureDetector(
+                                      onTap: () {
+                                        Duration currentPosition =
+                                            _controller.value.position;
+                                        Duration targetPosition =
+                                            currentPosition +
+                                                const Duration(seconds: 10);
+                                        _controller.seekTo(targetPosition);
+                                      },
+                                      child: const Icon(
+                                        Icons.arrow_forward,
+                                      ),
+                                    ),
+                                  ],
+                                ),
                               )
-                            : Container(),
-                      ),
+                              // : Visibility(
+                              //     visible: true,
+                              //     child: Row(
+                              //       mainAxisAlignment:
+                              //           MainAxisAlignment.center,
+                              //       crossAxisAlignment:
+                              //           CrossAxisAlignment.center,
+                              //       children: [
+                              //         GestureDetector(
+                              //           onTap: () {
+                              //             setState(() {
+                              //               _controller.value.isPlaying
+                              //                   ? _controller.pause()
+                              //                   : _controller.play();
+                              //             });
+                              //           },
+                              //           child: Icon(
+                              //             _controller.value.isPlaying
+                              //                 ? Icons.pause
+                              //                 : Icons.play_arrow,
+                              //             color: Colors.white,
+                              //           ),
+                              //         )
+                              //       ],
+                              //     ),
+                              //   ),
+                            ],
+                          )
+                        : Container(),
+                  ),
 
-                      // Center(
-                      //   child: AspectRatio(
-                      //       aspectRatio: _controller.value.aspectRatio,
-                      //       child: Chewie(controller: _chewieController!)),
-                      // ),
-                    ],
-                  )
-                : BaseUI().progressIndicator(),
+                  // Center(
+                  //   child: AspectRatio(
+                  //       aspectRatio: _controller.value.aspectRatio,
+                  //       child: Chewie(controller: _chewieController!)),
+                  // ),
+                ],
+              )
+            : BaseUI().progressIndicator(),
       ),
     );
   }
