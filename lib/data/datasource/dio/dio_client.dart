@@ -4,9 +4,7 @@ import 'package:dio/dio.dart';
 import 'package:erik_haydar/data/model/response/body/user_info_model.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-import '../../../util/app_constants.dart';
 import '../../../util/loading_dialog.dart';
-import '../../model/response/body/info_model.dart';
 import '../exception/pretty_dio_logger.dart';
 import 'logging_interceptor.dart';
 

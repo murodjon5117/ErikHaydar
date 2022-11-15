@@ -13,6 +13,10 @@ class UserDataProvider extends ChangeNotifier {
     return sharedPreferences.getBool(AppConstants.isLogin) ?? false;
   }
 
+  String getName() {
+    return sharedPreferences.getString(AppConstants.name) ?? '';
+  }
+
   Future<void> saveUserData(
       String token, String name, String surName, String userName) async {
     LoadingOverlay().show();

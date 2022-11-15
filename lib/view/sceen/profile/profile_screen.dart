@@ -21,8 +21,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
   @override
   void initState() {
     SchedulerBinding.instance.addPostFrameCallback((_) {
-      Provider.of<ProfileProvider>(context, listen: false).getUserInfo();
-      Provider.of<ProfileProvider>(context, listen: false).getTarifs();
+      Future.delayed(const Duration(milliseconds: 200), () {
+        Provider.of<ProfileProvider>(context, listen: false).getUserInfo();
+        Provider.of<ProfileProvider>(context, listen: false).getTarifs();
+      });
     });
     super.initState();
   }

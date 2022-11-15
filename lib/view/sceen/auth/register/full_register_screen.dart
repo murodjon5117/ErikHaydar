@@ -271,7 +271,10 @@ class _FullRegisterScreenState extends State<FullRegisterScreen> {
                                           }
                                         });
                                       }
-                                    }, getTranslated('confirm', context))
+                                    }, getTranslated('confirm', context)),
+                                    SizedBox(
+                                      height: 50,
+                                    )
                                   ],
                                 ),
                               ),
@@ -283,6 +286,9 @@ class _FullRegisterScreenState extends State<FullRegisterScreen> {
                       ],
                     ),
                   ),
+                  const SizedBox(
+                    height: 50,
+                  )
                 ],
               ),
             ),

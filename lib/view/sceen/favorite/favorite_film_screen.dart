@@ -18,8 +18,10 @@ class _FavoriteFilmScreenState extends State<FavoriteFilmScreen> {
   @override
   void initState() {
     SchedulerBinding.instance.addPostFrameCallback((_) {
-      Provider.of<FavoriteProvider>(context, listen: false)
-          .getFavoriteFilms(false);
+      Future.delayed(const Duration(milliseconds: 200), () {
+        Provider.of<FavoriteProvider>(context, listen: false)
+            .getFavoriteFilms(false);
+      });
     });
 
     super.initState();
