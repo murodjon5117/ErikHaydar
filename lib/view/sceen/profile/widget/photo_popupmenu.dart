@@ -1,4 +1,5 @@
 import 'package:erik_haydar/data/model/response/body/info_model.dart';
+import 'package:erik_haydar/view/base/base_ui.dart';
 import 'package:erik_haydar/view/sceen/profile/change_phone/edit_phone_number_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
@@ -25,7 +26,14 @@ class PhotoAndPopupMenu extends StatelessWidget {
               top: 0,
               right: 0,
               bottom: 0,
-              child: SvgPicture.asset(Images.user_photo),
+              child: SvgPicture.asset(Images.user_photo)
+                  // : SizedBox(
+                  //   height: 110,
+                  //   width: 110,
+                  //   child: CircleAvatar(
+                  //       radius: 100,
+                  //       child: BaseUI().imageNetwork(userinfo.img ?? '')),
+                  // ),
             ),
             Positioned(
                 right: 0,

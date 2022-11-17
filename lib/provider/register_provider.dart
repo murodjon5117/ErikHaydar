@@ -2,26 +2,24 @@ import 'dart:io';
 
 import 'package:erik_haydar/data/model/response/body/cities_model.dart';
 import 'package:erik_haydar/data/model/response/body/user_info_model.dart';
+import 'package:erik_haydar/main.dart';
+import 'package:erik_haydar/provider/user_data_provider.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../data/model/response/base/api_response.dart';
 import '../data/model/response/base/base_model.dart';
 import '../data/repository/auth_repo.dart';
 import '../helper/api_checker.dart';
-import '../helper/shared_pres.dart';
 import '../util/app_constants.dart';
 
 class RegisterProvider extends ChangeNotifier {
   final AuthRepo authRepo;
-  final SharedPreferences sharedPreferences;
-  RegisterProvider({required this.authRepo, required this.sharedPreferences});
-  bool _isLoading = false;
-  bool get isLoading => _isLoading;
+  RegisterProvider({required this.authRepo, });
 
   //for enter phone
   Future<BaseResponse> enterPhone(String phone) async {
-    _isLoading = true;
     notifyListeners();
     var data = {'phone': phone};
     BaseResponse baseResponse = BaseResponse();
@@ -34,14 +32,12 @@ class RegisterProvider extends ChangeNotifier {
     } else {
       ApiChecker.checkApi(apiResponse);
     }
-    _isLoading = false;
     notifyListeners();
     return baseResponse;
   }
 
   //sms verify
   Future<BaseResponse> verifyPhone(String phone, String smsCode) async {
-    _isLoading = true;
     notifyListeners();
     var data = {'phone': phone, 'code': smsCode};
     BaseResponse baseResponse = BaseResponse();
@@ -54,7 +50,6 @@ class RegisterProvider extends ChangeNotifier {
     } else {
       ApiChecker.checkApi(apiResponse);
     }
-    _isLoading = false;
     notifyListeners();
     return baseResponse;
   }
@@ -64,7 +59,6 @@ class RegisterProvider extends ChangeNotifier {
   List<Regions> get cityList => _cityList;
 
   Future<void> getCities() async {
-    _isLoading = true;
     _cityList.clear();
     ApiResponse apiResponse = await authRepo.getCities();
 
@@ -76,7 +70,6 @@ class RegisterProvider extends ChangeNotifier {
     } else {
       ApiChecker.checkApi(apiResponse);
     }
-    _isLoading = false;
     notifyListeners();
   }
 
@@ -109,23 +102,6 @@ class RegisterProvider extends ChangeNotifier {
       String deviceId,
       String deviceName,
       String deviceToken) async {
-    _isLoading = true;
-    notifyListeners();
-    Map<String, String> userData = {
-      'phone': phone,
-      'code': code,
-      'firstname': firstName,
-      'lastname': lastName,
-      'password': password,
-      'password_repeat': passwordRepeat,
-      'region_id': _cityId.toString(),
-      'born_date': bornDate,
-      'gender_id': _genderId.toString(),
-      'device_id': deviceId,
-      'device_name': deviceName,
-      'device_token': deviceToken
-    };
-
     bool status = false;
     ApiResponse apiResponse = await authRepo.fullRegistration(
         img,
@@ -145,15 +121,18 @@ class RegisterProvider extends ChangeNotifier {
         apiResponse.response?.data['status'] == 200) {
       var response = BaseResponse<UserInfoData>.fromJson(
           apiResponse.response?.data, (data) => UserInfoData.fromJson(data));
-      SharedPref().save(AppConstants.USER_DATA, response.data?.toJson());
-      sharedPreferences.setString(
-          AppConstants.TOKEN, response.data?.authKey ?? '');
+      Provider.of<UserDataProvider>(MyApp.navigatorKey.currentState!.context,
+              listen: false)
+          .saveUserData(
+              response.data?.authKey ?? '',
+              response.data?.firstname ?? '',
+              response.data?.lastname ?? '',
+              response.data?.username ?? '');
       status = true;
     } else {
       status = false;
       ApiChecker.checkApi(apiResponse);
     }
-    _isLoading = false;
     notifyListeners();
     return status;
   }

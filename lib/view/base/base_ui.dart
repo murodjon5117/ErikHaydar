@@ -1,5 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:erik_haydar/helper/enums/button_enum.dart';
+import 'package:erik_haydar/main.dart';
 import 'package:erik_haydar/util/dimensions.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
@@ -16,12 +17,14 @@ class BaseUI {
       centerTitle: true,
       elevation: 0.0,
       leading: IconButton(
-        alignment: Alignment.center,
+        alignment: Alignment.topRight,
         icon: SvgPicture.asset(Images.back_icon),
         onPressed: () => Navigator.of(context).pop(),
       ),
     );
   }
+
+  
 
   Widget imageNetwork(String url) {
     return CachedNetworkImage(

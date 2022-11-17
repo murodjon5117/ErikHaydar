@@ -5,15 +5,22 @@ import 'package:erik_haydar/view/base/base_ui.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:provider/provider.dart';
 
+import '../../../../provider/home_provider.dart';
 import '../../../../util/color_resources.dart';
 import '../../../../util/images.dart';
 import '../../../../util/styles.dart';
 
-class MusicItem extends StatelessWidget {
+class MusicItem extends StatefulWidget {
   final MusicModel musicModel;
   const MusicItem({super.key, required this.musicModel});
 
+  @override
+  State<MusicItem> createState() => _MusicItemState();
+}
+
+class _MusicItemState extends State<MusicItem> {
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -22,8 +29,7 @@ class MusicItem extends StatelessWidget {
       decoration: BoxDecoration(
           boxShadow: [
             BoxShadow(
-              offset: Offset(2, 2),
-              color: ColorResources.COLOR_EBE9E9,
+              color: ColorResources.COLOR_BLACK.withOpacity(0.08),
               blurRadius: 3.0,
               spreadRadius: 1.0,
             )
@@ -41,15 +47,14 @@ class MusicItem extends StatelessWidget {
                 child: SizedBox(
                   height: 83,
                   width: 99,
-                  child: BaseUI().imageNetwork(musicModel.image ?? ''),
+                  child: BaseUI().imageNetwork(widget.musicModel.image ?? ''),
                 ),
               ),
-              Positioned(
-                  left: 8, top: 8, child: SvgPicture.asset(Images.unliked)),
+              Positioned(left: 8, top: 8, child: favorite(context)),
               Positioned(
                   left: 0,
                   top: 71,
-                  child: tipVideo(musicModel.isFree ?? false, context)),
+                  child: tipVideo(widget.musicModel.isFree ?? false, context)),
               Positioned(
                   left: 127,
                   top: 12,
@@ -60,7 +65,7 @@ class MusicItem extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
                       Text(
-                        '${musicModel.name}',
+                        '${widget.musicModel.name}',
                         style: titleTextField.copyWith(
                             color: ColorResources.COLOR_BLACK),
                         maxLines: 1,
@@ -69,7 +74,7 @@ class MusicItem extends StatelessWidget {
                         height: 5,
                       ),
                       Text(
-                        '${musicModel.musicAuthor} \n',
+                        '${widget.musicModel.musicAuthor} \n',
                         style: itemWidgetTextStyle.copyWith(
                             color: ColorResources.COLOR_BBB5B5),
                         maxLines: 2,
@@ -88,7 +93,7 @@ class MusicItem extends StatelessWidget {
                                         width: 8,
                                       ),
                                       Text(
-                                        musicModel.viewsCount.toString(),
+                                        widget.musicModel.viewsCount.toString(),
                                         style: itemWidgetTextStyle,
                                       )
                                     ],
@@ -103,7 +108,7 @@ class MusicItem extends StatelessWidget {
                                         width: 8,
                                       ),
                                       Text(
-                                        musicModel.activeCommentsCount
+                                        widget.musicModel.activeCommentsCount
                                             .toString(),
                                         style: itemWidgetTextStyle,
                                       )
@@ -145,5 +150,31 @@ class MusicItem extends StatelessWidget {
                 color: ColorResources.COLOR_WHITE)),
       ),
     );
+  }
+
+  Widget favorite(
+    BuildContext context,
+  ) {
+    return GestureDetector(
+        onTap: () {
+          Provider.of<HomeProvider>(context, listen: false)
+              .addFavorite(widget.musicModel.slug ?? '')
+              .then((value) {
+            if (value.status == 200) {
+              if (widget.musicModel.isUserFavoriteFilm == true) {
+                setState(() {
+                  widget.musicModel.isUserFavoriteFilm = false;
+                });
+              } else {
+                setState(() {
+                  widget.musicModel.isUserFavoriteFilm = true;
+                });
+              }
+            }
+          });
+        },
+        child: SvgPicture.asset(widget.musicModel.isUserFavoriteFilm ?? false
+            ? Images.favorited
+            : Images.favorite));
   }
 }

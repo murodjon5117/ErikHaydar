@@ -10,19 +10,14 @@ class SliderScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Consumer<HomeProvider>(
-      builder: (context, value, child) => value.isLoading
-          ? BaseUI().progressIndicator()
-          : CarouselSlider.builder(
+      builder: (context, value, child) => CarouselSlider.builder(
               itemCount: value.slider.length,
               itemBuilder: (context, index, realIndex) {
                 return ClipRRect(
-                  borderRadius: BorderRadius.circular(12),
-                  clipBehavior: Clip.antiAliasWithSaveLayer,
-                  child: Image.network(
-                    "${value.slider[index].url}",
-                    fit: BoxFit.cover,
-                  ),
-                );
+                    borderRadius: BorderRadius.circular(12),
+                    clipBehavior: Clip.antiAliasWithSaveLayer,
+                    child: BaseUI().imageNetwork(
+                        'https://hamshira.biznesgoya.uz/uploads/images/film/8/preview-63623e500212e.png'));
               },
               options: CarouselOptions(
                 autoPlay: false,

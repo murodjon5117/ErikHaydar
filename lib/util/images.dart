@@ -41,12 +41,22 @@ class Images {
   static const String person_icon = 'assets/icon/person.svg';
   static const String home_icon = 'assets/icon/home.svg';
   static const String play_icon = 'assets/icon/play.svg';
-  static const String search_icon = 'assets/icon/search.svg';
+  static const String searchIcon = 'assets/icon/search.svg';
   static const String notif_icon = 'assets/icon/notification.svg';
   static const String user_icon = 'assets/icon/user.svg';
   static const String commentIcon = 'assets/icon/comment.svg';
   static const String eyeIcon = 'assets/icon/Eye.svg';
-  static const String unliked = 'assets/icon/unliked.svg';
+  static const String favorite = 'assets/icon/unliked.svg';
+  static const String favorited = 'assets/icon/favorited.svg';
   static const String playRed = 'assets/icon/play_red.svg';
+  static const String showGrid = 'assets/icon/show_grid.svg';
+  static const String showList = 'assets/icon/show_list.svg';
+  static const String playVideo = 'assets/icon/play_video.svg';
+  static const String view = 'assets/icon/view.svg';
+  static const String unLike = 'assets/icon/un_like.svg';
+  static const String liked = 'assets/icon/liked.svg';
+  static const String unDislike = 'assets/icon/un_dislike.svg';
+  static const String disliked = 'assets/icon/disliked.svg';
+  static const String downloadVideo = 'assets/icon/download_video.svg';
   static const String placeholderImage = 'assets/image/placeholder_image.png';
 }

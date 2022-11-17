@@ -9,11 +9,16 @@ const boldTitle = TextStyle(
     fontWeight: FontWeight.w600,
     height: 1.4,
     color: ColorResources.COLOR_BLACK);
+const detailTitle = TextStyle(
+    fontFamily: 'Inter',
+    fontSize: Dimensions.FONT_SIZE_24,
+    fontWeight: FontWeight.w500,
+    height: 1.6,
+    color: ColorResources.COLOR_BLACK);
 const boldTitlePhone = TextStyle(
     fontFamily: 'Inter',
     fontSize: Dimensions.FONT_SIZE_28,
     fontWeight: FontWeight.w600,
-    height: 2.0,
     color: ColorResources.COLOR_BLACK);
 const boldTitlePhoneSub = TextStyle(
     fontFamily: 'Inter',
@@ -37,18 +42,24 @@ const filledButtonTextStyle = TextStyle(
     color: ColorResources.COLOR_WHITE);
 
 const profileNumber = TextStyle(
-  fontFamily: 'Inter',
-  fontSize: Dimensions.FONT_SIZE_16,
-  fontWeight: FontWeight.w500,
-  height: 1.1,
-  color: ColorResources.COLOR_BLACK
-);
+    fontFamily: 'Inter',
+    fontSize: Dimensions.FONT_SIZE_16,
+    fontWeight: FontWeight.w500,
+    height: 1.1,
+    color: ColorResources.COLOR_BLACK);
 
 const textButtonTextStyle = TextStyle(
     fontFamily: 'Inter',
     fontSize: Dimensions.FONT_SIZE_16,
     fontWeight: FontWeight.w400,
     height: 1.1,
+    color: ColorResources.COLOR_PPIMARY);
+
+const downloadTextStyle = TextStyle(
+    fontFamily: 'Inter',
+    fontSize: Dimensions.FONT_SIZE_14,
+    fontWeight: FontWeight.w500,
+    height: 1.0,
     color: ColorResources.COLOR_PPIMARY);
 
 const itemWidgetTextStyle = TextStyle(
@@ -59,11 +70,10 @@ const itemWidgetTextStyle = TextStyle(
     color: ColorResources.COLOR_BLACK);
 
 const profileTitle = TextStyle(
-  fontFamily: 'Inter',
-  fontSize: Dimensions.FONT_SIZE_12,
-  fontWeight: FontWeight.w400,
-  color: ColorResources.COLOR_BBB5B5
-);
+    fontFamily: 'Inter',
+    fontSize: Dimensions.FONT_SIZE_12,
+    fontWeight: FontWeight.w400,
+    color: ColorResources.COLOR_BBB5B5);
 
 const searchHint = TextStyle(
   fontFamily: 'Roboto-Regular',
