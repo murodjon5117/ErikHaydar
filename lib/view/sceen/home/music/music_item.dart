@@ -174,7 +174,7 @@ class _MusicItemState extends State<MusicItem> {
           });
         },
         child: SvgPicture.asset(widget.musicModel.isUserFavoriteFilm ?? false
-            ? Images.liked
-            : Images.unliked));
+            ? Images.favorited
+            : Images.favorite));
   }
 }

@@ -16,8 +16,7 @@ import '../util/app_constants.dart';
 
 class RegisterProvider extends ChangeNotifier {
   final AuthRepo authRepo;
-  final SharedPreferences sharedPreferences;
-  RegisterProvider({required this.authRepo, required this.sharedPreferences});
+  RegisterProvider({required this.authRepo, });
 
   //for enter phone
   Future<BaseResponse> enterPhone(String phone) async {

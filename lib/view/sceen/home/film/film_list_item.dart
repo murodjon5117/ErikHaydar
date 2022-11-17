@@ -7,11 +7,13 @@ import 'package:erik_haydar/view/base/base_ui.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:persistent_bottom_nav_bar_v2/persistent-tab-view.dart';
 import 'package:provider/provider.dart';
 
 import '../../../../util/color_resources.dart';
 import '../../../../util/images.dart';
 import '../../../../util/styles.dart';
+import '../../detail_film/detail_film_screen.dart';
 
 class FilmListItem extends StatefulWidget {
   final Films item;
@@ -26,108 +28,115 @@ class FilmListItem extends StatefulWidget {
 class _FilmListItemState extends State<FilmListItem> {
   @override
   Widget build(BuildContext context) {
-    return Consumer<CategoryProvider>(
-      builder: (context, value, child) => Container(
-        height: 122,
-        width: double.infinity,
-        decoration: BoxDecoration(
-            boxShadow: [
-              BoxShadow(
-                color: ColorResources.COLOR_BLACK.withOpacity(0.08),
-                blurRadius: 3.0,
-                spreadRadius: 1.0,
+    return GestureDetector(
+      onTap: () {
+        pushNewScreen(context,
+            withNavBar: false,
+            screen: DetailFilmScreen(slug: widget.item.slug ?? ''));
+      },
+      child: Consumer<CategoryProvider>(
+        builder: (context, value, child) => Container(
+          height: 122,
+          width: double.infinity,
+          decoration: BoxDecoration(
+              boxShadow: [
+                BoxShadow(
+                  color: ColorResources.COLOR_BLACK.withOpacity(0.08),
+                  blurRadius: 3.0,
+                  spreadRadius: 1.0,
+                )
+              ],
+              color: ColorResources.COLOR_WHITE,
+              borderRadius: BorderRadius.circular(8)),
+          child: Stack(
+            children: [
+              Stack(
+                children: [
+                  Positioned(
+                    top: 12,
+                    bottom: 12,
+                    left: 12,
+                    child: SizedBox(
+                      height: 98,
+                      width: 138,
+                      child: BaseUI().imageNetwork(widget.item.image ?? ''),
+                    ),
+                  ),
+                  Positioned(
+                      left: 8,
+                      top: 8,
+                      child: favorite(
+                        context,
+                      )),
+                  Positioned(
+                      left: 0,
+                      top: 71,
+                      child: tipVideo(widget.item.isFree ?? false, context)),
+                  Positioned(
+                      left: 162,
+                      top: 12,
+                      right: 12,
+                      bottom: 12,
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Text(
+                            '${widget.item.name}',
+                            style: titleTextField.copyWith(
+                                color: ColorResources.COLOR_BLACK),
+                            maxLines: 2,
+                          ),
+                          const SizedBox(
+                            height: 12,
+                          ),
+                          Row(
+                            children: [
+                              Expanded(
+                                child: Row(
+                                  children: [
+                                    Expanded(
+                                      flex: 1,
+                                      child: Row(
+                                        children: [
+                                          SvgPicture.asset(Images.eyeIcon),
+                                          const SizedBox(
+                                            width: 8,
+                                          ),
+                                          Text(
+                                            widget.item.viewsCount.toString(),
+                                            style: itemWidgetTextStyle,
+                                          )
+                                        ],
+                                      ),
+                                    ),
+                                    Expanded(
+                                      flex: 1,
+                                      child: Row(
+                                        children: [
+                                          SvgPicture.asset(Images.commentIcon),
+                                          const SizedBox(
+                                            width: 8,
+                                          ),
+                                          Text(
+                                            widget.item.activeCommentsCount
+                                                .toString(),
+                                            style: itemWidgetTextStyle,
+                                          )
+                                        ],
+                                      ),
+                                    )
+                                  ],
+                                ),
+                              ),
+                            ],
+                          ),
+                        ],
+                      ))
+                ],
               )
             ],
-            color: ColorResources.COLOR_WHITE,
-            borderRadius: BorderRadius.circular(8)),
-        child: Stack(
-          children: [
-            Stack(
-              children: [
-                Positioned(
-                  top: 12,
-                  bottom: 12,
-                  left: 12,
-                  child: SizedBox(
-                    height: 98,
-                    width: 138,
-                    child: BaseUI().imageNetwork(widget.item.image ?? ''),
-                  ),
-                ),
-                Positioned(
-                    left: 8,
-                    top: 8,
-                    child: favorite(
-                      context,
-                    )),
-                Positioned(
-                    left: 0,
-                    top: 71,
-                    child: tipVideo(widget.item.isFree ?? false, context)),
-                Positioned(
-                    left: 162,
-                    top: 12,
-                    right: 12,
-                    bottom: 12,
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Text(
-                          '${widget.item.name}',
-                          style: titleTextField.copyWith(
-                              color: ColorResources.COLOR_BLACK),
-                          maxLines: 2,
-                        ),
-                        const SizedBox(
-                          height: 12,
-                        ),
-                        Row(
-                          children: [
-                            Expanded(
-                              child: Row(
-                                children: [
-                                  Expanded(
-                                    flex: 1,
-                                    child: Row(
-                                      children: [
-                                        SvgPicture.asset(Images.eyeIcon),
-                                        const SizedBox(
-                                          width: 8,
-                                        ),
-                                        Text(
-                                          widget.item.viewsCount.toString(),
-                                          style: itemWidgetTextStyle,
-                                        )
-                                      ],
-                                    ),
-                                  ),
-                                  Expanded(
-                                    flex: 1,
-                                    child: Row(
-                                      children: [
-                                        SvgPicture.asset(Images.commentIcon),
-                                        const SizedBox(
-                                          width: 8,
-                                        ),
-                                        Text(
-                                          widget.item.activeCommentsCount
-                                              .toString(),
-                                          style: itemWidgetTextStyle,
-                                        )
-                                      ],
-                                    ),
-                                  )
-                                ],
-                              ),
-                            ),
-                          ],
-                        ),
-                      ],
-                    ))
-              ],
-            )
-          ],
+          ),
         ),
       ),
     );
@@ -173,7 +182,7 @@ class _FilmListItemState extends State<FilmListItem> {
           });
         },
         child: SvgPicture.asset(widget.item.isUserFavoriteFilm ?? false
-            ? Images.liked
-            : Images.unliked));
+            ? Images.favorited
+            : Images.favorite));
   }
 }

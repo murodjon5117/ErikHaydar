@@ -10,9 +10,8 @@ import '../model/response/base/api_response.dart';
 
 class AuthRepo {
   DioClient dioClient;
-  SharedPreferences sharedPreferences;
 
-  AuthRepo({required this.dioClient, required this.sharedPreferences});
+  AuthRepo({required this.dioClient});
 
   Future<ApiResponse> enterPhone(dynamic data) async {
     try {

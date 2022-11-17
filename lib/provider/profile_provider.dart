@@ -15,9 +15,8 @@ import '../view/sceen/profile/widget/buttons.dart';
 
 class ProfileProvider extends ChangeNotifier {
   ProfileRepo repo;
-  SharedPreferences sharedPreferences;
 
-  ProfileProvider({required this.repo, required this.sharedPreferences});
+  ProfileProvider({required this.repo});
 
   UserInfoModelProfile _userInfo = UserInfoModelProfile();
   UserInfoModelProfile get userInfo => _userInfo;

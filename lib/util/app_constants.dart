@@ -29,6 +29,7 @@ class AppConstants {
   static const likeForFilm = '/film-manager/film/like';
   static const dissLikeForFilm = '/film-manager/film/dislike';
   static const addFavorite = '/film-manager/favorite-film/create';
+  static const filmDetail = '/film-manager/film/detail';
   //Shared Key
   static const String token = 'token';
   static const String isLogin = 'isLogin';
