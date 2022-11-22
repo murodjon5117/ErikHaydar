@@ -1,26 +1,27 @@
 import 'package:erik_haydar/helper/enums/button_enum.dart';
 import 'package:erik_haydar/localization/language_constrants.dart';
-import 'package:erik_haydar/provider/register_provider.dart';
+import 'package:erik_haydar/provider/profile_provider.dart';
 import 'package:erik_haydar/util/color_resources.dart';
 import 'package:erik_haydar/view/base/base_ui.dart';
-import 'package:erik_haydar/view/sceen/auth/register/full_register_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:otp_text_field/otp_field.dart';
 import 'package:otp_text_field/otp_field_style.dart';
 import 'package:otp_text_field/style.dart';
-import 'package:persistent_bottom_nav_bar_v2/persistent-tab-view.dart';
 import 'package:provider/provider.dart';
+import '../../../../util/dimensions.dart';
+import '../../../../util/images.dart';
 import '../../../../util/styles.dart';
 
-class SmsScreen extends StatefulWidget {
+class EditPhoneSmsScreen extends StatefulWidget {
   final String phoneNumber;
-  const SmsScreen({super.key, required this.phoneNumber});
+  const EditPhoneSmsScreen({super.key, required this.phoneNumber});
 
   @override
-  State<SmsScreen> createState() => _SmsScreenState();
+  State<EditPhoneSmsScreen> createState() => _EditPhoneSmsScreenState();
 }
 
-class _SmsScreenState extends State<SmsScreen>
+class _EditPhoneSmsScreenState extends State<EditPhoneSmsScreen>
     with SingleTickerProviderStateMixin {
   bool validator = false;
   AnimationController? _animationController;
@@ -46,7 +47,7 @@ class _SmsScreenState extends State<SmsScreen>
 
   @override
   Widget build(BuildContext context) {
-    return Consumer<RegisterProvider>(
+    return Consumer<ProfileProvider>(
       builder: (context, value, child) => Scaffold(
         backgroundColor: ColorResources.COLOR_WHITE,
         appBar: BaseUI().appBar(context),
@@ -147,13 +148,8 @@ class _SmsScreenState extends State<SmsScreen>
                           .verifyPhone(widget.phoneNumber, _otpCode)
                           .then((result) {
                         if (result.status == 200) {
-                          pushNewScreen(context,
-                              screen: FullRegisterScreen(
-                                code: _otpCode,
-                                phone: widget.phoneNumber,
-                              ),
-                              pageTransitionAnimation:
-                                  PageTransitionAnimation.fade);
+                          _showSuccessDialog(context);
+                          value.getUserInfo();
                         } else {
                           setState(() {
                             validator = true;
@@ -172,6 +168,56 @@ class _SmsScreenState extends State<SmsScreen>
       ),
     );
   }
+}
+
+_showSuccessDialog(BuildContext context) {
+  showDialog(
+      barrierDismissible: false,
+      context: context,
+      builder: (BuildContext context) {
+        return Consumer<ProfileProvider>(
+          builder: (context, value, child) => Dialog(
+            insetPadding: const EdgeInsets.symmetric(horizontal: 20),
+            shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(10.0)), //this right here
+            child: Wrap(
+              alignment: WrapAlignment.center,
+              children: [
+                Padding(
+                  padding: const EdgeInsets.all(24),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      SvgPicture.asset(Images.succesIcon),
+                      const SizedBox(
+                        height: 24,
+                      ),
+                      Text(
+                        getTranslated('conguratulation', context),
+                        style: boldTitle.copyWith(
+                            fontSize: Dimensions.FONT_SIZE_24),
+                      ),
+                      const SizedBox(
+                        height: 12,
+                      ),
+                      Text(getTranslated('success_edit_phone', context)),
+                      const SizedBox(
+                        height: 24,
+                      ),
+                      BaseUI().buttonsType(TypeButton.filled, context, () {
+                        Navigator.pop(context);
+                        Navigator.pop(context);
+                        Navigator.pop(context);
+                      }, getTranslated('understand', context)),
+                    ],
+                  ),
+                ),
+              ],
+            ),
+          ),
+        );
+      });
 }
 
 class Countdown extends AnimatedWidget {

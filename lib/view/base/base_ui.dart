@@ -15,9 +15,8 @@ class BaseUI {
     return AppBar(
       backgroundColor: ColorResources.COLOR_WHITE,
       centerTitle: true,
-      elevation: 0.0,
+      elevation: 0,
       leading: IconButton(
-        alignment: Alignment.topRight,
         icon: SvgPicture.asset(Images.back_icon),
         onPressed: () => Navigator.of(context).pop(),
       ),
@@ -26,9 +25,9 @@ class BaseUI {
 
   
 
-  Widget imageNetwork(String url) {
+  Widget imageNetwork(String? url) {
     return CachedNetworkImage(
-      imageUrl: url,
+      imageUrl: url??'',
       fit: BoxFit.contain,
       imageBuilder: (context, imageProvider) => Container(
         decoration: BoxDecoration(
@@ -44,6 +43,7 @@ class BaseUI {
       errorWidget: (context, url, error) => Image.asset(
         Images.placeholderImage,
       ),
+      
     );
   }
 

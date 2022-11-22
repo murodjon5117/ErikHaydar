@@ -5,6 +5,7 @@ import 'package:erik_haydar/data/repository/profile_repo.dart';
 import 'package:erik_haydar/data/repository/home_repo.dart';
 import 'package:erik_haydar/provider/category_provider.dart';
 import 'package:erik_haydar/provider/detail_film_provider.dart';
+import 'package:erik_haydar/provider/detail_music_provider.dart';
 import 'package:erik_haydar/provider/home_provider.dart';
 import 'package:erik_haydar/provider/localization_provider.dart';
 import 'package:erik_haydar/provider/login_provider.dart';
@@ -53,4 +54,5 @@ Future<void> init() async {
   sl.registerFactory(() => SearchProvider(repo: sl()));
   sl.registerFactory(() => FavoriteProvider(repo: sl()));
   sl.registerFactory(() => FilmDetailProvider(repo: sl()));
+  sl.registerFactory(() => MusicDetailProvider(repo: sl()));
 }

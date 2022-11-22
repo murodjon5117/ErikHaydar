@@ -32,7 +32,8 @@ class _FilmListItemState extends State<FilmListItem> {
       onTap: () {
         pushNewScreen(context,
             withNavBar: false,
-            screen: DetailFilmScreen(slug: widget.item.slug ?? ''));
+            screen: DetailFilmScreen(
+                slug: widget.item.slug ?? '', image: widget.item.image ?? ''));
       },
       child: Consumer<CategoryProvider>(
         builder: (context, value, child) => Container(

@@ -90,12 +90,12 @@ class _RegisterScreenState extends State<RegisterScreen> {
                             )
                                 .then((result) {
                               if (result.status == 200) {
-                                pushNewScreen(context,
-                                    screen: SmsScreen(
-                                      phoneNumber: _phoneNumberController.text,
-                                    ),
-                                    pageTransitionAnimation:
-                                        PageTransitionAnimation.fade);
+                                pushNewScreen(
+                                  context,
+                                  screen: SmsScreen(
+                                    phoneNumber: _phoneNumberController.text,
+                                  ),
+                                );
                               }
                             });
                           }

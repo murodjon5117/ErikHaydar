@@ -18,6 +18,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:provider/provider.dart';
 
+import 'package:intl/intl.dart';
+
 import '../../dashboard/dashboard_screen.dart';
 
 class FullRegisterScreen extends StatefulWidget {
@@ -90,6 +92,8 @@ class _FullRegisterScreenState extends State<FullRegisterScreen> {
     super.dispose();
   }
 
+  DateTime selectedDate = DateTime.now();
+
   @override
   Widget build(BuildContext context) {
     return LayoutBuilder(
@@ -122,11 +126,12 @@ class _FullRegisterScreenState extends State<FullRegisterScreen> {
                               width: double.infinity,
                               decoration: BoxDecoration(
                                   boxShadow: [
-                                    const BoxShadow(
-                                      color: ColorResources.APPBAR_HEADER_COL0R,
+                                    BoxShadow(
+                                      color: ColorResources.APPBAR_HEADER_COL0R
+                                          .withOpacity(1),
                                       blurRadius: 8.0,
                                       spreadRadius: 5.0,
-                                      offset: Offset(4.0,
+                                      offset: const Offset(4.0,
                                           4.0), // shadow direction: bottom right
                                     )
                                   ],
@@ -166,6 +171,9 @@ class _FullRegisterScreenState extends State<FullRegisterScreen> {
                                             getTranslated('hint_date', context),
                                         controller: _dateController,
                                         focusNode: _dateFocus,
+                                        onTap: () {
+                                          selectDate(context);
+                                        },
                                         type: TextFieldType.text),
                                     CustomTextField(
                                         title: getTranslated('city', context),
@@ -272,7 +280,7 @@ class _FullRegisterScreenState extends State<FullRegisterScreen> {
                                         });
                                       }
                                     }, getTranslated('confirm', context)),
-                                    SizedBox(
+                                    const SizedBox(
                                       height: 50,
                                     )
                                   ],
@@ -296,6 +304,21 @@ class _FullRegisterScreenState extends State<FullRegisterScreen> {
         ),
       ),
     );
+  }
+
+  Future<void> selectDate(BuildContext context) async {
+    final DateTime? picked = await showDatePicker(
+        context: context,
+        initialDate: selectedDate,
+        firstDate: DateTime(1960, 11),
+        lastDate: DateTime(2101));
+    if (picked != null) {
+      String formattedDate = DateFormat('dd.MM.yyyy').format(picked);
+      selectedDate = picked;
+      setState(() {
+        _dateController.text = formattedDate;
+      });
+    }
   }
 
   Future<void> initPlatformState() async {
@@ -455,7 +478,7 @@ class _FullRegisterScreenState extends State<FullRegisterScreen> {
                     backgroundColor: ColorResources.COLOR_WHITE,
                     radius: 45.0,
                     child: image == null
-                        ? SvgPicture.asset(Images.user_photo)
+                        ? SvgPicture.asset(Images.userPhoto)
                         : ClipOval(
                             child: Image.file(image!,
                                 width: 85, height: 85, fit: BoxFit.cover),

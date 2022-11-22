@@ -1,35 +1,37 @@
-import 'package:erik_haydar/data/model/response/body/detail_fim_model.dart';
-import 'package:erik_haydar/provider/detail_film_provider.dart';
+import 'package:erik_haydar/data/model/response/body/detail_music_model.dart';
+import 'package:erik_haydar/util/dimensions.dart';
 import 'package:erik_haydar/view/base/base_ui.dart';
 import 'package:erik_haydar/view/sceen/detail_film/comment_list.dart';
 import 'package:erik_haydar/view/sceen/detail_film/set_comment.dart';
+import 'package:erik_haydar/view/sceen/detail_music/player/music_payer.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:provider/provider.dart';
 
 import '../../../localization/language_constrants.dart';
+import '../../../provider/detail_music_provider.dart';
 import '../../../provider/home_provider.dart';
 import '../../../util/color_resources.dart';
 import '../../../util/images.dart';
 import '../../../util/styles.dart';
 
-class DetailFilmScreen extends StatefulWidget {
+class DetailMusicScreen extends StatefulWidget {
   final String slug;
   final String image;
 
-  const DetailFilmScreen({super.key, required this.slug, required this.image});
+  const DetailMusicScreen({super.key, required this.slug, required this.image});
   @override
-  State<DetailFilmScreen> createState() => _DetailFilmScreenState();
+  State<DetailMusicScreen> createState() => _DetailMusicScreenState();
 }
 
-class _DetailFilmScreenState extends State<DetailFilmScreen> {
+class _DetailMusicScreenState extends State<DetailMusicScreen> {
   @override
   void initState() {
     SchedulerBinding.instance.addPostFrameCallback((_) {
-      Provider.of<FilmDetailProvider>(context, listen: false)
-          .getFilmDetail(widget.slug);
-      Provider.of<FilmDetailProvider>(context, listen: false)
+      Provider.of<MusicDetailProvider>(context, listen: false)
+          .getMusicDetail(widget.slug);
+      Provider.of<MusicDetailProvider>(context, listen: false)
           .getComment(widget.slug, false);
     });
 
@@ -44,7 +46,7 @@ class _DetailFilmScreenState extends State<DetailFilmScreen> {
   @override
   Widget build(BuildContext context) {
     return LayoutBuilder(
-      builder: (p0, p1) => Consumer<FilmDetailProvider>(
+      builder: (p0, p1) => Consumer<MusicDetailProvider>(
         builder: (context, value, child) => Scaffold(
           backgroundColor: ColorResources.COLOR_WHITE,
           appBar: AppBar(
@@ -55,7 +57,7 @@ class _DetailFilmScreenState extends State<DetailFilmScreen> {
               icon: SvgPicture.asset(Images.back_icon),
               onPressed: () => Navigator.of(context).pop(),
             ),
-            actions: [favorite(context, value.detailFilmModel)],
+            actions: [favorite(context, value.detailMusicModel)],
           ),
           body: Stack(
             children: [
@@ -69,10 +71,11 @@ class _DetailFilmScreenState extends State<DetailFilmScreen> {
                     ),
                     child: Column(
                       children: [
-                        detaiPhoto(value.detailFilmModel.image ?? '',
-                            value.detailFilmModel.isFree ?? false),
-                        detailInformation(value.detailFilmModel),
-                        detailFunctions(value.detailFilmModel.viewsCount ?? 0),
+                        detaiPhoto(value.detailMusicModel.image ?? '',
+                            value.detailMusicModel.isFree ?? false),
+                        detailInformation(value.detailMusicModel),
+                        MusicPayer(slug: widget.slug),
+                        detailFunctions(value.detailMusicModel.viewsCount ?? 0),
                         CommentList(
                           commentList: value.commentList,
                           totalCount: value.totalItemCount,
@@ -85,7 +88,7 @@ class _DetailFilmScreenState extends State<DetailFilmScreen> {
                   ),
                 ),
               ),
-              SetComment(id: value.detailFilmModel.id ?? 0)
+              SetComment(id: value.detailMusicModel.id ?? 0)
             ],
           ),
         ),
@@ -95,16 +98,16 @@ class _DetailFilmScreenState extends State<DetailFilmScreen> {
 
   bool _scrollNotification(ScrollNotification scrollInfo) {
     if (scrollInfo.metrics.pixels == scrollInfo.metrics.maxScrollExtent &&
-        Provider.of<FilmDetailProvider>(context, listen: false).isPaging()) {
-      Provider.of<FilmDetailProvider>(context, listen: false)
+        Provider.of<MusicDetailProvider>(context, listen: false).isPaging()) {
+      Provider.of<MusicDetailProvider>(context, listen: false)
           .getComment(widget.slug, true);
     }
     return true;
   }
 
-  Widget detailInformation(DetailFilmModel detailFilmModel) {
+  Widget detailInformation(DetailMusicMidel detailMusicModel) {
     return Padding(
-      padding: const EdgeInsets.fromLTRB(20, 18, 20, 27),
+      padding: const EdgeInsets.fromLTRB(20, 18, 20, 20),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -117,7 +120,7 @@ class _DetailFilmScreenState extends State<DetailFilmScreen> {
                     titleTextField.copyWith(color: ColorResources.COLOR_BBB5B5),
               ),
               Text(
-                detailFilmModel.createdAt ?? '',
+                detailMusicModel.createdAt ?? '',
                 style: titleTextField,
               ),
             ],
@@ -126,16 +129,17 @@ class _DetailFilmScreenState extends State<DetailFilmScreen> {
             height: 18,
           ),
           Text(
-            detailFilmModel.name ?? '',
-            style: detailTitle,
+            detailMusicModel.musicAuthor ?? '',
+            style: filledButtonTextStyle.copyWith(
+                fontSize: Dimensions.FONT_SIZE_14,
+                color: ColorResources.COLOR_BLACK),
           ),
           const SizedBox(
-            height: 14,
+            height: 4,
           ),
           Text(
-            detailFilmModel.description ?? '',
-            style: filledButtonTextStyle.copyWith(
-                color: ColorResources.COLOR_BLACK),
+            detailMusicModel.name ?? '',
+            style: detailTitle,
           ),
         ],
       ),
@@ -143,7 +147,7 @@ class _DetailFilmScreenState extends State<DetailFilmScreen> {
   }
 
   Widget detailFunctions(int viewCount) {
-    return Consumer<FilmDetailProvider>(
+    return Consumer<MusicDetailProvider>(
       builder: (context, value, child) => Padding(
         padding: const EdgeInsets.symmetric(horizontal: 20),
         child: Row(
@@ -208,18 +212,18 @@ class _DetailFilmScreenState extends State<DetailFilmScreen> {
               ],
             ),
             const Spacer(),
-            Column(
-              children: [
-                SvgPicture.asset(Images.downloadVideo),
-                const SizedBox(
-                  height: 4,
-                ),
-                Text(
-                  getTranslated('download', context),
-                  style: downloadTextStyle,
-                ),
-              ],
-            ),
+            // Column(
+            //   children: [
+            //     SvgPicture.asset(Images.downloadVideo),
+            //     const SizedBox(
+            //       height: 4,
+            //     ),
+            //     Text(
+            //       getTranslated('download', context),
+            //       style: downloadTextStyle,
+            //     ),
+            //   ],
+            // ),
           ],
         ),
       ),
@@ -234,17 +238,10 @@ class _DetailFilmScreenState extends State<DetailFilmScreen> {
           decoration: BoxDecoration(borderRadius: BorderRadius.circular(10)),
           child: SizedBox(
               width: double.infinity,
-              height: 238,
+              height: 355,
               child: BaseUI().imageNetwork(widget.image)),
         ),
         Positioned(top: 10, left: 0, child: tipVideo(isFree, context)),
-        Positioned(
-            top: 77,
-            bottom: 77,
-            left: 0,
-            right: 0,
-            child: GestureDetector(
-                onTap: () {}, child: SvgPicture.asset(Images.playVideo)))
       ],
     );
   }
@@ -269,7 +266,7 @@ class _DetailFilmScreenState extends State<DetailFilmScreen> {
 
   Widget favorite(
     BuildContext context,
-    DetailFilmModel detailFilmModel,
+    DetailMusicMidel detailFilmModel,
   ) {
     return GestureDetector(
         onTap: () {

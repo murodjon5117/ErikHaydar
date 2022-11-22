@@ -1,6 +1,7 @@
 import 'package:erik_haydar/data/model/response/body/comment_model.dart';
-import 'package:erik_haydar/data/model/response/body/detail_fim_model.dart';
+import 'package:erik_haydar/data/model/response/body/detail_music_model.dart';
 import 'package:erik_haydar/data/model/response/body/like_dislike_model.dart';
+import 'package:erik_haydar/data/model/response/body/play_music_model.dart';
 import 'package:erik_haydar/data/repository/detail_repo.dart';
 import 'package:erik_haydar/helper/extention/extention.dart';
 import 'package:flutter/material.dart';
@@ -8,13 +9,13 @@ import 'package:flutter/material.dart';
 import '../data/model/response/base/api_response.dart';
 import '../data/model/response/base/base_model.dart';
 
-class FilmDetailProvider extends ChangeNotifier {
-  FilmDetailProvider({
+class MusicDetailProvider extends ChangeNotifier {
+  MusicDetailProvider({
     required this.repo,
   });
   DetailRepo repo;
-  DetailFilmModel _detailFilmModel = DetailFilmModel();
-  DetailFilmModel get detailFilmModel => _detailFilmModel;
+  DetailMusicMidel _detailMusicModel = DetailMusicMidel();
+  DetailMusicMidel get detailMusicModel => _detailMusicModel;
 
   bool _isLike = false;
   bool get isLike => _isLike;
@@ -26,19 +27,20 @@ class FilmDetailProvider extends ChangeNotifier {
   String _disLikeCount = '';
   String get likeDisCount => _disLikeCount;
 
-  Future<void> getFilmDetail(String slug) async {
-    _detailFilmModel = DetailFilmModel();
-    ApiResponse apiResponse = await repo.getFilmDetail({
+  Future<void> getMusicDetail(String slug) async {
+    _detailMusicModel = DetailMusicMidel();
+    ApiResponse apiResponse = await repo.getMusicDetail({
       'key': slug,
     });
     if (IsEnableApiResponse(apiResponse).isValide()) {
-      var response = BaseResponse<DetailFilmModel>.fromJson(
-          apiResponse.response?.data, (data) => DetailFilmModel.fromJson(data));
-      _detailFilmModel = response.data ?? DetailFilmModel();
-      _isLike = _detailFilmModel.isLike ?? false;
-      _likeCount = _detailFilmModel.likesCount.toString();
-      _isDisLike = _detailFilmModel.isDisLike ?? false;
-      _disLikeCount = _detailFilmModel.dislikesCount.toString();
+      var response = BaseResponse<DetailMusicMidel>.fromJson(
+          apiResponse.response?.data,
+          (data) => DetailMusicMidel.fromJson(data));
+      _detailMusicModel = response.data ?? DetailMusicMidel();
+      _isLike = _detailMusicModel.isLike ?? false;
+      _likeCount = _detailMusicModel.likesCount.toString();
+      _isDisLike = _detailMusicModel.isDisLike ?? false;
+      _disLikeCount = _detailMusicModel.dislikesCount.toString();
     }
     notifyListeners();
   }
@@ -131,5 +133,18 @@ class FilmDetailProvider extends ChangeNotifier {
     }
     _isPagingLoading = false;
     notifyListeners();
+  }
+
+  Future<void> getSourceMusic(String slug) async {
+    String musicUrl = '';
+    dynamic data = {'key': slug};
+    ApiResponse apiResponse = await repo.getMusicSourse(data);
+    if (IsEnableApiResponse(apiResponse).isValide()) {
+      var response = BaseResponse<PlayMusicModel>.fromJson(
+          apiResponse.response?.data, (data) => PlayMusicModel.fromJson(data));
+      musicUrl = response.data?.sources ?? '';
+    }
+    notifyListeners();
+    // return musicUrl;
   }
 }

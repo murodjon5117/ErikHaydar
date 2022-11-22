@@ -6,13 +6,17 @@ import 'package:erik_haydar/util/dimensions.dart';
 import 'package:erik_haydar/util/styles.dart';
 import 'package:erik_haydar/view/base/base_ui.dart';
 import 'package:erik_haydar/view/base/custom_text_field.dart';
+import 'package:erik_haydar/view/sceen/profile/change_phone/edit_phone_sms_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:persistent_bottom_nav_bar_v2/persistent-tab-view.dart';
 import 'package:provider/provider.dart';
 
 class EditPhoneNumber extends StatelessWidget {
   final _formKey = GlobalKey<FormState>();
   final FocusNode _newPhoneFocus = FocusNode();
   final TextEditingController _newPhone = TextEditingController();
+
+  EditPhoneNumber({super.key});
   @override
   Widget build(BuildContext context) {
     return Consumer<ProfileProvider>(
@@ -69,8 +73,18 @@ class EditPhoneNumber extends StatelessWidget {
                 left: 20,
                 right: 20,
                 bottom: 40,
-                child: BaseUI().buttonsType(TypeButton.filled, context, () {},
-                    getTranslated('confirm', context)))
+                child: BaseUI().buttonsType(TypeButton.filled, context, () {
+                  if (_formKey.currentState!.validate()) {
+                    value.changePhone(_newPhone.text).then((result) {
+                      if (result.status == 200) {
+                        pushNewScreen(context,
+                            screen: EditPhoneSmsScreen(
+                              phoneNumber: _newPhone.text,
+                            ));
+                      }
+                    });
+                  }
+                }, getTranslated('confirm', context)))
           ],
         ),
       ),

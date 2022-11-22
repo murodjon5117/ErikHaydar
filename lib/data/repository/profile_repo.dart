@@ -47,6 +47,46 @@ class ProfileRepo {
     }
   }
 
+  Future<ApiResponse> changePhone(dynamic data) async {
+    try {
+      final response =
+          await dioClient.post(AppConstants.changePhone, data: data);
+      return ApiResponse.withSuccess(response);
+    } catch (e) {
+      return ApiResponse.withError(ApiErrorHandler.getMessage(e));
+    }
+  }
+
+  Future<ApiResponse> verifySms(dynamic data) async {
+    try {
+      final response =
+          await dioClient.post(AppConstants.verifySms, data: data);
+      return ApiResponse.withSuccess(response);
+    } catch (e) {
+      return ApiResponse.withError(ApiErrorHandler.getMessage(e));
+    }
+  }
+
+  Future<ApiResponse> updateUserInfo(dynamic data) async {
+    try {
+      final response =
+          await dioClient.post(AppConstants.updateUserInfo, data: data);
+      return ApiResponse.withSuccess(response);
+    } catch (e) {
+      return ApiResponse.withError(ApiErrorHandler.getMessage(e));
+    }
+  }
+
+  Future<ApiResponse> updateUserRassword(dynamic data) async {
+    try {
+      final response =
+          await dioClient.post(AppConstants.updateUserPassword, data: data);
+      return ApiResponse.withSuccess(response);
+    } catch (e) {
+      return ApiResponse.withError(ApiErrorHandler.getMessage(e));
+    }
+  }
+
   Future<ApiResponse> buyTarif(dynamic data) async {
     try {
       final response = await dioClient.post(

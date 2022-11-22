@@ -51,6 +51,16 @@
   "hello": "Salom",
   "exit": "Akkauntdan chiqish",
   "download": "Yuklab olish",
-  "downloaded": "Yuklandi"
-
+  "downloaded": "Yuklandi",
+  "write": "Yozing...",
+  "comment": "Izohlar",
+  "save": "Saqlash",
+  "set_comment": "O’z izohingizni qoldiring!",
+  "input_old_password": "Eski parolni kiriting",
+  "input_new_password": "Yangi parolni kiriting",
+  "input_new_password_repeat": "Yangi parolni takrorlang",
+  "edit_user_info": "Profil ma’lumotlarini \ntahrirlash",
+  "success_edit_phone": "Telefon raqamingiz muvaffaqiyatli tahrirlandi!",
+  "success_edit_password": "Parolingiz muvaffaqiyatli yangilandi!",
+  "success_user_info": "Profil ma'lumotlaringiz muvaffaqiyatli tahrirlandi!"
 }

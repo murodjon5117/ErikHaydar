@@ -2,6 +2,7 @@ import 'dart:io';
 import 'dart:ui';
 import 'package:erik_haydar/provider/category_provider.dart';
 import 'package:erik_haydar/provider/detail_film_provider.dart';
+import 'package:erik_haydar/provider/detail_music_provider.dart';
 import 'package:erik_haydar/provider/favorite_provider.dart';
 import 'package:erik_haydar/provider/home_provider.dart';
 import 'package:erik_haydar/provider/localization_provider.dart';
@@ -37,6 +38,7 @@ Future<void> main() async {
       ChangeNotifierProvider(create: (context) => di.sl<SearchProvider>()),
       ChangeNotifierProvider(create: (context) => di.sl<FilmDetailProvider>()),
       ChangeNotifierProvider(create: (context) => di.sl<UserDataProvider>()),
+      ChangeNotifierProvider(create: (context) => di.sl<MusicDetailProvider>()),
     ],
     child: const MyApp(),
   ));

@@ -28,7 +28,7 @@ class _FilmGridItemState extends State<FilmGridItem> {
       onTap: () {
         pushNewScreen(context,
             withNavBar: false,
-            screen: DetailFilmScreen(slug: widget.item.slug ?? ''));
+            screen: DetailFilmScreen(slug: widget.item.slug ?? '',image: widget.item.image??'',));
       },
       child: Container(
         height: 201,

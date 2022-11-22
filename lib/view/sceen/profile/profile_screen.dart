@@ -13,6 +13,8 @@ import '../../../util/color_resources.dart';
 import '../../../util/styles.dart';
 
 class ProfileScreen extends StatefulWidget {
+  const ProfileScreen({super.key});
+
   @override
   State<ProfileScreen> createState() => _ProfileScreenState();
 }

@@ -46,30 +46,7 @@ class HomeRepo {
     }
   }
 
-  Future<ApiResponse> likeForFilm(dynamic data) async {
-    try {
-      final response = await dioClient.post(
-        AppConstants.likeForFilm,
-        queryParameters: data,
-      );
-      return ApiResponse.withSuccess(response);
-    } catch (e) {
-      return ApiResponse.withError(ApiErrorHandler.getMessage(e));
-    }
-  }
-
-  Future<ApiResponse> dissLikeForFilm(dynamic data) async {
-    try {
-      final response = await dioClient.post(
-        AppConstants.dissLikeForFilm,
-        queryParameters: data,
-      );
-      return ApiResponse.withSuccess(response);
-    } catch (e) {
-      return ApiResponse.withError(ApiErrorHandler.getMessage(e));
-    }
-  }
-
+  
   Future<ApiResponse> addFavorite(dynamic data) async {
     try {
       final response = await dioClient.post(

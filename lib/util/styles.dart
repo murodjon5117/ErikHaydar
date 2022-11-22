@@ -15,6 +15,12 @@ const detailTitle = TextStyle(
     fontWeight: FontWeight.w500,
     height: 1.6,
     color: ColorResources.COLOR_BLACK);
+const commentTiteStyle = TextStyle(
+    fontFamily: 'Inter',
+    fontSize: Dimensions.FONT_SIZE_18,
+    fontWeight: FontWeight.w500,
+    height: 1.25,
+    color: ColorResources.COLOR_BLACK);
 const boldTitlePhone = TextStyle(
     fontFamily: 'Inter',
     fontSize: Dimensions.FONT_SIZE_28,
@@ -25,6 +31,11 @@ const boldTitlePhoneSub = TextStyle(
     fontSize: Dimensions.FONT_SIZE_18,
     fontWeight: FontWeight.w400,
     height: 1.4,
+    color: ColorResources.COLOR_737373);
+const payerIndigator = TextStyle(
+    fontFamily: 'Inter',
+    fontSize: Dimensions.FONT_SIZE_10,
+    fontWeight: FontWeight.w400,
     color: ColorResources.COLOR_737373);
 
 const titleTextField = TextStyle(

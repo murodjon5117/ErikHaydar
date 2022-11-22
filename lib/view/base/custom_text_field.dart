@@ -9,6 +9,8 @@ import '../../util/images.dart';
 import '../../util/styles.dart';
 
 class CustomTextField extends StatelessWidget {
+  DateTime selectedDate = DateTime.now();
+
   final String title;
   final String hint;
   final TextEditingController controller;
@@ -74,10 +76,18 @@ class CustomTextField extends StatelessWidget {
                   return hint;
                 }
                 return null;
+              case TextFieldType.selectDate:
+                if (value == null || value.isEmpty) {
+                  return hint;
+                }
+                return null;
             }
           },
           controller: controller,
-          readOnly: (type == TextFieldType.selected) ? true : false,
+          readOnly: (type == TextFieldType.selected ||
+                  type == TextFieldType.selectDate)
+              ? true
+              : false,
           focusNode: focusNode,
           onTap: onTap,
           keyboardType: _textInputType(),
@@ -130,6 +140,8 @@ class CustomTextField extends StatelessWidget {
         return ColorResources.COLOR_4A4949;
       case TextFieldType.summa:
         return ColorResources.COLOR_CFCBCB;
+      case TextFieldType.selectDate:
+        return ColorResources.COLOR_CFCBCB;
     }
   }
 
@@ -145,6 +157,8 @@ class CustomTextField extends StatelessWidget {
         return hint;
       case TextFieldType.summa:
         return '(120 000)';
+      case TextFieldType.selectDate:
+        return hint;
     }
   }
 
@@ -160,8 +174,12 @@ class CustomTextField extends StatelessWidget {
         return TextInputType.text;
       case TextFieldType.summa:
         return TextInputType.number;
+      case TextFieldType.selectDate:
+        return TextInputType.text;
     }
   }
+
+  
 }
 
 enum TextFieldType {
@@ -169,5 +187,6 @@ enum TextFieldType {
   password,
   text,
   summa,
+  selectDate,
   selected;
 }
