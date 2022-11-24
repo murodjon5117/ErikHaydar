@@ -26,7 +26,7 @@ class _FilmGridItemState extends State<FilmGridItem> {
       height: 201,
       width: 162,
       decoration: BoxDecoration(
-          boxShadow: const [
+          boxShadow: [
             BoxShadow(
               color: ColorResources.COLOR_BLACK.withOpacity(0.08),
               blurRadius: 3.0,

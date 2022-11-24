@@ -28,7 +28,7 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
 
   List<Widget> _buildScreens() {
     return [
-      HomeScreen(),
+      const HomeScreen(),
       CategoryScreen(),
       FavoritesScreen(),
       ProfileScreen(),
@@ -108,7 +108,7 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
               color: Colors.black.withOpacity(0.1),
               spreadRadius: 3,
               blurRadius: 5,
-              offset: Offset(0, 3), // changes position of shadow
+              offset: const Offset(0, 3), // changes position of shadow
             ),
           ]),
       popAllScreensOnTapOfSelectedTab: true,

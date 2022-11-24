@@ -48,7 +48,8 @@ class _MediaPlayerState extends State<MediaPlayer> with WidgetsBindingObserver {
       DeviceOrientation.portraitUp,
       DeviceOrientation.portraitDown,
     ]);
-    _controller = VideoPlayerController.network(videoPlayerOptions: VideoPlayerOptions(mixWithOthers: true),  
+    _controller = VideoPlayerController.network(
+        videoPlayerOptions: VideoPlayerOptions(mixWithOthers: true),
         'https://hamshira.biznesgoya.uz/uploads/media/stream/1/6f9e961dc1b1ea58daf6469956ae7a48/4474efb04d27d874331982f1a8b77c2c.m3u8');
     _attachListenerToController();
     _controller.setLooping(true);

@@ -27,7 +27,7 @@ class _MusicItemState extends State<MusicItem> {
       height: 119,
       width: 335,
       decoration: BoxDecoration(
-          boxShadow: const [
+          boxShadow: [
             BoxShadow(
               color: ColorResources.COLOR_BLACK.withOpacity(0.08),
               blurRadius: 3.0,
