@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:erik_haydar/data/model/response/body/cities_model.dart';
 import 'package:erik_haydar/data/model/response/body/user_info_model.dart';
+import 'package:erik_haydar/helper/extention/extention.dart';
 import 'package:erik_haydar/main.dart';
 import 'package:erik_haydar/provider/user_data_provider.dart';
 import 'package:flutter/material.dart';
@@ -16,8 +17,9 @@ import '../util/app_constants.dart';
 
 class RegisterProvider extends ChangeNotifier {
   final AuthRepo authRepo;
-  final SharedPreferences sharedPreferences;
-  RegisterProvider({required this.authRepo, required this.sharedPreferences});
+  RegisterProvider({
+    required this.authRepo,
+  });
 
   //for enter phone
   Future<BaseResponse> enterPhone(String phone) async {
@@ -26,12 +28,9 @@ class RegisterProvider extends ChangeNotifier {
     BaseResponse baseResponse = BaseResponse();
     ApiResponse apiResponse = await authRepo.enterPhone(data);
 
-    if (apiResponse.response?.statusCode == 200 &&
-        apiResponse.response?.data['status'] == 200) {
+    if (IsEnableApiResponse(apiResponse).isValide()) {
       baseResponse =
           BaseResponse.fromJson(apiResponse.response?.data, (data) => dynamic);
-    } else {
-      ApiChecker.checkApi(apiResponse);
     }
     notifyListeners();
     return baseResponse;

@@ -10,8 +10,6 @@ import 'package:otp_text_field/otp_field_style.dart';
 import 'package:otp_text_field/style.dart';
 import 'package:persistent_bottom_nav_bar_v2/persistent-tab-view.dart';
 import 'package:provider/provider.dart';
-
-import '../../../../util/route.dart';
 import '../../../../util/styles.dart';
 
 class SmsScreen extends StatefulWidget {
@@ -156,7 +154,6 @@ class _SmsScreenState extends State<SmsScreen>
                               ),
                               pageTransitionAnimation:
                                   PageTransitionAnimation.fade);
-                          
                         } else {
                           setState(() {
                             validator = true;
@@ -169,7 +166,6 @@ class _SmsScreenState extends State<SmsScreen>
                       });
                     }
                   }, getTranslated('confirm', context))),
-              
             ],
           ),
         ),

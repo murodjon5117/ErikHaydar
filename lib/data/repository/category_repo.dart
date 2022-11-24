@@ -10,18 +10,14 @@ import 'package:erik_haydar/data/datasource/dio/dio_client.dart';
 class CategoryRepo {
   CategoryRepo({
     required this.dioClient,
-    required this.sharedPreferences,
   });
   DioClient dioClient;
-  SharedPreferences sharedPreferences;
 
   Future<ApiResponse> getFilmsCategory() async {
     try {
-      final response = await dioClient.post(AppConstants.filmCategory,
-          options: Options(headers: {
-            'Authorization':
-                'Bearer ${sharedPreferences.getString(AppConstants.token)}'
-          }));
+      final response = await dioClient.post(
+        AppConstants.filmCategory,
+      );
       return ApiResponse.withSuccess(response);
     } catch (e) {
       return ApiResponse.withError(ApiErrorHandler.getMessage(e));
@@ -30,12 +26,10 @@ class CategoryRepo {
 
   Future<ApiResponse> getFilmsCategoryPage(dynamic params) async {
     try {
-      final response = await dioClient.post(AppConstants.filmCategoryPage,
-          queryParameters: params,
-          options: Options(headers: {
-            'Authorization':
-                'Bearer ${sharedPreferences.getString(AppConstants.token)}'
-          }));
+      final response = await dioClient.post(
+        AppConstants.filmCategoryPage,
+        queryParameters: params,
+      );
       return ApiResponse.withSuccess(response);
     } catch (e) {
       return ApiResponse.withError(ApiErrorHandler.getMessage(e));
@@ -44,12 +38,10 @@ class CategoryRepo {
 
   Future<ApiResponse> getCategoryMusic(dynamic params) async {
     try {
-      final response = await dioClient.post(AppConstants.categoryMusic,
-          queryParameters: params,
-          options: Options(headers: {
-            'Authorization':
-                'Bearer ${sharedPreferences.getString(AppConstants.token)}'
-          }));
+      final response = await dioClient.post(
+        AppConstants.categoryMusic,
+        queryParameters: params,
+      );
       return ApiResponse.withSuccess(response);
     } catch (e) {
       return ApiResponse.withError(ApiErrorHandler.getMessage(e));
@@ -58,35 +50,52 @@ class CategoryRepo {
 
   Future<ApiResponse> getFilters() async {
     try {
-      final response = await dioClient.get(AppConstants.filterType,
-          options: Options(headers: {
-            'Authorization':
-                'Bearer ${sharedPreferences.getString(AppConstants.token)}'
-          }));
+      final response = await dioClient.get(
+        AppConstants.filterType,
+      );
       return ApiResponse.withSuccess(response);
     } catch (e) {
       return ApiResponse.withError(ApiErrorHandler.getMessage(e));
     }
   }
+
   Future<ApiResponse> getFavoritesMusic() async {
     try {
-      final response = await dioClient.post(AppConstants.favoritesMusic,
-          options: Options(headers: {
-            'Authorization':
-                'Bearer ${sharedPreferences.getString(AppConstants.token)}'
-          }));
+      final response = await dioClient.post(
+        AppConstants.favoritesMusic,
+      );
       return ApiResponse.withSuccess(response);
     } catch (e) {
       return ApiResponse.withError(ApiErrorHandler.getMessage(e));
     }
   }
+
   Future<ApiResponse> getFavoritesFilm() async {
     try {
-      final response = await dioClient.post(AppConstants.favoritesFilm,
-          options: Options(headers: {
-            'Authorization':
-                'Bearer ${sharedPreferences.getString(AppConstants.token)}'
-          }));
+      final response = await dioClient.post(
+        AppConstants.favoritesFilm,
+      );
+      return ApiResponse.withSuccess(response);
+    } catch (e) {
+      return ApiResponse.withError(ApiErrorHandler.getMessage(e));
+    }
+  }
+
+  Future<ApiResponse> getSearchFilms(dynamic data) async {
+    try {
+      final response =
+          await dioClient.post(AppConstants.filmSearch, queryParameters: data);
+      return ApiResponse.withSuccess(response);
+    } catch (e) {
+      return ApiResponse.withError(ApiErrorHandler.getMessage(e));
+    }
+  }
+
+  Future<ApiResponse> getSearchMusics(dynamic data) async {
+    try {
+      final response = await dioClient.post(
+        AppConstants.musicSearch,queryParameters: data
+      );
       return ApiResponse.withSuccess(response);
     } catch (e) {
       return ApiResponse.withError(ApiErrorHandler.getMessage(e));

@@ -15,27 +15,19 @@ class BaseUI {
     return AppBar(
       backgroundColor: ColorResources.COLOR_WHITE,
       centerTitle: true,
-      elevation: 0.0,
+      elevation: 0,
       leading: IconButton(
-        alignment: Alignment.center,
         icon: SvgPicture.asset(Images.back_icon),
         onPressed: () => Navigator.of(context).pop(),
       ),
     );
   }
 
-  showLoadingDialog() {
-    showDialog(
-      barrierDismissible: true,
-      barrierColor: ColorResources.COLOR_BLACK.withOpacity(0.1),
-      context: MyApp.navigatorKey.currentState!.context,
-      builder: (context) => progressIndicator(),
-    );
-  }
+  
 
-  Widget imageNetwork(String url) {
+  Widget imageNetwork(String? url) {
     return CachedNetworkImage(
-      imageUrl: url,
+      imageUrl: url??'',
       fit: BoxFit.contain,
       imageBuilder: (context, imageProvider) => Container(
         decoration: BoxDecoration(
@@ -51,6 +43,7 @@ class BaseUI {
       errorWidget: (context, url, error) => Image.asset(
         Images.placeholderImage,
       ),
+      
     );
   }
 

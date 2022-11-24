@@ -21,6 +21,10 @@ class AppConstants {
   static const categoryMusic = '/film-manager/music/index';
   static const favoritesMusic = '/film-manager/favorite-film/music';
   static const favoritesFilm = '/film-manager/favorite-film/index';
+  static const changePhone = '/profile-manager/update-username/phone';
+  static const verifySms = '/profile-manager/update-username/verify';
+  static const updateUserInfo = '/profile-manager/profile/update-name';
+  static const updateUserPassword = '/profile-manager/profile/update-password';
 
   //Home Page
   static const SLIDER = '/slider/index';
@@ -29,6 +33,13 @@ class AppConstants {
   static const likeForFilm = '/film-manager/film/like';
   static const dissLikeForFilm = '/film-manager/film/dislike';
   static const addFavorite = '/film-manager/favorite-film/create';
+  static const filmDetail = '/film-manager/film/detail';
+  static const musicDetail = '/film-manager/music/detail';
+  static const setComment = '/film-manager/film-comment/create';
+  static const getComment = '/film-manager/film-comment/comments';
+  static const getMusicSource = '/film-manager/music/watch';
+  static const musicSearch = '/film-manager/music/search';
+  static const filmSearch = '/film-manager/film/search';
   //Shared Key
   static const String token = 'token';
   static const String isLogin = 'isLogin';

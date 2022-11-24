@@ -13,9 +13,8 @@ import '../helper/api_checker.dart';
 
 class LoginProvider extends ChangeNotifier {
   AuthRepo repo;
-  SharedPreferences sharedPreferences;
 
-  LoginProvider({required this.repo, required this.sharedPreferences});
+  LoginProvider({required this.repo});
 
   //for login
   Future<BaseResponse> login(String phone, String password, String deviceId,

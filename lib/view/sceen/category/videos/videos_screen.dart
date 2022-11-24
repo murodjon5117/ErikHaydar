@@ -87,6 +87,7 @@ class _VideosScreenState extends State<VideosScreen>
           backgroundColor: ColorResources.COLOR_WHITE,
         ),
         body: TabBarView(
+
           controller: _tabController,
           children: getWidgets(),
         ),

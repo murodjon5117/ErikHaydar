@@ -62,34 +62,7 @@ class HomeProvider extends ChangeNotifier {
     }
     notifyListeners();
   }
-  Future<BaseResponse> likeForFilm(String slug) async {
-    BaseResponse baseResponse = BaseResponse();
-    var data = {'slug': slug,};
-    ApiResponse apiResponse = await repo.likeForFilm(data);
-    if (apiResponse.response?.statusCode == 200 &&
-        apiResponse.response?.data['status'] == 200) {
-      baseResponse =
-          BaseResponse.fromJson(apiResponse.response?.data, (data) => dynamic);
-    } else {
-      ApiChecker.checkApi(apiResponse);
-    }
-    notifyListeners();
-    return baseResponse;
-  }
-  Future<BaseResponse> dissLikeForFilm(String slug) async {
-    BaseResponse baseResponse = BaseResponse();
-    var data = {'slug': slug,};
-    ApiResponse apiResponse = await repo.dissLikeForFilm(data);
-    if (apiResponse.response?.statusCode == 200 &&
-        apiResponse.response?.data['status'] == 200) {
-      baseResponse =
-          BaseResponse.fromJson(apiResponse.response?.data, (data) => dynamic);
-    } else {
-      ApiChecker.checkApi(apiResponse);
-    }
-    notifyListeners();
-    return baseResponse;
-  }
+  
   Future<BaseResponse> addFavorite(String slug) async {
     BaseResponse baseResponse = BaseResponse();
     var data = {'key': slug,};

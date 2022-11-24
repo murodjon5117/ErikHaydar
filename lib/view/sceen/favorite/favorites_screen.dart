@@ -1,11 +1,15 @@
 import 'package:erik_haydar/view/sceen/favorite/favorite_film_screen.dart';
 import 'package:erik_haydar/view/sceen/favorite/favorite_music.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
+import 'package:persistent_bottom_nav_bar_v2/persistent-tab-view.dart';
 
 import '../../../localization/language_constrants.dart';
 import '../../../util/color_resources.dart';
 import '../../../util/dimensions.dart';
+import '../../../util/images.dart';
 import '../../../util/styles.dart';
+import '../search/search_screen.dart';
 
 class FavoritesScreen extends StatelessWidget {
   @override
@@ -17,6 +21,17 @@ class FavoritesScreen extends StatelessWidget {
         appBar: AppBar(
           centerTitle: false,
           elevation: 0.0,
+          actions: [
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 20),
+              child: GestureDetector(
+                  onTap: () {
+                    pushNewScreen(context,
+                        screen: SearchScreen(), withNavBar: false);
+                  },
+                  child: SvgPicture.asset(Images.searchIcon)),
+            )
+          ],
           backgroundColor: ColorResources.COLOR_WHITE,
           title: Text(
             getTranslated('favorites', context),
@@ -45,7 +60,7 @@ class FavoritesScreen extends StatelessWidget {
         ),
         body: TabBarView(
           children: [
-             FavoriteFilmScreen(),
+            const FavoriteFilmScreen(),
             FavoriteMusic(),
           ],
         ),
