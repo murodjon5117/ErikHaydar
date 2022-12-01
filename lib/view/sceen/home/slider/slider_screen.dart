@@ -4,6 +4,8 @@ import 'package:erik_haydar/view/base/base_ui.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import '../video_player/media_player.dart';
+
 class SliderScreen extends StatelessWidget {
   const SliderScreen({super.key});
 
@@ -16,8 +18,15 @@ class SliderScreen extends StatelessWidget {
           return ClipRRect(
               borderRadius: BorderRadius.circular(12),
               clipBehavior: Clip.antiAliasWithSaveLayer,
-              child: BaseUI().imageNetwork(
-                  'https://hamshira.biznesgoya.uz/uploads/images/film/8/preview-63623e500212e.png'));
+              child: GestureDetector(
+                onTap: () {
+                  Navigator.of(context).push(MaterialPageRoute(
+                    builder: (context) => MediaPlayer(),
+                  ));
+                },
+                child: BaseUI().imageNetwork(
+                    'https://hamshira.biznesgoya.uz/uploads/images/film/8/preview-63623e500212e.png'),
+              ));
         },
         options: CarouselOptions(
           autoPlay: false,

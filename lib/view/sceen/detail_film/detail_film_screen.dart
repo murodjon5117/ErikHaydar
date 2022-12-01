@@ -3,6 +3,7 @@ import 'package:erik_haydar/provider/detail_film_provider.dart';
 import 'package:erik_haydar/view/base/base_ui.dart';
 import 'package:erik_haydar/view/sceen/detail_film/comment_list.dart';
 import 'package:erik_haydar/view/sceen/detail_film/set_comment.dart';
+import 'package:erik_haydar/view/sceen/home/video_player/media_player.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter_svg/svg.dart';
@@ -69,8 +70,14 @@ class _DetailFilmScreenState extends State<DetailFilmScreen> {
                     ),
                     child: Column(
                       children: [
-                        detaiPhoto(value.detailFilmModel.image ?? '',
-                            value.detailFilmModel.isFree ?? false),
+                        GestureDetector(
+                          onTap: () =>
+                              Navigator.of(context).push(MaterialPageRoute(
+                            builder: (context) => MediaPlayer(),
+                          )),
+                          child: detaiPhoto(value.detailFilmModel.image ?? '',
+                              value.detailFilmModel.isFree ?? false),
+                        ),
                         detailInformation(value.detailFilmModel),
                         detailFunctions(value.detailFilmModel.viewsCount ?? 0),
                         CommentList(

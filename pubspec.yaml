@@ -40,6 +40,8 @@ dependencies:
 
   url_launcher: ^6.1.6
   video_player: ^2.4.7
+  better_player: ^0.0.83
+  pod_player: ^0.1.0
 
 dev_dependencies:
   flutter_lints: ^2.0.0

@@ -28,7 +28,7 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
 
   List<Widget> _buildScreens() {
     return [
-      const HomeScreen(),
+      HomeScreen(),
       CategoryScreen(),
       FavoritesScreen(),
       ProfileScreen(),
