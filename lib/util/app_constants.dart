@@ -2,7 +2,7 @@ import '../data/model/util_model/language_model.dart';
 
 class AppConstants {
   static const APP_NAME = 'ERIK HAYDAR';
-  static const BASE_URL = 'https://hamshira.biznesgoya.uz/api';
+  static const BASE_URL = '';
   static const ENTER_PHONE = '/auth/register/phone';
   static const GET_USER_INFO = '/profile-manager/profile/index';
   static const GET_TARIFS = '/tariff-manager/tariff/index';
