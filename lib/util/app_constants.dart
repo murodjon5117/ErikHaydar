@@ -2,7 +2,7 @@ import '../data/model/util_model/language_model.dart';
 
 class AppConstants {
   static const APP_NAME = 'ERIK HAYDAR';
-  static const BASE_URL = 'https://erik.safowater.com/api';
+  static const BASE_URL = '';
   static const ENTER_PHONE = '/auth/register/phone';
   static const GET_USER_INFO = '/profile-manager/profile/index';
   static const VERIFY_PHONE = '/auth/register/verify';
