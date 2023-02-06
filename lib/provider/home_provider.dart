@@ -1,8 +1,9 @@
 import 'package:erik_haydar/data/model/response/base/api_response.dart';
 import 'package:erik_haydar/data/model/response/body/home_model.dart';
 import 'package:erik_haydar/data/model/response/body/music_model.dart';
+import 'package:erik_haydar/data/model/response/body/notification_model.dart';
 import 'package:erik_haydar/data/model/response/body/slider_model/slider_model.dart';
-import 'package:erik_haydar/helper/api_checker.dart';
+import 'package:erik_haydar/helper/extention/extention.dart';
 import 'package:flutter/material.dart';
 
 import 'package:erik_haydar/data/repository/home_repo.dart';
@@ -15,64 +16,69 @@ class HomeProvider extends ChangeNotifier {
   });
   HomeRepo repo;
 
-  List<SliderModel> _slider = [];
+  final List<SliderModel> _slider = [];
   List<SliderModel> get slider => _slider;
 
   Future<void> getSliderData() async {
     ApiResponse apiResponse = await repo.getSlider();
     _slider.clear();
-    if (apiResponse.response?.statusCode == 200 &&
-        apiResponse.response?.data['status'] == 200) {
+    if (IsEnableApiResponse(apiResponse).isValide()) {
       apiResponse.response?.data['data']
           .forEach((category) => _slider.add(SliderModel.fromJson(category)));
-    } else {
-      ApiChecker.checkApi(apiResponse);
     }
     notifyListeners();
   }
 
-  List<HomeModel> _homeDataList = [];
+  final List<HomeModel> _homeDataList = [];
   List<HomeModel> get homeDataList => _homeDataList;
 
   Future<void> getHomeFilm() async {
     ApiResponse apiResponse = await repo.getHomeData();
     _homeDataList.clear();
-    if (apiResponse.response?.statusCode == 200 &&
-        apiResponse.response?.data['status'] == 200) {
+    if (IsEnableApiResponse(apiResponse).isValide()) {
       apiResponse.response?.data['data']
           .forEach((list) => _homeDataList.add(HomeModel.fromJson(list)));
-    } else {
-      ApiChecker.checkApi(apiResponse);
     }
     notifyListeners();
   }
 
-  List<MusicModel> _homeMusicList = [];
+  final List<MusicModel> _homeMusicList = [];
   List<MusicModel> get homeMusicList => _homeMusicList;
 
   Future<void> getHomeMusic() async {
     ApiResponse apiResponse = await repo.getHomeMusic();
     _homeMusicList.clear();
-    if (apiResponse.response?.statusCode == 200 &&
-        apiResponse.response?.data['status'] == 200) {
+    if (IsEnableApiResponse(apiResponse).isValide()) {
       apiResponse.response?.data['data']
           .forEach((list) => _homeMusicList.add(MusicModel.fromJson(list)));
-    } else {
-      ApiChecker.checkApi(apiResponse);
     }
     notifyListeners();
   }
-  
+
+  List<NotifItems> _notifList = [];
+  List<NotifItems> get notifList => _notifList;
+
+  Future<void> getNotification() async {
+    ApiResponse apiResponse = await repo.getNotification();
+    _notifList.clear();
+    if (IsEnableApiResponse(apiResponse).isValide()) {
+      var response = BaseResponse<NotificationModel>.fromJson(
+          apiResponse.response?.data,
+          (data) => NotificationModel.fromJson(data));
+      _notifList.addAll(response.data?.items ?? []);
+    }
+    notifyListeners();
+  }
+
   Future<BaseResponse> addFavorite(String slug) async {
     BaseResponse baseResponse = BaseResponse();
-    var data = {'key': slug,};
+    var data = {
+      'key': slug,
+    };
     ApiResponse apiResponse = await repo.addFavorite(data);
-    if (apiResponse.response?.statusCode == 200 &&
-        apiResponse.response?.data['status'] == 200) {
+    if (IsEnableApiResponse(apiResponse).isValide()) {
       baseResponse =
           BaseResponse.fromJson(apiResponse.response?.data, (data) => dynamic);
-    } else {
-      ApiChecker.checkApi(apiResponse);
     }
     notifyListeners();
     return baseResponse;

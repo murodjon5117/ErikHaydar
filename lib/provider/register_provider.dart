@@ -5,21 +5,28 @@ import 'package:erik_haydar/data/model/response/body/user_info_model.dart';
 import 'package:erik_haydar/helper/extention/extention.dart';
 import 'package:erik_haydar/main.dart';
 import 'package:erik_haydar/provider/user_data_provider.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 import '../data/model/response/base/api_response.dart';
 import '../data/model/response/base/base_model.dart';
 import '../data/repository/auth_repo.dart';
-import '../helper/api_checker.dart';
-import '../util/app_constants.dart';
 
 class RegisterProvider extends ChangeNotifier {
   final AuthRepo authRepo;
   RegisterProvider({
     required this.authRepo,
   });
+
+  String _firebaseToken = '';
+  String get firebaseToken => _firebaseToken;
+
+  void getFirebaseToken() {
+    FirebaseMessaging.instance.getToken().then((value) {
+      _firebaseToken = value.toString();
+    });
+  }
 
   //for enter phone
   Future<BaseResponse> enterPhone(String phone) async {
@@ -43,12 +50,9 @@ class RegisterProvider extends ChangeNotifier {
     BaseResponse baseResponse = BaseResponse();
     ApiResponse apiResponse = await authRepo.verifyPhone(data);
 
-    if (apiResponse.response?.statusCode == 200 &&
-        apiResponse.response?.data['status'] == 200) {
+    if (IsEnableApiResponse(apiResponse).isValide()) {
       baseResponse =
           BaseResponse.fromJson(apiResponse.response?.data, (data) => dynamic);
-    } else {
-      ApiChecker.checkApi(apiResponse);
     }
     notifyListeners();
     return baseResponse;
@@ -62,13 +66,10 @@ class RegisterProvider extends ChangeNotifier {
     _cityList.clear();
     ApiResponse apiResponse = await authRepo.getCities();
 
-    if (apiResponse.response?.statusCode == 200 &&
-        apiResponse.response?.data['status'] == 200) {
+    if (IsEnableApiResponse(apiResponse).isValide()) {
       var response = BaseResponse<CitiesModel>.fromJson(
           apiResponse.response?.data, (data) => CitiesModel.fromJson(data));
       _cityList.addAll(response.data?.regions ?? []);
-    } else {
-      ApiChecker.checkApi(apiResponse);
     }
     notifyListeners();
   }
@@ -91,17 +92,17 @@ class RegisterProvider extends ChangeNotifier {
 
   //full registration
   Future<bool> savePhoto(
-      File? img,
-      String phone,
-      String code,
-      String firstName,
-      String lastName,
-      String password,
-      String passwordRepeat,
-      String bornDate,
-      String deviceId,
-      String deviceName,
-      String deviceToken) async {
+    File? img,
+    String phone,
+    String code,
+    String firstName,
+    String lastName,
+    String password,
+    String passwordRepeat,
+    String bornDate,
+    String deviceId,
+    String deviceName,
+  ) async {
     bool status = false;
     ApiResponse apiResponse = await authRepo.fullRegistration(
         img,
@@ -116,9 +117,8 @@ class RegisterProvider extends ChangeNotifier {
         _genderId.toString(),
         deviceId,
         deviceName,
-        deviceToken);
-    if (apiResponse.response?.statusCode == 200 &&
-        apiResponse.response?.data['status'] == 200) {
+        _firebaseToken);
+    if (IsEnableApiResponse(apiResponse).isValide()) {
       var response = BaseResponse<UserInfoData>.fromJson(
           apiResponse.response?.data, (data) => UserInfoData.fromJson(data));
       Provider.of<UserDataProvider>(MyApp.navigatorKey.currentState!.context,
@@ -129,9 +129,6 @@ class RegisterProvider extends ChangeNotifier {
               response.data?.lastname ?? '',
               response.data?.username ?? '');
       status = true;
-    } else {
-      status = false;
-      ApiChecker.checkApi(apiResponse);
     }
     notifyListeners();
     return status;

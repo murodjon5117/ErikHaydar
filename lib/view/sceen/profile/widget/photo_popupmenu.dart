@@ -1,12 +1,11 @@
 import 'package:erik_haydar/data/model/response/body/info_model.dart';
-import 'package:erik_haydar/view/base/base_ui.dart';
+import 'package:erik_haydar/util/color_resources.dart';
 import 'package:erik_haydar/view/sceen/profile/change_phone/edit_phone_number_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:persistent_bottom_nav_bar_v2/persistent-tab-view.dart';
 
 import '../../../../util/images.dart';
-import '../../../../util/route.dart';
 import '../change_user_info/change_user_info_screen.dart';
 import '../change_user_password/change_user_password_screen.dart';
 
@@ -31,9 +30,16 @@ class PhotoAndPopupMenu extends StatelessWidget {
                 bottom: 0,
                 child: userinfo.img?.isNotEmpty ?? false
                     ? CircleAvatar(
-                        radius: 30.0,
-                        backgroundImage: NetworkImage(userinfo.img ?? ''),
-                        backgroundColor: Colors.transparent,
+                        radius: 0,
+                        backgroundColor: ColorResources.COLOR_WHITE,
+                        child: ClipOval(
+                          child: Image.network(
+                            userinfo.img ?? '',
+                            width: 100,
+                            height: 100,
+                            fit: BoxFit.cover,
+                          ),
+                        ),
                       )
                     : SvgPicture.asset(Images.userPhoto)),
             Positioned(

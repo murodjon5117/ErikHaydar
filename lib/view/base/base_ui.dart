@@ -23,11 +23,21 @@ class BaseUI {
     );
   }
 
-  
+  appBarMusic(BuildContext context) {
+    return AppBar(
+      backgroundColor: ColorResources.COLOR_BLACK,
+      centerTitle: true,
+      elevation: 0,
+      leading: IconButton(
+        icon: SvgPicture.asset(Images.blackBack),
+        onPressed: () => Navigator.of(context).pop(),
+      ),
+    );
+  }
 
   Widget imageNetwork(String? url) {
     return CachedNetworkImage(
-      imageUrl: url??'',
+      imageUrl: url ?? '',
       fit: BoxFit.contain,
       imageBuilder: (context, imageProvider) => Container(
         decoration: BoxDecoration(
@@ -43,7 +53,6 @@ class BaseUI {
       errorWidget: (context, url, error) => Image.asset(
         Images.placeholderImage,
       ),
-      
     );
   }
 

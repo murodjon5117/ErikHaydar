@@ -20,7 +20,7 @@ class LocalizationProvider extends ChangeNotifier {
   }
 
   bool isExistLanguage() {
-    if (sharedPreferences.getString(AppConstants.LANGUAGE_CODE) == null) {
+    if (sharedPreferences.getString(AppConstants.languageCode) == null) {
       return false;
     } else {
       return true;
@@ -31,7 +31,7 @@ class LocalizationProvider extends ChangeNotifier {
     if (lang == 'en') {
       lang = 'kr';
     }
-    if (lang == sharedPreferences.getString(AppConstants.LANGUAGE_CODE)) {
+    if (lang == sharedPreferences.getString(AppConstants.languageCode)) {
       return true;
     } else {
       return false;
@@ -40,22 +40,22 @@ class LocalizationProvider extends ChangeNotifier {
 
   _loadCurrentLanguage() async {
     _locale = Locale(
-        sharedPreferences.getString(AppConstants.LANGUAGE_CODE) ??
+        sharedPreferences.getString(AppConstants.languageCode) ??
             AppConstants.languages[0].languageCode!,
-        sharedPreferences.getString(AppConstants.COUNTRY_CODE) ??
+        sharedPreferences.getString(AppConstants.contryCode) ??
             AppConstants.languages[0].countryCode);
     notifyListeners();
   }
 
   _saveLanguage(Locale locale) async {
-    String _lang = '';
+    String lang = '';
     if (locale.languageCode == 'en') {
-      _lang = 'kr';
+      lang = 'kr';
     } else {
-      _lang = locale.languageCode;
+      lang = locale.languageCode;
     }
-    sharedPreferences.setString(AppConstants.LANGUAGE_CODE, _lang);
+    sharedPreferences.setString(AppConstants.languageCode, lang);
     //sharedPreferences.setString(AppConstants.SCRIPT_CODE, locale.scriptCode!);
-    sharedPreferences.setString(AppConstants.COUNTRY_CODE, locale.countryCode!);
+    sharedPreferences.setString(AppConstants.contryCode, locale.countryCode!);
   }
 }

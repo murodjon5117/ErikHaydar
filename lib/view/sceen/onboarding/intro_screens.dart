@@ -3,7 +3,6 @@ import 'package:erik_haydar/view/sceen/onboarding/page_indicator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'intro_screen.dart';
 

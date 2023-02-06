@@ -4,34 +4,16 @@ import 'package:erik_haydar/util/color_resources.dart';
 import 'package:erik_haydar/util/dimensions.dart';
 import 'package:erik_haydar/util/images.dart';
 import 'package:erik_haydar/util/styles.dart';
-import 'package:erik_haydar/view/base/base_ui.dart';
 import 'package:erik_haydar/view/sceen/category/musics/category_music.dart';
 import 'package:erik_haydar/view/sceen/category/videos/videos_screen.dart';
 import 'package:erik_haydar/view/sceen/search/search_screen.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/scheduler.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:persistent_bottom_nav_bar_v2/persistent-tab-view.dart';
 import 'package:provider/provider.dart';
 
-class CategoryScreen extends StatefulWidget {
-  @override
-  State<CategoryScreen> createState() => _CategoryScreenState();
-}
-
-class _CategoryScreenState extends State<CategoryScreen> {
-  @override
-  void initState() {
-    SchedulerBinding.instance.addPostFrameCallback((_) {
-      Future.delayed(const Duration(milliseconds: 200), () {
-// Here you can write your code
-        Provider.of<CategoryProvider>(context, listen: false)
-            .getFilmsCategory();
-        Provider.of<CategoryProvider>(context, listen: false).getFilterType();
-      });
-    });
-    super.initState();
-  }
+class CategoryScreen extends StatelessWidget {
+  const CategoryScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -48,7 +30,8 @@ class _CategoryScreenState extends State<CategoryScreen> {
                 padding: const EdgeInsets.symmetric(horizontal: 20),
                 child: GestureDetector(
                     onTap: () {
-                      pushNewScreen(context, screen: SearchScreen(),withNavBar: false);
+                      pushNewScreen(context,
+                          screen: const SearchScreen(), withNavBar: false);
                     },
                     child: SvgPicture.asset(Images.searchIcon)),
               )
@@ -80,9 +63,9 @@ class _CategoryScreenState extends State<CategoryScreen> {
               ],
             ),
           ),
-          body: TabBarView(
+          body: const TabBarView(
             children: [
-              const VideosScreen(),
+              VideosScreen(),
               CategoryMusic(),
             ],
           ),

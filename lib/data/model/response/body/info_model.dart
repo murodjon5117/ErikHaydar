@@ -10,19 +10,22 @@ class UserInfoModelProfile {
   String? expiredAt;
   String? status;
   int? noticeStatus;
+  int? allowedDevicesCount;
 
-  UserInfoModelProfile(
-      {this.id,
-      this.username,
-      this.firstname,
-      this.lastname,
-      this.img,
-      this.balance,
-      this.activeTariff,
-      this.activeTariffId,
-      this.expiredAt,
-      this.status,
-      this.noticeStatus});
+  UserInfoModelProfile({
+    this.id,
+    this.username,
+    this.firstname,
+    this.lastname,
+    this.img,
+    this.balance,
+    this.activeTariff,
+    this.activeTariffId,
+    this.expiredAt,
+    this.status,
+    this.noticeStatus,
+    this.allowedDevicesCount,
+  });
 
   UserInfoModelProfile.fromJson(Map<String, dynamic> json) {
     id = json['id'];
@@ -36,6 +39,7 @@ class UserInfoModelProfile {
     expiredAt = json['expired_at'];
     status = json['status'];
     noticeStatus = json['notice_status'];
+    allowedDevicesCount = json['allowed_devices_count'];
   }
 
   Map<String, dynamic> toJson() {
@@ -51,6 +55,7 @@ class UserInfoModelProfile {
     data['expired_at'] = expiredAt;
     data['status'] = status;
     data['notice_status'] = noticeStatus;
+    data['allowedDevicesCount'] = allowedDevicesCount;
     return data;
   }
 }

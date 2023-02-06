@@ -1,4 +1,5 @@
 import 'package:erik_haydar/data/model/response/body/category_page_model.dart';
+import 'package:erik_haydar/helper/extention/extention.dart';
 import 'package:flutter/material.dart';
 
 import '../data/model/response/base/api_response.dart';
@@ -7,7 +8,6 @@ import '../data/model/response/body/category_music_model.dart';
 import '../data/model/response/body/home_model.dart';
 import '../data/model/response/body/music_model.dart';
 import '../data/repository/category_repo.dart';
-import '../helper/api_checker.dart';
 
 class FavoriteProvider extends ChangeNotifier {
   FavoriteProvider({
@@ -15,7 +15,7 @@ class FavoriteProvider extends ChangeNotifier {
   });
   CategoryRepo repo;
 
-  List<MusicModel> _musics = [];
+  final List<MusicModel> _musics = [];
   List<MusicModel> get musics => _musics;
   int _currentPage = 1;
   int get currentPage => _currentPage;
@@ -35,26 +35,23 @@ class FavoriteProvider extends ChangeNotifier {
       _musics.clear();
     }
     ApiResponse apiResponse = await repo.getFavoritesMusic();
-    if (apiResponse.response?.statusCode == 200 &&
-        apiResponse.response?.data['status'] == 200) {
+    if (IsEnableApiResponse(apiResponse).isValide()) {
       var response = BaseResponse<CategoryMusicModel>.fromJson(
           apiResponse.response?.data,
           (data) => CategoryMusicModel.fromJson(data));
       _musics.addAll(response.data?.items ?? []);
       _currentPage = (response.data?.mMeta?.currentPage ?? 0) + 1;
       _totalPageCount = (response.data?.mMeta?.pageCount ?? 0);
-    } else {
-      ApiChecker.checkApi(apiResponse);
     }
-
     _isPagingLoading = false;
     notifyListeners();
   }
-    bool isPaging() {
+
+  bool isPaging() {
     return !_isPagingLoading && (_currentPage <= totalPageCount);
   }
 
-  List<Films> _films = [];
+  final List<Films> _films = [];
   List<Films> get films => _films;
 
   Future<void> getFavoriteFilms(bool isPaging) async {
@@ -66,18 +63,13 @@ class FavoriteProvider extends ChangeNotifier {
       _films.clear();
     }
     ApiResponse apiResponse = await repo.getFavoritesFilm();
-    if (apiResponse.response?.statusCode == 200 &&
-        apiResponse.response?.data['status'] == 200) {
+    if (IsEnableApiResponse(apiResponse).isValide()) {
       var response = BaseResponse<FilmsAll>.fromJson(
-          apiResponse.response?.data,
-          (data) => FilmsAll.fromJson(data));
+          apiResponse.response?.data, (data) => FilmsAll.fromJson(data));
       _films.addAll(response.data?.items ?? []);
       _currentPage = (response.data?.mMeta?.currentPage ?? 0) + 1;
       _totalPageCount = (response.data?.mMeta?.pageCount ?? 0);
-    } else {
-      ApiChecker.checkApi(apiResponse);
     }
-
     _isPagingLoading = false;
     notifyListeners();
   }

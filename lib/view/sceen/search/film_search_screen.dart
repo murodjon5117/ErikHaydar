@@ -2,7 +2,6 @@ import 'package:erik_haydar/provider/search_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import '../../../util/color_resources.dart';
 import '../home/film/film_grid_item.dart';
 
 class FilmSearchScreen extends StatefulWidget {

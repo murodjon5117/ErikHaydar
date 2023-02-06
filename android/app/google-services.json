@@ -1,0 +1,46 @@
+{
+  "project_info": {
+    "project_number": "628452998985",
+    "project_id": "erikhaydar-cc050",
+    "storage_bucket": "erikhaydar-cc050.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:628452998985:android:60b76a0abd28d0d0892498",
+        "android_client_info": {
+          "package_name": "com.example.erik_haydar"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "628452998985-d2s4kkv8s967tsfaj8lu9tbu5r5og14g.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD4tJW7tsP1y46tx0g-bqemLk1oL3BnC4c"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "628452998985-d2s4kkv8s967tsfaj8lu9tbu5r5og14g.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "628452998985-a6d08d82kqe2kqa934n6el39ofivkn32.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.erikHaydar"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -12,37 +12,25 @@ import 'package:provider/provider.dart';
 import '../../../util/color_resources.dart';
 import '../../../util/styles.dart';
 
-class ProfileScreen extends StatefulWidget {
+class ProfileScreen extends StatelessWidget {
   const ProfileScreen({super.key});
 
   @override
-  State<ProfileScreen> createState() => _ProfileScreenState();
-}
-
-class _ProfileScreenState extends State<ProfileScreen> {
-  @override
-  void initState() {
+  Widget build(BuildContext context) {
     SchedulerBinding.instance.addPostFrameCallback((_) {
       Future.delayed(const Duration(milliseconds: 200), () {
         Provider.of<ProfileProvider>(context, listen: false).getUserInfo();
         Provider.of<ProfileProvider>(context, listen: false).getTarifs();
       });
     });
-    super.initState();
-  }
-
-  @override
-  Widget build(BuildContext context) {
     return Consumer<ProfileProvider>(
       builder: (context, value, child) => Scaffold(
         backgroundColor: ColorResources.COLOR_WHITE,
         body: SafeArea(
           child: RefreshIndicator(
             onRefresh: () async {
-              setState(() {
-                value.getUserInfo();
-                value.getTarifs();
-              });
+              value.getUserInfo();
+              value.getTarifs();
             },
             child: SingleChildScrollView(
               child: Column(
@@ -52,10 +40,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   PhotoAndPopupMenu(
                     userinfo: value.userInfo,
                   ),
-                  _userInfo(value.userInfo),
-                  _tarif(value.userInfo),
+                  UserInfo(userinfo: value.userInfo),
+                  TarifInfo(userinfo: value.userInfo),
                   ProfileButtons(),
-                  Carousel()
+                  const Tarifs()
                 ],
               ),
             ),
@@ -64,8 +52,15 @@ class _ProfileScreenState extends State<ProfileScreen> {
       ),
     );
   }
+}
 
-  Widget _userInfo(UserInfoModelProfile userinfo) {
+class UserInfo extends StatelessWidget {
+  final UserInfoModelProfile userinfo;
+
+  const UserInfo({super.key, required this.userinfo});
+
+  @override
+  Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 16),
       child: Column(
@@ -102,8 +97,14 @@ class _ProfileScreenState extends State<ProfileScreen> {
       ),
     );
   }
+}
 
-  Widget _tarif(UserInfoModelProfile userinfo) {
+class TarifInfo extends StatelessWidget {
+  final UserInfoModelProfile userinfo;
+
+  const TarifInfo({super.key, required this.userinfo});
+  @override
+  Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.fromLTRB(16, 18, 16, 24),
       child: Column(

@@ -1,4 +1,5 @@
 import 'package:audio_session/audio_session.dart';
+import 'package:erik_haydar/data/model/response/body/detail_music_model.dart';
 import 'package:erik_haydar/util/color_resources.dart';
 import 'package:erik_haydar/util/images.dart';
 import 'package:erik_haydar/view/base/base_ui.dart';
@@ -6,15 +7,17 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:just_audio/just_audio.dart';
 import 'package:flutter/services.dart';
-import 'package:provider/provider.dart';
 import 'package:rxdart/rxdart.dart';
-
-import '../../../../provider/detail_music_provider.dart';
+import '../../../../helper/enums/button_enum.dart';
+import '../../../../localization/language_constrants.dart';
+import '../../../../util/dimensions.dart';
+import '../../../../util/styles.dart';
 import 'common.dart';
 
 class MusicPayer extends StatefulWidget {
-  final String slug;
-  const MusicPayer({Key? key, required this.slug}) : super(key: key);
+  final DetailMusicMidel model;
+
+  const MusicPayer({super.key, required this.model});
 
   @override
   MusicPayerState createState() => MusicPayerState();
@@ -30,13 +33,10 @@ class MusicPayerState extends State<MusicPayer> with WidgetsBindingObserver {
     SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
       statusBarColor: Colors.black,
     ));
-    // Provider.of<MusicDetailProvider>(context, listen: false)
-    //     .getSourceMusic(widget.slug)
-    //     ;
-    _init();
+    _init(widget.model.sources ?? '');
   }
 
-  Future<void> _init() async {
+  Future<void> _init(String url) async {
     // Inform the operating system of our app's audio attributes etc.
     // We pick a reasonable default for an app that plays speech.
     final session = await AudioSession.instance;
@@ -49,8 +49,7 @@ class MusicPayerState extends State<MusicPayer> with WidgetsBindingObserver {
     // Try to load audio from a source and catch any errors.
     try {
       // AAC example: https://dl.espressif.com/dl/audio/ff-16b-2c-44100hz.aac
-      await _player.setAudioSource(AudioSource.uri(Uri.parse(
-          "https://hamshira.biznesgoya.uz/uploads/music/99/6379d8e6763c3.mp3")));
+      await _player.setAudioSource(AudioSource.uri(Uri.parse(url)));
     } catch (e) {
       print("Error loading audio source: $e");
     }
@@ -95,7 +94,10 @@ class MusicPayerState extends State<MusicPayer> with WidgetsBindingObserver {
         mainAxisSize: MainAxisSize.max,
         children: [
           // Display play/pause button and volume/speed sliders.
-          ControlButtons(_player),
+          ControlButtons(
+            player: _player,
+            model: widget.model,
+          ),
           const SizedBox(
             width: 10,
           ),
@@ -139,8 +141,9 @@ class MusicPayerState extends State<MusicPayer> with WidgetsBindingObserver {
 /// Displays the play/pause button and volume/speed sliders.
 class ControlButtons extends StatelessWidget {
   final AudioPlayer player;
+  final DetailMusicMidel model;
 
-  const ControlButtons(this.player, {Key? key}) : super(key: key);
+  const ControlButtons({super.key, required this.player, required this.model});
 
   @override
   Widget build(BuildContext context) {
@@ -164,7 +167,9 @@ class ControlButtons extends StatelessWidget {
             constraints: const BoxConstraints(),
             icon: SvgPicture.asset(Images.playPlayer),
             iconSize: 64.0,
-            onPressed: player.play,
+            onPressed: model.canWatch == true
+                ? player.play
+                : () => _showMessage(model.canWatchMessage ?? '', context),
           );
         } else if (processingState != ProcessingState.completed) {
           return IconButton(
@@ -185,5 +190,51 @@ class ControlButtons extends StatelessWidget {
         }
       },
     );
+  }
+
+  _showMessage(String message, BuildContext context) {
+    showDialog(
+        barrierDismissible: false,
+        context: context,
+        builder: (BuildContext context) {
+          return Dialog(
+            insetPadding: const EdgeInsets.symmetric(horizontal: 20),
+            shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(10.0)), //this right here
+            child: Wrap(
+              alignment: WrapAlignment.center,
+              children: [
+                Padding(
+                  padding: const EdgeInsets.all(24),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      SvgPicture.asset(Images.succesIcon),
+                      const SizedBox(
+                        height: 24,
+                      ),
+                      Text(
+                        getTranslated('info', context),
+                        style: boldTitle.copyWith(
+                            fontSize: Dimensions.FONT_SIZE_24),
+                      ),
+                      const SizedBox(
+                        height: 12,
+                      ),
+                      Text(message),
+                      const SizedBox(
+                        height: 24,
+                      ),
+                      BaseUI().buttonsType(TypeButton.filled, context, () {
+                        Navigator.pop(context);
+                      }, getTranslated('understand', context)),
+                    ],
+                  ),
+                ),
+              ],
+            ),
+          );
+        });
   }
 }

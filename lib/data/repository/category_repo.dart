@@ -83,8 +83,8 @@ class CategoryRepo {
 
   Future<ApiResponse> getSearchFilms(dynamic data) async {
     try {
-      final response =
-          await dioClient.post(AppConstants.filmSearch, queryParameters: data);
+      final response = await dioClient.post(AppConstants.filmSearch,
+          queryParameters: data, isLoading: false);
       return ApiResponse.withSuccess(response);
     } catch (e) {
       return ApiResponse.withError(ApiErrorHandler.getMessage(e));
@@ -93,9 +93,8 @@ class CategoryRepo {
 
   Future<ApiResponse> getSearchMusics(dynamic data) async {
     try {
-      final response = await dioClient.post(
-        AppConstants.musicSearch,queryParameters: data
-      );
+      final response = await dioClient.post(AppConstants.musicSearch,
+          queryParameters: data, isLoading: false);
       return ApiResponse.withSuccess(response);
     } catch (e) {
       return ApiResponse.withError(ApiErrorHandler.getMessage(e));

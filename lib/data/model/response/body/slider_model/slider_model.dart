@@ -38,6 +38,7 @@ class Film {
   String? image;
   bool? isFree;
   String? qualityText;
+  int? isMusic;
 
   Film(
       {this.id,
@@ -48,7 +49,8 @@ class Film {
       this.dislikesCount,
       this.image,
       this.isFree,
-      this.qualityText});
+      this.qualityText,
+      this.isMusic});
 
   Film.fromJson(Map<String, dynamic> json) {
     id = json['id'];
@@ -60,6 +62,7 @@ class Film {
     image = json['image'];
     isFree = json['isFree'];
     qualityText = json['qualityText'];
+    isMusic = json['is_music'];
   }
 
   Map<String, dynamic> toJson() {
@@ -73,6 +76,7 @@ class Film {
     data['image'] = image;
     data['isFree'] = isFree;
     data['qualityText'] = qualityText;
+    data['is_music'] = isMusic;
     return data;
   }
 }

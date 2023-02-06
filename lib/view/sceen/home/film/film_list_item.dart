@@ -4,6 +4,7 @@ import 'package:erik_haydar/localization/language_constrants.dart';
 import 'package:erik_haydar/provider/category_provider.dart';
 import 'package:erik_haydar/provider/home_provider.dart';
 import 'package:erik_haydar/view/base/base_ui.dart';
+import 'package:erik_haydar/view/sceen/serial/serials_screen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';

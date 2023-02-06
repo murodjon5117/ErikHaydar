@@ -2,6 +2,7 @@ import 'package:erik_haydar/data/model/response/body/home_model.dart';
 import 'package:erik_haydar/localization/language_constrants.dart';
 import 'package:erik_haydar/view/base/base_ui.dart';
 import 'package:erik_haydar/view/sceen/detail_film/detail_film_screen.dart';
+import 'package:erik_haydar/view/sceen/serial/serials_screen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
@@ -26,9 +27,10 @@ class _FilmGridItemState extends State<FilmGridItem> {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
+       
         pushNewScreen(context,
             withNavBar: false,
-            screen: DetailFilmScreen(slug: widget.item.slug ?? '',image: widget.item.image??'',));
+            screen:  DetailFilmScreen(slug: widget.item.slug ?? '',image: widget.item.image??'',));
       },
       child: Container(
         height: 201,

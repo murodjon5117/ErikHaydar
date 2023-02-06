@@ -18,6 +18,7 @@ class DetailFilmModel {
   bool? isSerial;
   String? qualityText;
   bool? canWatch;
+  String? canWatchMessage;
   int? viewsCount;
   String? description;
   bool? isUserFavoriteFilm;
@@ -42,6 +43,7 @@ class DetailFilmModel {
       this.isSerial,
       this.qualityText,
       this.canWatch,
+      this.canWatchMessage,
       this.viewsCount,
       this.description,
       this.isUserFavoriteFilm});
@@ -66,6 +68,7 @@ class DetailFilmModel {
     isSerial = json['isSerial'];
     qualityText = json['qualityText'];
     canWatch = json['canWatch'];
+    canWatchMessage = json['canWatchMessage'];
     viewsCount = json['viewsCount'];
     description = json['description'];
     isUserFavoriteFilm = json['isUserFavoriteFilm'];

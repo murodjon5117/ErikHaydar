@@ -1,13 +1,7 @@
 import 'package:erik_haydar/data/model/response/body/home_model.dart';
-import 'package:erik_haydar/data/model/response/body/slider_model/slider_model.dart';
 import 'package:erik_haydar/util/styles.dart';
 import 'package:erik_haydar/view/sceen/home/film/film_grid_item.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
-
-import '../../../util/color_resources.dart';
-import '../../../util/images.dart';
-
 class HomeCategoriesScreen extends StatelessWidget {
   final HomeModel films;
   HomeCategoriesScreen({super.key, required this.films});
@@ -36,7 +30,7 @@ class HomeCategoriesScreen extends StatelessWidget {
           SizedBox(
             height: 210,
             child: ListView.separated(
-              physics: const ClampingScrollPhysics(),
+              physics: const BouncingScrollPhysics(),
               itemCount: films.films?.length ?? 0,
               shrinkWrap: true,
               scrollDirection: Axis.horizontal,

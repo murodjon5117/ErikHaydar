@@ -3,7 +3,7 @@ import 'dart:io';
 import 'package:device_info_plus/device_info_plus.dart';
 import 'package:erik_haydar/localization/language_constrants.dart';
 import 'package:erik_haydar/provider/login_provider.dart';
-import 'package:erik_haydar/provider/user_data_provider.dart';
+import 'package:erik_haydar/provider/register_provider.dart';
 import 'package:erik_haydar/util/images.dart';
 import 'package:erik_haydar/view/base/base_ui.dart';
 import 'package:erik_haydar/view/sceen/dashboard/dashboard_screen.dart';
@@ -14,7 +14,6 @@ import 'package:provider/provider.dart';
 
 import '../../../../helper/enums/button_enum.dart';
 import '../../../../util/color_resources.dart';
-import '../../../../util/route.dart';
 import '../../../../util/styles.dart';
 import '../../../base/custom_text_field.dart';
 import '../register/register_screen.dart';
@@ -30,7 +29,6 @@ class _LoginScreenState extends State<LoginScreen> {
   final _formKey = GlobalKey<FormState>();
   static final DeviceInfoPlugin deviceInfoPlugin = DeviceInfoPlugin();
   Map<String, dynamic> _deviceData = <String, dynamic>{};
-  String deviceToken = '';
   String deviceId = '';
   String deviceName = '';
   final FocusNode _phoneNumberFocus = FocusNode();
@@ -42,11 +40,14 @@ class _LoginScreenState extends State<LoginScreen> {
   @override
   void initState() {
     initPlatformState();
+
     _phoneNumberController = TextEditingController();
     _passwordController = TextEditingController();
 
     super.initState();
   }
+
+  String? token;
 
   @override
   void dispose() {
@@ -128,7 +129,9 @@ class _LoginScreenState extends State<LoginScreen> {
                                     _passwordController.text,
                                     deviceId,
                                     deviceName,
-                                    deviceToken)
+                                    Provider.of<RegisterProvider>(context,
+                                            listen: false)
+                                        .firebaseToken)
                                 .then((result) {
                               if (result.status == 200) {
                                 Navigator.of(context, rootNavigator: true)
@@ -153,14 +156,6 @@ class _LoginScreenState extends State<LoginScreen> {
                               pageTransitionAnimation:
                                   PageTransitionAnimation.fade);
                         }, getTranslated('register', context)),
-
-                        // BaseUI().buttonsType(TypeButton.text, context,
-                        //     () {
-                        //   // Navigator.of(
-                        //   //   context,
-                        //   //   rootNavigator: true,
-                        //   // ).push(createRoute(RegisterScreen()));
-                        // }, ''),
                         const SizedBox(
                           height: 34,
                         )

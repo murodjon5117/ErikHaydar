@@ -1,6 +1,7 @@
 import 'package:erik_haydar/data/model/response/body/comment_model.dart';
 import 'package:erik_haydar/data/model/response/body/detail_fim_model.dart';
 import 'package:erik_haydar/data/model/response/body/like_dislike_model.dart';
+import 'package:erik_haydar/data/model/response/body/movie_source.dart';
 import 'package:erik_haydar/data/repository/detail_repo.dart';
 import 'package:erik_haydar/helper/extention/extention.dart';
 import 'package:flutter/material.dart';
@@ -26,7 +27,7 @@ class FilmDetailProvider extends ChangeNotifier {
   String _disLikeCount = '';
   String get likeDisCount => _disLikeCount;
 
-  Future<void> getFilmDetail(String slug) async {
+  Future<DetailFilmModel> getFilmDetail(String slug) async {
     _detailFilmModel = DetailFilmModel();
     ApiResponse apiResponse = await repo.getFilmDetail({
       'key': slug,
@@ -41,7 +42,35 @@ class FilmDetailProvider extends ChangeNotifier {
       _disLikeCount = _detailFilmModel.dislikesCount.toString();
     }
     notifyListeners();
+    return _detailFilmModel;
   }
+
+  MovieSource _movieSource = MovieSource();
+  MovieSource get movieSource => _movieSource;
+
+  Future<MovieSource> getMovieSource(String slug) async {
+    _movieSource = MovieSource();
+    ApiResponse apiResponse = await repo.getMovieSource({'key': slug});
+    if (IsEnableApiResponse(apiResponse).isValide()) {
+      var response = BaseResponse<MovieSource>.fromJson(
+          apiResponse.response?.data, (data) => MovieSource.fromJson(data));
+      _movieSource = response.data ?? MovieSource();
+    }
+    return _movieSource;
+  }
+
+  // Future<void> downloadVideo(String urlPath) async {
+  //   var dir = await getApplicationDocumentsDirectory();
+  //   ApiResponse apiResponse =
+  //       await repo.download(urlPath, "${dir.path}/demo.mp4", ((count, total) {
+  //     print("Rec: $count , Total: $total");
+  //     print(((count / total) * 100).toStringAsFixed(0) + "%");
+  //   }));
+  //   if (apiResponse.response?.statusCode == 200) {
+  //     print(apiResponse);
+  //   }
+  //   notifyListeners();
+  // }
 
   Future<void> likeForFilm(String slug) async {
     var data = {

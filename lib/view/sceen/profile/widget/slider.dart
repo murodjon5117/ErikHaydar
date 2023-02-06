@@ -5,7 +5,6 @@ import 'package:erik_haydar/provider/profile_provider.dart';
 import 'package:erik_haydar/provider/user_data_provider.dart';
 import 'package:erik_haydar/util/dimensions.dart';
 import 'package:erik_haydar/view/sceen/auth/login/login_screen.dart';
-import 'package:erik_haydar/view/sceen/splash/splash.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
@@ -17,8 +16,8 @@ import '../../../../util/images.dart';
 import '../../../../util/styles.dart';
 import '../../../base/base_ui.dart';
 
-class Carousel extends StatelessWidget {
-  Carousel({super.key});
+class Tarifs extends StatelessWidget {
+  const Tarifs({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -39,7 +38,7 @@ class Carousel extends StatelessWidget {
           ),
           CarouselSlider(
             options: CarouselOptions(
-              height: 289.0,
+              height: 300.0,
               aspectRatio: 16 / 9,
               viewportFraction: 0.5,
               initialPage: 0,
@@ -55,103 +54,134 @@ class Carousel extends StatelessWidget {
             items: value.tarifs.map((model) {
               return Builder(
                 builder: (BuildContext context) {
-                  return Container(
-                      width: 219,
-                      margin: const EdgeInsets.symmetric(
-                          horizontal: 5, vertical: 5),
-                      decoration: BoxDecoration(
-                          boxShadow: [
-                            const BoxShadow(
-                              color: ColorResources.COLOR_EBE9E9,
-                              blurRadius: 5.0,
-                              spreadRadius: 2.0,
-                              offset: Offset(
-                                  2.0, 2.0), // shadow direction: bottom right
-                            )
-                          ],
-                          color: ColorResources.COLOR_WHITE,
-                          border: Border.all(
-                            color: ColorResources.COLOR_EBE9E9,
-                            style: BorderStyle.solid,
-                            width: 1.0,
-                          ),
-                          borderRadius: BorderRadius.circular(8)),
-                      child: Stack(
-                        children: [
-                          Column(
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            children: [
-                              const SizedBox(
-                                height: 18,
-                              ),
-                              Text(
-                                model.name ?? '',
-                                style: textButtonTextStyle.copyWith(
-                                    fontWeight: FontWeight.w500),
-                              ),
-                              Expanded(
-                                child: Padding(
-                                  padding: const EdgeInsets.symmetric(
-                                      horizontal: 16, vertical: 20),
-                                  child: ListView.separated(
-                                    shrinkWrap: true,
-                                    scrollDirection: Axis.vertical,
-                                    itemCount: model.description?.length ?? 0,
-                                    itemBuilder: (context, index) => Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.center,
-                                      children: [
-                                        SvgPicture.asset(Images.check),
-                                        const SizedBox(
-                                          width: 10,
-                                        ),
-                                        Expanded(
-                                          child: Text(
-                                            model.description?[index] ?? '',
-                                            style: profileTitle.copyWith(
-                                                color: ColorResources
-                                                    .COLOR_737373),
+                  return Stack(
+                    children: [
+                      Positioned(
+                        bottom: 0,
+                        left: 0,
+                        right: 0,
+                        top: 15,
+                        child: Container(
+                            width: 219,
+                            margin: const EdgeInsets.symmetric(
+                                horizontal: 5, vertical: 5),
+                            decoration: BoxDecoration(
+                                boxShadow: const [
+                                  BoxShadow(
+                                    color: ColorResources.COLOR_EBE9E9,
+                                    blurRadius: 5.0,
+                                    spreadRadius: 2.0,
+                                    offset: Offset(2.0,
+                                        2.0), // shadow direction: bottom right
+                                  )
+                                ],
+                                color: ColorResources.COLOR_WHITE,
+                                border: Border.all(
+                                  color: ColorResources.COLOR_EBE9E9,
+                                  style: BorderStyle.solid,
+                                  width: 1.0,
+                                ),
+                                borderRadius: BorderRadius.circular(8)),
+                            child: Stack(
+                              children: [
+                                Column(
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  children: [
+                                    const SizedBox(
+                                      height: 18,
+                                    ),
+                                    Text(
+                                      model.name ?? '',
+                                      style: textButtonTextStyle.copyWith(
+                                          fontWeight: FontWeight.w500),
+                                    ),
+                                    Expanded(
+                                      child: Padding(
+                                        padding: const EdgeInsets.symmetric(
+                                            horizontal: 16, vertical: 20),
+                                        child: ListView.separated(
+                                          shrinkWrap: true,
+                                          scrollDirection: Axis.vertical,
+                                          itemCount:
+                                              model.activeItems?.length ?? 0,
+                                          itemBuilder: (context, index) => Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.center,
+                                            children: [
+                                              SvgPicture.asset(Images.check),
+                                              const SizedBox(
+                                                width: 10,
+                                              ),
+                                              Expanded(
+                                                child: Text(
+                                                  model.activeItems?[index]
+                                                          .name ??
+                                                      '',
+                                                  style: profileTitle.copyWith(
+                                                      color: ColorResources
+                                                          .COLOR_737373),
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                          separatorBuilder:
+                                              (BuildContext context,
+                                                      int index) =>
+                                                  const SizedBox(
+                                            height: 10,
                                           ),
                                         ),
-                                      ],
+                                      ),
                                     ),
-                                    separatorBuilder:
-                                        (BuildContext context, int index) =>
-                                            const SizedBox(
-                                      height: 10,
-                                    ),
-                                  ),
+                                  ],
                                 ),
-                              ),
-                            ],
-                          ),
-                          Positioned(
-                              left: 0,
-                              right: 0,
-                              bottom: 10,
-                              child: Padding(
-                                padding:
-                                    const EdgeInsets.symmetric(horizontal: 16),
-                                child: BaseUI().buttonsType(
-                                    model.activeTariffStatus == true
-                                        ? TypeButton.tarifBorder
-                                        : TypeButton.tarif,
-                                    context, () {
-                                  _showBuyDialog(context, model);
-                                  // value.buyTarif(context, model.id ?? 0).then((result) {
-                                  //   if(result.status==200){
-                                  //     show
-                                  //   }
-                                  // });
-                                },
-                                    getTranslated(
-                                        model.activeTariffStatus == true
-                                            ? 'extension'
-                                            : 'purchase',
-                                        context)),
-                              ))
-                        ],
-                      ));
+                                Positioned(
+                                    left: 0,
+                                    right: 0,
+                                    bottom: 10,
+                                    child: Padding(
+                                      padding: const EdgeInsets.symmetric(
+                                          horizontal: 16),
+                                      child: BaseUI().buttonsType(
+                                          model.activeTariffStatus == true
+                                              ? TypeButton.tarifBorder
+                                              : TypeButton.tarif,
+                                          context, () {
+                                        value.selectActiveTarif(model);
+                                        _showBuyDialog(context, model);
+                                      },
+                                          getTranslated(
+                                              model.activeTariffStatus == true
+                                                  ? 'extension'
+                                                  : 'purchase',
+                                              context)),
+                                    ))
+                              ],
+                            )),
+                      ),
+                      Positioned(
+                          right: 0,
+                          top: 5,
+                          child: model.isPremium == 1
+                              ? Container(
+                                  width: 35,
+                                  height: 35,
+                                  padding: const EdgeInsets.all(5),
+                                  decoration: BoxDecoration(
+                                      boxShadow: const [
+                                        BoxShadow(
+                                          color: ColorResources.COLOR_EBE9E9,
+                                          blurRadius: 2.0,
+                                          spreadRadius: 2.0,
+                                          // shadow direction: bottom right
+                                        )
+                                      ],
+                                      color: ColorResources.COLOR_WHITE,
+                                      borderRadius: BorderRadius.circular(8)),
+                                  child: Image.asset(Images.premium))
+                              : const SizedBox())
+                    ],
+                  );
                 },
               );
             }).toList(),
@@ -166,7 +196,7 @@ class Carousel extends StatelessWidget {
               Navigator.of(context, rootNavigator: true).pushAndRemoveUntil(
                 CupertinoPageRoute(
                   builder: (BuildContext context) {
-                    return  const LoginScreen();
+                    return const LoginScreen();
                   },
                 ),
                 (_) => false,
@@ -240,6 +270,13 @@ class Carousel extends StatelessWidget {
                               fontSize: Dimensions.FONT_SIZE_24),
                         ),
                         const SizedBox(
+                          height: 12,
+                        ),
+                        Text(
+                          getTranslated('selectTarif', context),
+                          style: titleTextField,
+                        ),
+                        const SizedBox(
                           height: 24,
                         ),
                         Container(
@@ -255,28 +292,40 @@ class Carousel extends StatelessWidget {
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               Expanded(
-                                  flex: 1,
-                                  child: Container(
-                                      decoration: BoxDecoration(
-                                          color: ColorResources.COLOR_F7F7F9,
-                                          border: Border.all(
-                                            color: ColorResources.COLOR_E2E2E5,
-                                            style: BorderStyle.solid,
-                                            width: 1.0,
-                                          ),
-                                          borderRadius: const BorderRadius.only(
-                                              topLeft: Radius.circular(10.0),
-                                              bottomLeft:
-                                                  Radius.circular(10.0))),
-                                      child: Center(
-                                          child: Padding(
-                                        padding: const EdgeInsets.symmetric(
-                                            horizontal: 24, vertical: 10),
+                                flex: 1,
+                                child: Container(
+                                  padding: const EdgeInsets.symmetric(
+                                      horizontal: 24, vertical: 0),
+                                  color: ColorResources.COLOR_F7F7F9,
+                                  child: DropdownButton<String>(
+                                    alignment: AlignmentDirectional.center,
+                                    value: value.selectedActiveItem,
+                                    icon: SvgPicture.asset(Images.prefix_icon),
+                                    elevation: 16,
+                                    style: profileNumber,
+                                    underline: const SizedBox(),
+                                    onChanged: (String? item) {
+                                      value.selectActiveItemTarif(item ?? '');
+                                    },
+                                    items: value.activeItemString
+                                        .map<DropdownMenuItem<String>>(
+                                            (String value) {
+                                      return DropdownMenuItem<String>(
+                                        value: value,
                                         child: Text(
-                                          model.durationName ?? '',
+                                          value,
                                           style: profileNumber,
+                                          textAlign: TextAlign.center,
                                         ),
-                                      )))),
+                                      );
+                                    }).toList(),
+                                  ),
+                                ),
+                              ),
+                              const VerticalDivider(
+                                color: ColorResources.COLOR_E2E2E5,
+                                thickness: 1,
+                              ),
                               Expanded(
                                   flex: 1,
                                   child: Center(
@@ -284,7 +333,8 @@ class Carousel extends StatelessWidget {
                                     padding: const EdgeInsets.symmetric(
                                         horizontal: 24, vertical: 10),
                                     child: Text(
-                                      model.price ?? '',
+                                      value.getPriceOfTarif(
+                                          value.selectedActiveItem),
                                       style: profileNumber,
                                     ),
                                   ))),
@@ -309,7 +359,7 @@ class Carousel extends StatelessWidget {
                                 flex: 1,
                                 child: BaseUI().buttonsType(
                                     TypeButton.filled, context, () {
-                                  value.buyTarif(model.id ?? 0).then((result) {
+                                  value.buyTarif().then((result) {
                                     if (result.status == 200) {
                                       _showSuccessDialog(context);
                                     }
@@ -366,6 +416,7 @@ class Carousel extends StatelessWidget {
                           height: 24,
                         ),
                         BaseUI().buttonsType(TypeButton.filled, context, () {
+                          Navigator.pop(context);
                           Navigator.pop(context);
                         }, getTranslated('understand', context)),
                       ],

@@ -41,6 +41,8 @@ class Images {
   static const String person_icon = 'assets/icon/person.svg';
   static const String home_icon = 'assets/icon/home.svg';
   static const String play_icon = 'assets/icon/play.svg';
+  static const String playMusic = 'assets/icon/play_music.svg';
+  static const String playVideoNotif = 'assets/icon/play_video_notif.svg';
   static const String searchIcon = 'assets/icon/search.svg';
   static const String notif_icon = 'assets/icon/notification.svg';
   static const String user_icon = 'assets/icon/user.svg';
@@ -62,5 +64,12 @@ class Images {
   static const String playPlayer = 'assets/icon/play_player.svg';
   static const String pausePlayer = 'assets/icon/pause_payer.svg';
   static const String succesIcon = 'assets/icon/succes_icon.svg';
+  static const String language = 'assets/icon/language.svg';
+  static const String phoneSetting = 'assets/icon/phone_setting.svg';
+  static const String smartphone = 'assets/icon/smartphone.svg';
+  static const String activePhone = 'assets/icon/active_phone.svg';
+  static const String blackBack = 'assets/icon/back_back.svg';
+  static const String smallPlay = 'assets/icon/small_play.svg';
+  static const String premium = 'assets/icon/premium.png';
   static const String placeholderImage = 'assets/image/placeholder_image.png';
 }

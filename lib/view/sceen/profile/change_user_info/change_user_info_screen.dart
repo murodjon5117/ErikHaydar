@@ -158,7 +158,7 @@ class _ChangeUserInfoState extends State<ChangeUserInfo> {
                     if (_formKey.currentState!.validate()) {
                       value
                           .updateUserInfo(
-                              _nameController.text, _surNameController.text)
+                              _nameController.text, _surNameController.text,image)
                           .then((result) {
                         if (result.status == 200) {
                           _showSuccessDialog(context);

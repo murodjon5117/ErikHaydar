@@ -47,6 +47,7 @@ class CustomTextField extends StatelessWidget {
           height: 10,
         ),
         TextFormField(
+          maxLines: type == TextFieldType.support ? 7 : 1,
           inputFormatters:
               (type == TextFieldType.phone) ? [maskFormatter] : null,
           validator: (value) {
@@ -77,6 +78,11 @@ class CustomTextField extends StatelessWidget {
                 }
                 return null;
               case TextFieldType.selectDate:
+                if (value == null || value.isEmpty) {
+                  return hint;
+                }
+                return null;
+              case TextFieldType.support:
                 if (value == null || value.isEmpty) {
                   return hint;
                 }
@@ -142,6 +148,8 @@ class CustomTextField extends StatelessWidget {
         return ColorResources.COLOR_CFCBCB;
       case TextFieldType.selectDate:
         return ColorResources.COLOR_CFCBCB;
+      case TextFieldType.support:
+        return ColorResources.COLOR_CFCBCB;
     }
   }
 
@@ -158,6 +166,8 @@ class CustomTextField extends StatelessWidget {
       case TextFieldType.summa:
         return '(120 000)';
       case TextFieldType.selectDate:
+        return hint;
+      case TextFieldType.support:
         return hint;
     }
   }
@@ -176,16 +186,17 @@ class CustomTextField extends StatelessWidget {
         return TextInputType.number;
       case TextFieldType.selectDate:
         return TextInputType.text;
+      case TextFieldType.support:
+        return TextInputType.text;
     }
   }
-
-  
 }
 
 enum TextFieldType {
   phone,
   password,
   text,
+  support,
   summa,
   selectDate,
   selected;

@@ -1,3 +1,6 @@
+import 'dart:io';
+
+import 'package:erik_haydar/data/model/response/body/devices_model.dart';
 import 'package:erik_haydar/data/model/response/body/info_model.dart';
 import 'package:erik_haydar/data/model/response/body/tarif_model.dart';
 import 'package:erik_haydar/data/model/response/body/url_launch.dart';
@@ -7,7 +10,6 @@ import '../data/model/response/base/api_response.dart';
 import '../data/model/response/base/base_model.dart';
 import '../data/model/response/base/payment_model.dart';
 import '../data/repository/profile_repo.dart';
-import '../helper/api_checker.dart';
 import '../util/images.dart';
 import '../view/sceen/profile/widget/buttons.dart';
 
@@ -89,10 +91,14 @@ class ProfileProvider extends ChangeNotifier {
     return baseResponse;
   }
 
-  Future<BaseResponse> updateUserInfo(String name, String surName) async {
-    var data = {'firstname': name, 'lastname': surName, 'gender_id': _genderId};
+  Future<BaseResponse> updateUserInfo(
+    String name,
+    String surName,
+    File? img,
+  ) async {
     BaseResponse baseResponse = BaseResponse();
-    ApiResponse apiResponse = await repo.updateUserInfo(data);
+    ApiResponse apiResponse =
+        await repo.updateUserInfo(name, surName, genderId, img);
     if (IsEnableApiResponse(apiResponse).isValide()) {
       baseResponse =
           BaseResponse.fromJson(apiResponse.response?.data, (data) => dynamic);
@@ -118,19 +124,62 @@ class ProfileProvider extends ChangeNotifier {
     return baseResponse;
   }
 
-  Future<BaseResponse> buyTarif(int id) async {
+  Future<BaseResponse> setSupport(String message) async {
+    var data = {
+      'message': message,
+    };
     BaseResponse baseResponse = BaseResponse();
-    var data = {'id': id};
-    ApiResponse apiResponse = await repo.buyTarif(data);
-    if (apiResponse.response?.statusCode == 200 &&
-        apiResponse.response?.data['status'] == 200) {
+    ApiResponse apiResponse = await repo.setSupport(data);
+    if (IsEnableApiResponse(apiResponse).isValide()) {
       baseResponse =
           BaseResponse.fromJson(apiResponse.response?.data, (data) => dynamic);
-    } else {
-      ApiChecker.checkApi(apiResponse);
     }
     notifyListeners();
     return baseResponse;
+  }
+
+  Future<BaseResponse> buyTarif() async {
+    int id = _activeItem
+            .firstWhere(
+              (element) => _selectedActiveItem == element.durationName,
+              orElse: () => ActiveItems(),
+            )
+            .id ??
+        0;
+    BaseResponse baseResponse = BaseResponse();
+    var data = {'id': id};
+    ApiResponse apiResponse = await repo.buyTarif(data);
+    if (IsEnableApiResponse(apiResponse).isValide()) {
+      baseResponse =
+          BaseResponse.fromJson(apiResponse.response?.data, (data) => dynamic);
+    }
+    notifyListeners();
+    return baseResponse;
+  }
+
+  Future<BaseResponse> deleteDevice(String deviceId) async {
+    BaseResponse baseResponse = BaseResponse();
+    var data = {'device_id': deviceId};
+    ApiResponse apiResponse = await repo.deleteDevice(data);
+    if (IsEnableApiResponse(apiResponse).isValide()) {
+      baseResponse =
+          BaseResponse.fromJson(apiResponse.response?.data, (data) => dynamic);
+    }
+    notifyListeners();
+    return baseResponse;
+  }
+
+  final List<DeviceModel> _deviceList = [];
+  List<DeviceModel> get deviceList => _deviceList;
+
+  Future<void> getActiveDevices() async {
+    ApiResponse apiResponse = await repo.getActiveDevices();
+    _deviceList.clear();
+    if (IsEnableApiResponse(apiResponse).isValide()) {
+      apiResponse.response?.data['data']
+          .forEach((items) => _deviceList.add(DeviceModel.fromJson(items)));
+    }
+    notifyListeners();
   }
 
   final List<PaymentModel> _paymentList = [
@@ -162,5 +211,37 @@ class ProfileProvider extends ChangeNotifier {
       }
     }
     notifyListeners();
+  }
+
+  final List<ActiveItems> _activeItem = [];
+  List<ActiveItems> get activeItems => _activeItem;
+
+  final List<String> _activeItemString = [];
+  List<String> get activeItemString => _activeItemString;
+
+  String _selectedActiveItem = '';
+  String get selectedActiveItem => _selectedActiveItem;
+
+  selectActiveTarif(TarifModel model) {
+    _activeItem.clear();
+    _activeItemString.clear();
+    _activeItem.addAll(model.activeItems ?? []);
+    for (var element in _activeItem) {
+      _activeItemString.add(element.durationName ?? '');
+    }
+    _selectedActiveItem = _activeItemString[0];
+    notifyListeners();
+  }
+
+  selectActiveItemTarif(String item) {
+    _selectedActiveItem = item;
+    notifyListeners();
+  }
+
+  String getPriceOfTarif(String item) {
+    return _activeItem
+            .firstWhere((element) => element.durationName == item)
+            .price ??
+        '';
   }
 }

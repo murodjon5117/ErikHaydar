@@ -12,6 +12,8 @@ import '../../../util/styles.dart';
 import '../search/search_screen.dart';
 
 class FavoritesScreen extends StatelessWidget {
+  const FavoritesScreen({super.key});
+
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
@@ -58,9 +60,9 @@ class FavoritesScreen extends StatelessWidget {
             ],
           ),
         ),
-        body: TabBarView(
+        body: const TabBarView(
           children: [
-            const FavoriteFilmScreen(),
+            FavoriteFilmScreen(),
             FavoriteMusic(),
           ],
         ),

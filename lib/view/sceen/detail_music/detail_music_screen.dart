@@ -57,7 +57,7 @@ class _DetailMusicScreenState extends State<DetailMusicScreen> {
               icon: SvgPicture.asset(Images.back_icon),
               onPressed: () => Navigator.of(context).pop(),
             ),
-            actions: [favorite(context, value.detailMusicModel)],
+            actions: [favorite(value.detailMusicModel)],
           ),
           body: Stack(
             children: [
@@ -74,7 +74,9 @@ class _DetailMusicScreenState extends State<DetailMusicScreen> {
                         detaiPhoto(value.detailMusicModel.image ?? '',
                             value.detailMusicModel.isFree ?? false),
                         detailInformation(value.detailMusicModel),
-                        MusicPayer(slug: widget.slug),
+                        MusicPayer(
+                          model: value.detailMusicModel,
+                        ),
                         detailFunctions(value.detailMusicModel.viewsCount ?? 0),
                         CommentList(
                           commentList: value.commentList,
@@ -241,12 +243,19 @@ class _DetailMusicScreenState extends State<DetailMusicScreen> {
               height: 355,
               child: BaseUI().imageNetwork(widget.image)),
         ),
-        Positioned(top: 10, left: 0, child: tipVideo(isFree, context)),
+        Positioned(
+            top: 10,
+            left: 0,
+            child: tipVideo(
+              isFree,
+            )),
       ],
     );
   }
 
-  Widget tipVideo(bool isFree, BuildContext context) {
+  Widget tipVideo(
+    bool isFree,
+  ) {
     return Container(
       decoration: BoxDecoration(
           color: isFree
@@ -265,7 +274,6 @@ class _DetailMusicScreenState extends State<DetailMusicScreen> {
   }
 
   Widget favorite(
-    BuildContext context,
     DetailMusicMidel detailFilmModel,
   ) {
     return GestureDetector(

@@ -16,7 +16,7 @@ class AuthRepo {
   Future<ApiResponse> enterPhone(dynamic data) async {
     try {
       final response =
-          await dioClient.post(AppConstants.ENTER_PHONE, data: data);
+          await dioClient.post(AppConstants.enterPhone, data: data);
       return ApiResponse.withSuccess(response);
     } catch (e) {
       return ApiResponse.withError(ApiErrorHandler.getMessage(e));
@@ -25,7 +25,7 @@ class AuthRepo {
 
   Future<ApiResponse> login(dynamic data) async {
     try {
-      final response = await dioClient.post(AppConstants.LOGIN, data: data);
+      final response = await dioClient.post(AppConstants.login, data: data);
       return ApiResponse.withSuccess(response);
     } catch (e) {
       return ApiResponse.withError(ApiErrorHandler.getMessage(e));
@@ -35,7 +35,7 @@ class AuthRepo {
   Future<ApiResponse> verifyPhone(dynamic data) async {
     try {
       final response =
-          await dioClient.post(AppConstants.VERIFY_PHONE, data: data);
+          await dioClient.post(AppConstants.verifyPhone, data: data);
       return ApiResponse.withSuccess(response);
     } catch (e) {
       return ApiResponse.withError(ApiErrorHandler.getMessage(e));
@@ -45,7 +45,7 @@ class AuthRepo {
   Future<ApiResponse> getCities() async {
     try {
       final response = await dioClient.get(
-        AppConstants.GET_CITY,
+        AppConstants.getCity,
       );
       return ApiResponse.withSuccess(response);
     } catch (e) {
@@ -104,7 +104,7 @@ class AuthRepo {
 
     try {
       final response =
-          await dioClient.post(AppConstants.FULL_REGISTER, data: formData);
+          await dioClient.post(AppConstants.fullRegister, data: formData);
       return ApiResponse.withSuccess(response);
     } catch (e) {
       return ApiResponse.withError(ApiErrorHandler.getMessage(e));

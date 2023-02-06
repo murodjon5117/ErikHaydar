@@ -1,9 +1,7 @@
 import 'package:erik_haydar/provider/favorite_provider.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/scheduler.dart';
 import 'package:provider/provider.dart';
 
-import '../../../provider/category_provider.dart';
 import '../../../util/color_resources.dart';
 import '../home/film/film_grid_item.dart';
 
@@ -15,17 +13,6 @@ class FavoriteFilmScreen extends StatefulWidget {
 }
 
 class _FavoriteFilmScreenState extends State<FavoriteFilmScreen> {
-  @override
-  void initState() {
-    SchedulerBinding.instance.addPostFrameCallback((_) {
-      Future.delayed(const Duration(milliseconds: 200), () {
-        Provider.of<FavoriteProvider>(context, listen: false)
-            .getFavoriteFilms(false);
-      });
-    });
-
-    super.initState();
-  }
 
   double isEvenLeft(int index) {
     if (index % 2 == 0) {

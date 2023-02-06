@@ -1,3 +1,6 @@
+import 'dart:io';
+
+import 'package:dio/dio.dart';
 import 'package:erik_haydar/view/sceen/profile/widget/buttons.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -13,7 +16,7 @@ class ProfileRepo {
   Future<ApiResponse> getUserInfo() async {
     try {
       final response = await dioClient.get(
-        AppConstants.GET_USER_INFO,
+        AppConstants.getUserInfo,
       );
 
       return ApiResponse.withSuccess(response);
@@ -25,7 +28,19 @@ class ProfileRepo {
   Future<ApiResponse> getTarif() async {
     try {
       final response = await dioClient.get(
-        AppConstants.GET_TARIFS,
+        AppConstants.getTarifs,
+      );
+
+      return ApiResponse.withSuccess(response);
+    } catch (e) {
+      return ApiResponse.withError(ApiErrorHandler.getMessage(e));
+    }
+  }
+
+  Future<ApiResponse> getActiveDevices() async {
+    try {
+      final response = await dioClient.get(
+        AppConstants.getActiveDevices,
       );
 
       return ApiResponse.withSuccess(response);
@@ -59,18 +74,35 @@ class ProfileRepo {
 
   Future<ApiResponse> verifySms(dynamic data) async {
     try {
-      final response =
-          await dioClient.post(AppConstants.verifySms, data: data);
+      final response = await dioClient.post(AppConstants.verifySms, data: data);
       return ApiResponse.withSuccess(response);
     } catch (e) {
       return ApiResponse.withError(ApiErrorHandler.getMessage(e));
     }
   }
 
-  Future<ApiResponse> updateUserInfo(dynamic data) async {
+  Future<ApiResponse> updateUserInfo(
+      String name, String lastName, int genderId, File? image) async {
+    FormData formData = FormData();
+
+    if (image != null) {
+      String fileName = image.path.split('/').last;
+      formData = FormData.fromMap({
+        'img': await MultipartFile.fromFile(image.path, filename: fileName),
+        'firstname': name,
+        'lastname': lastName,
+        'gender_id': genderId,
+      });
+    } else {
+      formData = FormData.fromMap({
+        'firstname': name,
+        'lastname': lastName,
+        'gender_id': genderId,
+      });
+    }
     try {
       final response =
-          await dioClient.post(AppConstants.updateUserInfo, data: data);
+          await dioClient.post(AppConstants.updateUserInfo, data: formData);
       return ApiResponse.withSuccess(response);
     } catch (e) {
       return ApiResponse.withError(ApiErrorHandler.getMessage(e));
@@ -87,10 +119,33 @@ class ProfileRepo {
     }
   }
 
+  Future<ApiResponse> setSupport(dynamic data) async {
+    try {
+      final response =
+          await dioClient.post(AppConstants.setSupport, data: data);
+      return ApiResponse.withSuccess(response);
+    } catch (e) {
+      return ApiResponse.withError(ApiErrorHandler.getMessage(e));
+    }
+  }
+
   Future<ApiResponse> buyTarif(dynamic data) async {
     try {
       final response = await dioClient.post(
-        AppConstants.BUY_TARIF,
+        AppConstants.buyTarif,
+        data: data,
+      );
+
+      return ApiResponse.withSuccess(response);
+    } catch (e) {
+      return ApiResponse.withError(ApiErrorHandler.getMessage(e));
+    }
+  }
+
+  Future<ApiResponse> deleteDevice(dynamic data) async {
+    try {
+      final response = await dioClient.post(
+        AppConstants.deleteDevice,
         data: data,
       );
 
@@ -103,11 +158,11 @@ class ProfileRepo {
   String payType(PaymentType type) {
     switch (type) {
       case PaymentType.payme:
-        return AppConstants.PAY_PAYME;
+        return AppConstants.payPayme;
       case PaymentType.click:
-        return AppConstants.PAY_CLICK;
+        return AppConstants.payClick;
       case PaymentType.apelsin:
-        return AppConstants.PAY_APELSIN;
+        return AppConstants.payApelsin;
     }
   }
 }

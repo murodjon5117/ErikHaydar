@@ -1,15 +1,15 @@
 import 'package:erik_haydar/data/model/response/body/home_model.dart';
 import 'package:erik_haydar/data/model/response/body/music_model.dart';
 import 'package:erik_haydar/localization/language_constrants.dart';
+import 'package:erik_haydar/provider/category_provider.dart';
 import 'package:erik_haydar/provider/home_provider.dart';
 import 'package:erik_haydar/provider/user_data_provider.dart';
 import 'package:erik_haydar/util/color_resources.dart';
 import 'package:erik_haydar/util/images.dart';
 import 'package:erik_haydar/util/styles.dart';
 import 'package:erik_haydar/view/sceen/home/home_categories.dart';
-import 'package:erik_haydar/view/sceen/home/music/music_item.dart';
 import 'package:erik_haydar/view/sceen/home/music/music_list.dart';
-import 'package:erik_haydar/view/sceen/home/slider/slider_2.dart';
+import 'package:erik_haydar/view/sceen/home/notification/notification_screen.dart';
 import 'package:erik_haydar/view/sceen/home/slider/slider_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
@@ -17,10 +17,11 @@ import 'package:flutter_svg/svg.dart';
 import 'package:persistent_bottom_nav_bar_v2/persistent-tab-view.dart';
 import 'package:provider/provider.dart';
 
-import '../../../util/dimensions.dart';
 import '../search/search_screen.dart';
 
 class HomeScreen extends StatefulWidget {
+  const HomeScreen({super.key});
+
   @override
   State<HomeScreen> createState() => _HomeScreenState();
 }
@@ -31,11 +32,11 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   void initState() {
     SchedulerBinding.instance.addPostFrameCallback((_) {
-      Future.delayed(const Duration(milliseconds: 200), () {
-        Provider.of<HomeProvider>(context, listen: false).getSliderData();
-        Provider.of<HomeProvider>(context, listen: false).getHomeFilm();
-        Provider.of<HomeProvider>(context, listen: false).getHomeMusic();
-      });
+      Provider.of<CategoryProvider>(context, listen: false).getFilmsCategory();
+      Provider.of<CategoryProvider>(context, listen: false).getFilterType();
+      Provider.of<HomeProvider>(context, listen: false).getSliderData();
+      Provider.of<HomeProvider>(context, listen: false).getHomeFilm();
+      Provider.of<HomeProvider>(context, listen: false).getHomeMusic();
     });
 
     super.initState();
@@ -53,14 +54,17 @@ class _HomeScreenState extends State<HomeScreen> {
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 10),
             child: GestureDetector(
-                onTap: () {}, child: SvgPicture.asset(Images.notif_icon)),
+                onTap: () {
+                  pushNewScreen(context, screen: const NotificationScreen());
+                },
+                child: SvgPicture.asset(Images.notif_icon)),
           ),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 20),
             child: GestureDetector(
                 onTap: () {
                   pushNewScreen(context,
-                      screen: SearchScreen(), withNavBar: false);
+                      screen: const SearchScreen(), withNavBar: false);
                 },
                 child: SvgPicture.asset(Images.searchIcon)),
           )
@@ -97,7 +101,9 @@ class _HomeScreenState extends State<HomeScreen> {
                       const SizedBox(
                         height: 24,
                       ),
-                      const SliderScreen(),
+                      value.slider.isEmpty
+                          ? const SizedBox()
+                          : const SliderScreen(),
                       const SizedBox(
                         height: 35,
                       ),

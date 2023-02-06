@@ -5,6 +5,7 @@ import 'package:erik_haydar/util/color_resources.dart';
 import 'package:erik_haydar/view/base/base_ui.dart';
 import 'package:erik_haydar/view/sceen/auth/register/full_register_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
 import 'package:otp_text_field/otp_field.dart';
 import 'package:otp_text_field/otp_field_style.dart';
 import 'package:otp_text_field/style.dart';
@@ -147,13 +148,15 @@ class _SmsScreenState extends State<SmsScreen>
                           .verifyPhone(widget.phoneNumber, _otpCode)
                           .then((result) {
                         if (result.status == 200) {
-                          pushNewScreen(context,
-                              screen: FullRegisterScreen(
-                                code: _otpCode,
-                                phone: widget.phoneNumber,
-                              ),
-                              pageTransitionAnimation:
-                                  PageTransitionAnimation.fade);
+                          SchedulerBinding.instance.addPostFrameCallback((_) {
+                            pushNewScreen(context,
+                                screen: FullRegisterScreen(
+                                  code: _otpCode,
+                                  phone: widget.phoneNumber,
+                                ),
+                                pageTransitionAnimation:
+                                    PageTransitionAnimation.fade);
+                          });
                         } else {
                           setState(() {
                             validator = true;

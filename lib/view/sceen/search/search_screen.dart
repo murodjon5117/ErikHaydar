@@ -19,13 +19,20 @@ class SearchScreen extends StatefulWidget {
 
 class _SearchScreenState extends State<SearchScreen> {
   TextEditingController _controller = TextEditingController();
-  FocusNode _focusNode = FocusNode();
+  final FocusNode _focusNode = FocusNode();
   String query = '';
   @override
   void initState() {
     Provider.of<SearchProvider>(context, listen: false).setDefauilLists();
     _controller = TextEditingController();
     super.initState();
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    FocusManager.instance.primaryFocus?.unfocus();
+    super.dispose();
   }
 
   @override

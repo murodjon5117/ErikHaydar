@@ -18,27 +18,32 @@ class DetailMusicMidel {
   String? description;
   bool? isUserFavoriteFilm;
   String? createdAt;
+  String? canWatchMessage;
+  String? sources;
 
-  DetailMusicMidel(
-      {this.id,
-      this.slug,
-      this.name,
-      this.musicAuthor,
-      this.image,
-      this.isFree,
-      this.priceTypeName,
-      this.type,
-      this.likesCount,
-      this.dislikesCount,
-      this.isLike,
-      this.isDisLike,
-      this.activeCommentsCount,
-      this.qualityText,
-      this.canWatch,
-      this.viewsCount,
-      this.description,
-      this.isUserFavoriteFilm,
-      this.createdAt});
+  DetailMusicMidel({
+    this.id,
+    this.slug,
+    this.name,
+    this.musicAuthor,
+    this.image,
+    this.isFree,
+    this.priceTypeName,
+    this.type,
+    this.likesCount,
+    this.dislikesCount,
+    this.isLike,
+    this.isDisLike,
+    this.activeCommentsCount,
+    this.qualityText,
+    this.canWatch,
+    this.viewsCount,
+    this.description,
+    this.isUserFavoriteFilm,
+    this.createdAt,
+    this.canWatchMessage,
+    this.sources,
+  });
 
   DetailMusicMidel.fromJson(Map<String, dynamic> json) {
     id = json['id'];
@@ -60,5 +65,7 @@ class DetailMusicMidel {
     description = json['description'];
     isUserFavoriteFilm = json['isUserFavoriteFilm'];
     createdAt = json['created_at'];
+    canWatchMessage = json['canWatchMessage'];
+    sources = json['sources'];
   }
 }

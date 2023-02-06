@@ -16,7 +16,7 @@ class HomeRepo {
   Future<ApiResponse> getSlider() async {
     try {
       final response = await dioClient.post(
-        AppConstants.SLIDER,
+        AppConstants.slider,
       );
       return ApiResponse.withSuccess(response);
     } catch (e) {
@@ -39,6 +39,17 @@ class HomeRepo {
     try {
       final response = await dioClient.post(
         AppConstants.homeMusic,
+      );
+      return ApiResponse.withSuccess(response);
+    } catch (e) {
+      return ApiResponse.withError(ApiErrorHandler.getMessage(e));
+    }
+  }
+
+  Future<ApiResponse> getNotification() async {
+    try {
+      final response = await dioClient.post(
+        AppConstants.notification,
       );
       return ApiResponse.withSuccess(response);
     } catch (e) {

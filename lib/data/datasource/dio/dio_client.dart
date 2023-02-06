@@ -1,7 +1,6 @@
 import 'dart:io';
 
 import 'package:dio/dio.dart';
-import 'package:erik_haydar/data/model/response/body/user_info_model.dart';
 import 'package:erik_haydar/util/app_constants.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -14,13 +13,8 @@ class DioClient {
   final LoggingInterceptor? loggingInterceptor;
   final SharedPreferences? sharedPreferences;
   Dio dio = Dio();
-  UserInfoData user = UserInfoData();
   DioClient(this.baseUrl, Dio dioC,
       {this.loggingInterceptor, this.sharedPreferences}) {
-    // try {
-    //   user = UserInfoData.fromJson(SharedPref().read(AppConstants.USER_DATA));
-    // } catch (Excepetion) {}
-
     dio = dioC;
     dio
       ..interceptors.add(PrettyDioLogger(
@@ -38,36 +32,43 @@ class DioClient {
       ..httpClientAdapter
       ..options.headers = {
         'Content-Type': 'application/json; charset=UTF-8',
-        'Authorization':
-            'Bearer ${sharedPreferences?.getString(AppConstants.token)}',
       };
     dio.interceptors.add(loggingInterceptor!);
   }
-
-  Future<Response> get(
-    String uri, {
-    Map<String, dynamic>? queryParametrs,
-    Options? options,
-    CancelToken? cancelToken,
-    ProgressCallback? onReceiveProgress,
-  }) async {
-    LoadingOverlay().show();
+  Future<Response> get(String uri,
+      {Map<String, dynamic>? queryParametrs,
+      Options? options,
+      CancelToken? cancelToken,
+      ProgressCallback? onReceiveProgress,
+      bool? isLoading}) async {
+    if (isLoading ?? true) {
+      LoadingOverlay().show();
+    }
     try {
       var response = await dio.get(uri,
           queryParameters: queryParametrs,
-          options: options,
+          options: Options(headers: {
+            'Authorization':
+                'Bearer ${sharedPreferences?.getString(AppConstants.token)}',
+          }),
           cancelToken: cancelToken,
           onReceiveProgress: onReceiveProgress);
       LoadingOverlay().hide();
       return response;
     } on SocketException catch (e) {
-      LoadingOverlay().hide();
+      if (isLoading ?? true) {
+        LoadingOverlay().hide();
+      }
       throw SocketException(e.toString());
     } on FormatException catch (_) {
-      LoadingOverlay().hide();
+      if (isLoading ?? true) {
+        LoadingOverlay().hide();
+      }
       throw const FormatException("Unable to process the data");
     } catch (e) {
-      LoadingOverlay().hide();
+      if (isLoading ?? true) {
+        LoadingOverlay().hide();
+      }
       rethrow;
     }
   }
@@ -80,25 +81,37 @@ class DioClient {
     CancelToken? cancelToken,
     ProgressCallback? onSendProgress,
     ProgressCallback? onReceiveProgress,
+    bool? isLoading,
   }) async {
-    LoadingOverlay().show();
+    if (isLoading ?? true) {
+      LoadingOverlay().show();
+    }
     try {
       var response = await dio.post(
         uri,
         data: data,
         queryParameters: queryParameters,
-        options: options,
+        options: Options(headers: {
+          'Authorization':
+              'Bearer ${sharedPreferences?.getString(AppConstants.token)}'
+        }),
         cancelToken: cancelToken,
         onSendProgress: onSendProgress,
         onReceiveProgress: onReceiveProgress,
       );
-      LoadingOverlay().hide();
+      if (isLoading ?? true) {
+        LoadingOverlay().hide();
+      }
       return response;
     } on FormatException catch (_) {
-      LoadingOverlay().hide();
+      if (isLoading ?? true) {
+        LoadingOverlay().hide();
+      }
       throw const FormatException("Unable to process the data");
     } catch (e) {
-      LoadingOverlay().hide();
+      if (isLoading ?? true) {
+        LoadingOverlay().hide();
+      }
       rethrow;
     }
   }
@@ -117,7 +130,10 @@ class DioClient {
         uri,
         data: data,
         queryParameters: queryParameters,
-        options: options,
+        options: Options(headers: {
+          'Authorization':
+              'Bearer ${sharedPreferences?.getString(AppConstants.token)}'
+        }),
         cancelToken: cancelToken,
         onSendProgress: onSendProgress,
         onReceiveProgress: onReceiveProgress,
@@ -142,7 +158,10 @@ class DioClient {
         uri,
         data: data,
         queryParameters: queryParameters,
-        options: options,
+        options: Options(headers: {
+          'Authorization':
+              'Bearer ${sharedPreferences?.getString(AppConstants.token)}'
+        }),
         cancelToken: cancelToken,
       );
       return response;

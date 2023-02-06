@@ -1,3 +1,4 @@
+import 'package:dio/dio.dart';
 import 'package:erik_haydar/data/datasource/exception/api_error_handler.dart';
 import 'package:erik_haydar/data/model/response/base/api_response.dart';
 import 'package:erik_haydar/util/app_constants.dart';
@@ -11,6 +12,30 @@ class DetailRepo {
   DioClient dioClient;
 
   Future<ApiResponse> getFilmDetail(dynamic data) async {
+    try {
+      final response = await dioClient.post(
+        AppConstants.filmDetail,
+        queryParameters: data,
+      );
+      return ApiResponse.withSuccess(response);
+    } catch (e) {
+      return ApiResponse.withError(ApiErrorHandler.getMessage(e));
+    }
+  }
+
+  Future<ApiResponse> getMovieSource(dynamic data) async {
+    try {
+      final response = await dioClient.post(
+        AppConstants.movieSource,
+        queryParameters: data,
+      );
+      return ApiResponse.withSuccess(response);
+    } catch (e) {
+      return ApiResponse.withError(ApiErrorHandler.getMessage(e));
+    }
+  }
+
+  Future<ApiResponse> downloadVideo(dynamic data) async {
     try {
       final response = await dioClient.post(
         AppConstants.filmDetail,
@@ -82,15 +107,19 @@ class DetailRepo {
     }
   }
 
-  Future<ApiResponse> getMusicSourse(dynamic data) async {
-    try {
-      final response = await dioClient.post(
-        AppConstants.getMusicSource,
-        queryParameters: data,
-      );
-      return ApiResponse.withSuccess(response);
-    } catch (e) {
-      return ApiResponse.withError(ApiErrorHandler.getMessage(e));
-    }
-  }
+  
+  // Future<ApiResponse> download(
+  //   String urlPath,
+  //   String savePath,
+  //    ProgressCallback onReceiveProgress,
+  // ) async {
+  //   try {
+  //     final response = await dioClient.download(urlPath, savePath,
+
+  //         onReceiveProgress: onReceiveProgress);
+  //     return ApiResponse.withSuccess(response);
+  //   } catch (e) {
+  //     return ApiResponse.withError(ApiErrorHandler.getMessage(e));
+  //   }
+  // }
 }

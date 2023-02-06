@@ -6,7 +6,6 @@ import '../util/dimensions.dart';
 
 ThemeData light = ThemeData(
   fontFamily: 'Inter',
-  
   primaryColor: ColorResources.COLOR_PPIMARY,
   brightness: Brightness.light,
   cardColor: Colors.white,

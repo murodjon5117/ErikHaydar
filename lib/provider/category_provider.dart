@@ -7,8 +7,10 @@ import 'package:erik_haydar/data/model/response/body/music_model.dart';
 import 'package:erik_haydar/data/repository/category_repo.dart';
 import 'package:erik_haydar/helper/api_checker.dart';
 import 'package:erik_haydar/helper/enums/view_enum.dart';
+import 'package:erik_haydar/helper/extention/extention.dart';
 import 'package:flutter/material.dart';
 import '../data/model/response/base/base_model.dart';
+import '../view/sceen/category/videos/item_videos_screen.dart';
 
 class CategoryProvider extends ChangeNotifier {
   CategoryProvider({
@@ -25,24 +27,43 @@ class CategoryProvider extends ChangeNotifier {
 
   bool _isLoading = false;
   bool get isLoading => _isLoading;
+
   List<Items> _filmsCategory = [];
   List<Items> get filmsCategory => _filmsCategory;
 
-  Future<void> getFilmsCategory() async {
+  final List<Widget> _generalWidgets = [];
+  List<Widget> get generalWidgets => _generalWidgets;
+
+  final List<Tab> _tabs = [];
+  List<Tab> get tabs => _tabs;
+
+  Future<bool> getFilmsCategory() async {
     _filmsCategory.clear();
     _isLoading = true;
+    bool result = false;
+    _generalWidgets.clear();
+    _tabs.clear();
     ApiResponse apiResponse = await repo.getFilmsCategory();
-    if (apiResponse.response?.statusCode == 200 &&
-        apiResponse.response?.data['status'] == 200) {
+    if (IsEnableApiResponse(apiResponse).isValide()) {
       var response = BaseResponse<FilmsCategoryModel>.fromJson(
           apiResponse.response?.data,
           (data) => FilmsCategoryModel.fromJson(data));
       _filmsCategory = response.data?.items ?? [];
+
+      for (int i = 0; i < _filmsCategory.length; i++) {
+        _tabs.add(Tab(
+          text: filmsCategory[i].name,
+        ));
+        _generalWidgets.add(ItemVideosScreen(item: filmsCategory[i]));
+      }
+
+      result = true;
     } else {
       ApiChecker.checkApi(apiResponse);
     }
     _isLoading = false;
     notifyListeners();
+    return result;
   }
 
   List<Films> _films = [];
@@ -69,27 +90,25 @@ class CategoryProvider extends ChangeNotifier {
       _currentPage = 1;
       _films.clear();
     }
-    dynamic data = {'category': slug, 'page': _currentPage};
+
+    dynamic data = {'category': slug, 'page': _currentPage, 'type': setType()};
     ApiResponse apiResponse = await repo.getFilmsCategoryPage(data);
-    if (apiResponse.response?.statusCode == 200 &&
-        apiResponse.response?.data['status'] == 200) {
+    if (IsEnableApiResponse(apiResponse).isValide()) {
       var response = BaseResponse<CategoryPageModel>.fromJson(
           apiResponse.response?.data,
           (data) => CategoryPageModel.fromJson(data));
       _films.addAll(response.data?.films?.items ?? []);
       _currentPage = (response.data?.films?.mMeta?.currentPage ?? 0) + 1;
       _totalPageCount = (response.data?.films?.mMeta?.pageCount ?? 0);
-    } else {
-      ApiChecker.checkApi(apiResponse);
     }
     _isPagingLoading = false;
     notifyListeners();
   }
 
-  List<MusicModel> _musics = [];
+  final List<MusicModel> _musics = [];
   List<MusicModel> get musics => _musics;
 
-  Future<void> getCategoryMusics(String slug, bool isPaging) async {
+  Future<void> getCategoryMusics(bool isPaging) async {
     if (isPaging) {
       _isPagingLoading = true;
       notifyListeners();
@@ -97,46 +116,52 @@ class CategoryProvider extends ChangeNotifier {
       _currentPage = 1;
       _musics.clear();
     }
-    dynamic data = {'page': _currentPage};
+    dynamic data = {'page': _currentPage, 'type': setType()};
     ApiResponse apiResponse = await repo.getCategoryMusic(data);
-    if (apiResponse.response?.statusCode == 200 &&
-        apiResponse.response?.data['status'] == 200) {
+    if (IsEnableApiResponse(apiResponse).isValide()) {
       var response = BaseResponse<CategoryMusicModel>.fromJson(
           apiResponse.response?.data,
           (data) => CategoryMusicModel.fromJson(data));
       _musics.addAll(response.data?.items ?? []);
       _currentPage = (response.data?.mMeta?.currentPage ?? 0) + 1;
       _totalPageCount = (response.data?.mMeta?.pageCount ?? 0);
-    } else {
-      ApiChecker.checkApi(apiResponse);
     }
-
     _isPagingLoading = false;
     notifyListeners();
   }
 
-  List<Items> _filterList = [];
+  final List<Items> _filterList = [];
   List<Items> get filterList => _filterList;
 
-  List<String> _filterStringList = ['sadsds', 'adsad', 'afafa'];
+  final List<String> _filterStringList = [];
   List<String> get filterStringList => _filterStringList;
 
   String _currentFilterStringValue = '';
   String get currentFilterStringValue => _currentFilterStringValue;
+
   setCurrentFilterValue(String value) {
     _currentFilterStringValue = value;
     notifyListeners();
   }
 
+  String setType() {
+    return _filterList
+            .firstWhere((element) => element.name == _currentFilterStringValue)
+            .slug ??
+        '';
+  }
+
   Future<void> getFilterType() async {
     _filterList.clear();
+    _filterStringList.clear();
     ApiResponse apiResponse = await repo.getFilters();
-    if (apiResponse.response?.statusCode == 200 &&
-        apiResponse.response?.data['status'] == 200) {
+    if (IsEnableApiResponse(apiResponse).isValide()) {
       apiResponse.response?.data['data']
           .forEach((category) => _filterList.add(Items.fromJson(category)));
-    } else {
-      ApiChecker.checkApi(apiResponse);
+      for (var element in _filterList) {
+        _filterStringList.add(element.name ?? '');
+      }
+      _currentFilterStringValue = _filterStringList[0];
     }
     notifyListeners();
   }

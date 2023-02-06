@@ -9,20 +9,13 @@ import '../../../../util/color_resources.dart';
 import '../../../provider/favorite_provider.dart';
 
 class FavoriteMusic extends StatefulWidget {
+  const FavoriteMusic({super.key});
+
   @override
   State<FavoriteMusic> createState() => _FavoriteMusicState();
 }
 
 class _FavoriteMusicState extends State<FavoriteMusic> {
-  @override
-  void initState() {
-    SchedulerBinding.instance.addPostFrameCallback((_) {
-      Provider.of<FavoriteProvider>(context, listen: false)
-          .getFavoriteMusics( false);
-    });
-
-    super.initState();
-  }
 
 
   @override

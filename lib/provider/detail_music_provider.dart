@@ -134,17 +134,4 @@ class MusicDetailProvider extends ChangeNotifier {
     _isPagingLoading = false;
     notifyListeners();
   }
-
-  Future<void> getSourceMusic(String slug) async {
-    String musicUrl = '';
-    dynamic data = {'key': slug};
-    ApiResponse apiResponse = await repo.getMusicSourse(data);
-    if (IsEnableApiResponse(apiResponse).isValide()) {
-      var response = BaseResponse<PlayMusicModel>.fromJson(
-          apiResponse.response?.data, (data) => PlayMusicModel.fromJson(data));
-      musicUrl = response.data?.sources ?? '';
-    }
-    notifyListeners();
-    // return musicUrl;
-  }
 }

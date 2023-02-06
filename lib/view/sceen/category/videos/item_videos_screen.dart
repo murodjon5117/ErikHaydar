@@ -14,8 +14,7 @@ import '../../../../util/color_resources.dart';
 
 class ItemVideosScreen extends StatefulWidget {
   final Items item;
-
-  const ItemVideosScreen({super.key, required this.item});
+  ItemVideosScreen({super.key, required this.item});
 
   @override
   State<ItemVideosScreen> createState() => _ItemVideosScreenState();
@@ -25,10 +24,11 @@ class _ItemVideosScreenState extends State<ItemVideosScreen> {
   @override
   void initState() {
     SchedulerBinding.instance.addPostFrameCallback((_) {
-      Provider.of<CategoryProvider>(context, listen: false)
-          .getFilmsCategoryPage(widget.item.slug ?? '', false);
+      Future.delayed(const Duration(milliseconds: 200), () {
+        Provider.of<CategoryProvider>(context, listen: false)
+            .getFilmsCategoryPage(widget.item.slug ?? '', false);
+      });
     });
-
     super.initState();
   }
 
@@ -48,14 +48,6 @@ class _ItemVideosScreenState extends State<ItemVideosScreen> {
     }
   }
 
-  final List<String> items = [
-    'Barchasi',
-    'Eng ko’p ko’rilganlar',
-    'Eng so’ngi qo’shilganlarm',
-    'Eng ko’p izoh yozilganlar',
-  ];
-  String? selectedValue;
-
   @override
   Widget build(BuildContext context) {
     return Consumer<CategoryProvider>(
@@ -70,7 +62,7 @@ class _ItemVideosScreenState extends State<ItemVideosScreen> {
                       child: Row(
                         children: [
                           CustomDropdownButton2(
-                            hint: 'Select Item',
+                            hint: 'Saralash',
                             buttonWidth: 226,
                             dropdownWidth: 252,
                             dropdownDecoration: BoxDecoration(
@@ -97,12 +89,14 @@ class _ItemVideosScreenState extends State<ItemVideosScreen> {
                                 )
                               ],
                             ),
-                            dropdownItems: items,
-                            value: selectedValue,
-                            onChanged: (value) {
-                              setState(() {
-                                selectedValue = value;
-                              });
+                            dropdownItems: value.filterStringList,
+                            value: value.currentFilterStringValue,
+                            onChanged: (result) {
+                              value.setCurrentFilterValue(result ?? '');
+                              value.getFilmsCategoryPage(
+                                widget.item.slug ?? '',
+                                false,
+                              );
                             },
                           ),
                           const Spacer(),

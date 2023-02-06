@@ -8,6 +8,8 @@ import 'package:provider/provider.dart';
 import '../../../../util/color_resources.dart';
 
 class CategoryMusic extends StatefulWidget {
+  const CategoryMusic({super.key});
+
   @override
   State<CategoryMusic> createState() => _CategoryMusicState();
 }
@@ -17,103 +19,93 @@ class _CategoryMusicState extends State<CategoryMusic> {
   void initState() {
     SchedulerBinding.instance.addPostFrameCallback((_) {
       Provider.of<CategoryProvider>(context, listen: false)
-          .getCategoryMusics('slug', false);
+          .getCategoryMusics(false);
     });
 
     super.initState();
   }
 
-  final List<String> items = [
-    'Barchasi',
-    'Eng ko’p ko’rilganlar',
-    'Eng so’ngi qo’shilganlarm',
-    'Eng ko’p izoh yozilganlar',
-  ];
-  String? selectedValue;
-
   @override
   Widget build(BuildContext context) {
     return Consumer<CategoryProvider>(
-        builder: (context, value, child) =>  Stack(
-                children: [
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Padding(
-                        padding:
-                            const EdgeInsets.only(left: 20, top: 18, right: 20),
-                        child: Row(
-                          children: [
-                            CustomDropdownButton2(
-                              hint: 'Select Item',
-                              buttonWidth: 226,
-                              dropdownWidth: 252,
-                              dropdownDecoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(8),
-                                color: ColorResources.COLOR_WHITE,
-                                boxShadow: [
-                                  BoxShadow(
-                                    color: ColorResources.COLOR_BLACK
-                                        .withOpacity(0.08),
-                                    blurRadius: 3.0,
-                                    spreadRadius: 1.0,
-                                  )
-                                ],
-                              ),
-                              buttonDecoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(8),
-                                color: ColorResources.COLOR_WHITE,
-                                boxShadow: [
-                                  BoxShadow(
-                                    color: ColorResources.COLOR_BLACK
-                                        .withOpacity(0.08),
-                                    blurRadius: 3.0,
-                                    spreadRadius: 1.0,
-                                  )
-                                ],
-                              ),
-                              dropdownItems: items,
-                              value: selectedValue,
-                              onChanged: (value) {
-                                setState(() {
-                                  selectedValue = value;
-                                });
-                              },
+        builder: (context, value, child) => Stack(
+              children: [
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Padding(
+                      padding:
+                          const EdgeInsets.only(left: 20, top: 18, right: 20),
+                      child: Row(
+                        children: [
+                          CustomDropdownButton2(
+                            hint: 'Select Item',
+                            buttonWidth: 226,
+                            dropdownWidth: 252,
+                            dropdownDecoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(8),
+                              color: ColorResources.COLOR_WHITE,
+                              boxShadow: [
+                                BoxShadow(
+                                  color: ColorResources.COLOR_BLACK
+                                      .withOpacity(0.08),
+                                  blurRadius: 3.0,
+                                  spreadRadius: 1.0,
+                                )
+                              ],
                             ),
-                          ],
-                        ),
+                            buttonDecoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(8),
+                              color: ColorResources.COLOR_WHITE,
+                              boxShadow: [
+                                BoxShadow(
+                                  color: ColorResources.COLOR_BLACK
+                                      .withOpacity(0.08),
+                                  blurRadius: 3.0,
+                                  spreadRadius: 1.0,
+                                )
+                              ],
+                            ),
+                            dropdownItems: value.filterStringList,
+                            value: value.currentFilterStringValue,
+                            onChanged: (result) {
+                              value.setCurrentFilterValue(result ?? '');
+                              value.getCategoryMusics(false);
+                            },
+                          ),
+                        ],
                       ),
-                      Expanded(
-                        child: NotificationListener(
-                          onNotification: _scrollNotification,
-                          child: Padding(
-                              padding:
-                                  const EdgeInsets.only(top: 16, bottom: 8),
-                              child: list(context, value)),
-                        ),
+                    ),
+                    Expanded(
+                      child: NotificationListener(
+                        onNotification: _scrollNotification,
+                        child: Padding(
+                            padding: const EdgeInsets.only(top: 16, bottom: 8),
+                            child: list(context, value)),
                       ),
-                    ],
-                  ),
-                  Positioned(
-                      bottom: 10,
-                      left: 0,
-                      right: 0,
-                      child: value.isPagingLoading
-                          ? const LinearProgressIndicator(
-                              backgroundColor: ColorResources.COLOR_GREY,
-                              color: ColorResources.COLOR_PPIMARY,
-                              minHeight: 4,
-                            )
-                          : const SizedBox())
-                ],
-              ));
+                    ),
+                  ],
+                ),
+                Positioned(
+                    bottom: 10,
+                    left: 0,
+                    right: 0,
+                    child: value.isPagingLoading
+                        ? const LinearProgressIndicator(
+                            backgroundColor: ColorResources.COLOR_GREY,
+                            color: ColorResources.COLOR_PPIMARY,
+                            minHeight: 4,
+                          )
+                        : const SizedBox())
+              ],
+            ));
   }
 
   bool _scrollNotification(ScrollNotification scrollInfo) {
     if (scrollInfo.metrics.pixels == scrollInfo.metrics.maxScrollExtent &&
         Provider.of<CategoryProvider>(context, listen: false).isPaging()) {
       Provider.of<CategoryProvider>(context, listen: false)
-          .getCategoryMusics('', true);
+          .getCategoryMusics(true);
     }
     return true;
   }
