@@ -90,10 +90,14 @@ class Tarifs extends StatelessWidget {
                                     const SizedBox(
                                       height: 18,
                                     ),
-                                    Text(
-                                      model.name ?? '',
-                                      style: textButtonTextStyle.copyWith(
-                                          fontWeight: FontWeight.w500),
+                                    Padding(
+                                      padding: const EdgeInsets.symmetric(
+                                          horizontal: 16),
+                                      child: Text(
+                                        model.name ?? '',
+                                        style: textButtonTextStyle.copyWith(
+                                            fontWeight: FontWeight.w500),
+                                      ),
                                     ),
                                     Expanded(
                                       child: Padding(

@@ -18,6 +18,8 @@ class ProfileButtons extends StatelessWidget {
   final _formKey = GlobalKey<FormState>();
   final FocusNode _summaFocus = FocusNode();
   final TextEditingController _summaCOntroller = TextEditingController();
+
+  ProfileButtons({super.key});
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -30,11 +32,11 @@ class ProfileButtons extends StatelessWidget {
           const SizedBox(
             height: 24,
           ),
-          BaseUI().buttonsType(TypeButton.downloaded, context, () {},
-              getTranslated('downloads', context)),
-          const SizedBox(
-            height: 12,
-          ),
+          // BaseUI().buttonsType(TypeButton.downloaded, context, () {},
+          //     getTranslated('downloads', context)),
+          // const SizedBox(
+          //   height: 12,
+          // ),
           BaseUI().buttonsType(TypeButton.settings, context, () {
             pushNewScreen(context, screen: const SettingsScreen(), withNavBar: false);
           }, getTranslated('options', context)),
