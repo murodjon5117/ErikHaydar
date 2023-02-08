@@ -20,7 +20,10 @@ class SliderScreen extends StatelessWidget {
           return GestureDetector(
             onTap: () async {
               if ((value.slider[index].film == null)) {
-                launchUrlStart(url: value.slider[index].link ?? '');
+                String url = value.slider[index].link ?? '';
+                print(url);
+                // launchUrlStart(url: value.slider[index].link ?? '');
+                launchUrlStart(url: 'https://t.me/kunuzofficial');
               } else {
                 if (value.slider[index].film?.isMusic == 1) {
                   pushNewScreen(context,

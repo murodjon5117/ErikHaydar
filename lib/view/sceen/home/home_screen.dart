@@ -17,6 +17,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:persistent_bottom_nav_bar_v2/persistent-tab-view.dart';
 import 'package:provider/provider.dart';
 
+import '../../../provider/profile_provider.dart';
 import '../search/search_screen.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -37,6 +38,7 @@ class _HomeScreenState extends State<HomeScreen> {
       Provider.of<HomeProvider>(context, listen: false).getSliderData();
       Provider.of<HomeProvider>(context, listen: false).getHomeFilm();
       Provider.of<HomeProvider>(context, listen: false).getHomeMusic();
+      Provider.of<ProfileProvider>(context, listen: false).getUserInfo();
     });
 
     super.initState();
@@ -70,17 +72,36 @@ class _HomeScreenState extends State<HomeScreen> {
           )
         ],
         backgroundColor: ColorResources.COLOR_WHITE,
-        title: ListTile(
-          minLeadingWidth: 0,
-          contentPadding: EdgeInsets.zero,
-          leading: SvgPicture.asset(Images.user_icon),
-          title: Text(
-            getTranslated('hello', context),
-            style: textButtonTextStyle,
-          ),
-          subtitle: Text(
-            Provider.of<UserDataProvider>(context, listen: false).getName(),
-            style: boldTitle,
+        title: Consumer<ProfileProvider>(
+          builder: (context, value, child) => ListTile(
+            minLeadingWidth: 0,
+            contentPadding: EdgeInsets.zero,
+            leading: value.userInfo.img?.isNotEmpty ?? false
+                ? SizedBox(
+                  height: 43,
+                  width: 43,
+                  child: CircleAvatar(
+                      radius: 0,
+                      backgroundColor: ColorResources.COLOR_WHITE,
+                      child: ClipOval(
+                        child: Image.network(
+                          value.userInfo.img ?? '',
+                          width: 43,
+                          height: 43,
+                          fit: BoxFit.cover,
+                        ),
+                      ),
+                    ),
+                )
+                : SvgPicture.asset(Images.user_icon),
+            title: Text(
+              getTranslated('hello', context),
+              style: textButtonTextStyle,
+            ),
+            subtitle: Text(
+              Provider.of<UserDataProvider>(context, listen: false).getName(),
+              style: boldTitle,
+            ),
           ),
         ),
       ),

@@ -1,5 +1,3 @@
-import 'package:erik_haydar/localization/language_constrants.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
@@ -8,9 +6,7 @@ import '../../util/color_resources.dart';
 import '../../util/images.dart';
 import '../../util/styles.dart';
 
-class CustomTextField extends StatelessWidget {
-  DateTime selectedDate = DateTime.now();
-
+class CustomTextField extends StatefulWidget {
   final String title;
   final String hint;
   final TextEditingController controller;
@@ -28,6 +24,25 @@ class CustomTextField extends StatelessWidget {
       required this.type});
 
   @override
+  State<CustomTextField> createState() => _CustomTextFieldState();
+}
+
+class _CustomTextFieldState extends State<CustomTextField> {
+  DateTime selectedDate = DateTime.now();
+  final textFieldFocusNode = FocusNode();
+  bool _obscured = false;
+
+  void _toggleObscured() {
+    setState(() {
+      _obscured = !_obscured;
+      if (textFieldFocusNode.hasPrimaryFocus)
+        return; // If focus is on text field, dont unfocus
+      textFieldFocusNode.canRequestFocus =
+          false; // Prevents focus if tap on eye
+    });
+  }
+
+  @override
   Widget build(BuildContext context) {
     var maskFormatter = MaskTextInputFormatter(
         mask: '+998 (##) ###-##-##',
@@ -40,72 +55,90 @@ class CustomTextField extends StatelessWidget {
           height: 18,
         ),
         Text(
-          title,
+          widget.title,
           style: titleTextField,
         ),
         const SizedBox(
           height: 10,
         ),
         TextFormField(
-          maxLines: type == TextFieldType.support ? 7 : 1,
+          maxLines: widget.type == TextFieldType.support ? 7 : 1,
           inputFormatters:
-              (type == TextFieldType.phone) ? [maskFormatter] : null,
+              (widget.type == TextFieldType.phone) ? [maskFormatter] : null,
           validator: (value) {
-            switch (type) {
+            switch (widget.type) {
               case TextFieldType.phone:
                 if (value == null || value.isEmpty || value.length != 19) {
-                  return hint;
+                  return widget.hint;
                 }
                 return null;
               case TextFieldType.password:
                 if (value == null || value.isEmpty) {
-                  return hint;
+                  return widget.hint;
                 }
                 return null;
               case TextFieldType.text:
                 if (value == null || value.isEmpty) {
-                  return hint;
+                  return widget.hint;
                 }
                 return null;
               case TextFieldType.selected:
                 if (value == null || value.isEmpty) {
-                  return hint;
+                  return widget.hint;
                 }
                 return null;
               case TextFieldType.summa:
                 if (value == null || value.isEmpty || value.length < 4) {
-                  return hint;
+                  return widget.hint;
                 }
                 return null;
               case TextFieldType.selectDate:
                 if (value == null || value.isEmpty) {
-                  return hint;
+                  return widget.hint;
                 }
                 return null;
               case TextFieldType.support:
                 if (value == null || value.isEmpty) {
-                  return hint;
+                  return widget.hint;
                 }
                 return null;
             }
           },
-          controller: controller,
-          readOnly: (type == TextFieldType.selected ||
-                  type == TextFieldType.selectDate)
+          controller: widget.controller,
+          readOnly: (widget.type == TextFieldType.selected ||
+                  widget.type == TextFieldType.selectDate)
               ? true
               : false,
-          focusNode: focusNode,
-          onTap: onTap,
+          focusNode: widget.focusNode,
+          onTap: widget.onTap,
+          obscureText: _obscured,
+          enableSuggestions: false,
+          autocorrect: false,
           keyboardType: _textInputType(),
           cursorColor: ColorResources.COLOR_PPIMARY,
           decoration: InputDecoration(
             filled: true,
-            prefixIconConstraints: (type == TextFieldType.selected)
+            prefixIconConstraints: (widget.type == TextFieldType.selected)
                 ? const BoxConstraints(minHeight: 24, minWidth: 24)
                 : const BoxConstraints(),
-            prefixIcon: (type == TextFieldType.selected)
+            prefixIcon: (widget.type == TextFieldType.selected)
                 ? SvgPicture.asset(
                     Images.prefix_icon,
+                  )
+                : null,
+            suffixIcon: widget.type == TextFieldType.password
+                ? Padding(
+                    padding: const EdgeInsets.fromLTRB(0, 0, 4, 0),
+                    child: GestureDetector(
+                      onTap: _toggleObscured,
+                      child: Icon(
+                        _obscured
+                            ? Icons.visibility_rounded
+                            : Icons.visibility_off_rounded,
+                        size: 24,
+                        color: ColorResources.COLOR_PPIMARY,
+                      ),
+                    ),
                   )
                 : null,
             hoverColor: ColorResources.COLOR_BLACK_GREY,
@@ -135,7 +168,7 @@ class CustomTextField extends StatelessWidget {
   }
 
   Color _hintColor() {
-    switch (type) {
+    switch (widget.type) {
       case TextFieldType.phone:
         return ColorResources.COLOR_4A4949;
       case TextFieldType.password:
@@ -154,26 +187,26 @@ class CustomTextField extends StatelessWidget {
   }
 
   String _hintText() {
-    switch (type) {
+    switch (widget.type) {
       case TextFieldType.phone:
         return '+998 (';
       case TextFieldType.password:
         return '';
       case TextFieldType.text:
-        return hint;
+        return widget.hint;
       case TextFieldType.selected:
-        return hint;
+        return widget.hint;
       case TextFieldType.summa:
         return '(120 000)';
       case TextFieldType.selectDate:
-        return hint;
+        return widget.hint;
       case TextFieldType.support:
-        return hint;
+        return widget.hint;
     }
   }
 
   TextInputType _textInputType() {
-    switch (type) {
+    switch (widget.type) {
       case TextFieldType.phone:
         return TextInputType.phone;
       case TextFieldType.password:
