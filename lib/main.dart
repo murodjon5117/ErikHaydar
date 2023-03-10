@@ -17,6 +17,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:erik_haydar/theme/light_theme.dart';
 import 'package:erik_haydar/util/app_constants.dart';
+import 'package:flutter_downloader/flutter_downloader.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:provider/provider.dart';
 import 'di_container.dart' as di;
@@ -35,6 +36,8 @@ Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
 Future<void> main() async {
   HttpOverrides.global = MyHttpOverrides();
   WidgetsFlutterBinding.ensureInitialized();
+  // await FlutterDownloader.initialize();
+
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
   FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
 
@@ -82,7 +85,7 @@ Future<void> main() async {
 
 class MyApp extends StatefulWidget {
   static final navigatorKey = GlobalKey<NavigatorState>();
- 
+
   const MyApp({Key? key}) : super(key: key);
 
   @override
@@ -92,9 +95,10 @@ class MyApp extends StatefulWidget {
 class _MyAppState extends State<MyApp> {
   @override
   void initState() {
-    Provider.of<RegisterProvider>(context,listen: false).getFirebaseToken();
+    Provider.of<RegisterProvider>(context, listen: false).getFirebaseToken();
     super.initState();
   }
+
   @override
   Widget build(BuildContext context) {
     // FlutterStatusbarcolor.setStatusBarColor(ColorResources.COLOR_WHITE);
@@ -108,7 +112,7 @@ class _MyAppState extends State<MyApp> {
         ),
       );
     }
-    
+
     return MaterialApp(
       home: const SplashScreen(),
       title: 'Yengil',

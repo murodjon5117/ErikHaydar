@@ -11,6 +11,7 @@ import 'package:erik_haydar/view/sceen/player/player_screen.dart';
 import 'package:erik_haydar/view/sceen/serial/serials_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
+import 'package:flutter_downloader/flutter_downloader.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:persistent_bottom_nav_bar_v2/persistent-tab-view.dart';
@@ -24,6 +25,7 @@ import '../../../data/model/response/base/video/regex_response.dart';
 import '../../../helper/enums/button_enum.dart';
 import '../../../localization/language_constrants.dart';
 import '../../../provider/home_provider.dart';
+import '../../../provider/serial_provider.dart';
 import '../../../util/color_resources.dart';
 import '../../../util/dimensions.dart';
 import '../../../util/images.dart';
@@ -332,24 +334,31 @@ class _DetailFilmScreenState extends State<DetailFilmScreen> {
               ],
             ),
             const Spacer(),
-            // GestureDetector(
-            //   onTap: () {
-            //     // value.downloadVideo((yoyo[0].dataURL ?? ''));
-            //     // downloadFile(yoyo[0].dataURL ?? '');
-            //   },
-            //   child: Column(
-            //     children: [
-            //       SvgPicture.asset(Images.downloadVideo),
-            //       const SizedBox(
-            //         height: 4,
-            //       ),
-            //       Text(
-            //         getTranslated('download', context),
-            //         style: downloadTextStyle,
-            //       ),
-            //     ],
-            //   ),
-            // ),
+            GestureDetector(
+              onTap: () async {
+                // final taskId = await FlutterDownloader.enqueue(
+                //   url: yoyo[0].dataURL ?? '',
+                //   savedDir: '/path/to/download/directory',
+                //   showNotification: true,
+                //   openFileFromNotification: true,
+                // );
+
+                // value.downloadVideo((yoyo[0].dataURL ?? ''));
+                downloadFile(yoyo[0].dataURL ?? '');
+              },
+              child: Column(
+                children: [
+                  SvgPicture.asset(Images.downloadVideo),
+                  const SizedBox(
+                    height: 4,
+                  ),
+                  Text(
+                    getTranslated('download', context),
+                    style: downloadTextStyle,
+                  ),
+                ],
+              ),
+            ),
           ],
         ),
       ),
@@ -361,11 +370,11 @@ class _DetailFilmScreenState extends State<DetailFilmScreen> {
 
     try {
       var dir = await getApplicationDocumentsDirectory();
-      print("path ${dir.path}");
-      print(imageUrl);
-      await dio.download(
-          'https://freetestdata.com/wp-content/uploads/2022/02/Free_Test_Data_7MB_MP4.mp4',
-          "/sdcard/download/demo.mp4", onReceiveProgress: (rec, total) {
+      print(dir.path);
+      print(yoyo[0].dataURL ?? '');
+      print(yoyo[1].dataURL ?? '');
+      await dio.download(yoyo[0].dataURL ?? '', "${dir.path}/demo.mp4",
+          onReceiveProgress: (rec, total) {
         print("Rec: $rec , Total: $total");
 
         setState(() {
@@ -405,11 +414,19 @@ class _DetailFilmScreenState extends State<DetailFilmScreen> {
             right: 0,
             child: GestureDetector(
                 onTap: () {
+                  print(widget.slug);
                   if (model.canWatch ?? false) {
                     if (model.isSerial ?? false) {
-                      pushNewScreen(context,
-                          screen: SerialsScreen(
-                              slug: model.slug ?? '', name: model.name ?? ''));
+                      Provider.of<SerialProvider>(context, listen: false)
+                          .getSerialSeason(widget.slug)
+                          .then((value) {
+                        if (value) {
+                          pushNewScreen(context,
+                              screen: SerialsScreen(
+                                  slug: model.slug ?? '',
+                                  name: model.name ?? ''));
+                        }
+                      });
                     } else {
                       if ((Provider.of<FilmDetailProvider>(context,
                                       listen: false)

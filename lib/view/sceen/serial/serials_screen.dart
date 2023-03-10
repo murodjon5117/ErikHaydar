@@ -19,8 +19,7 @@ class _SerialsScreenState extends State<SerialsScreen> {
   void initState() {
     SchedulerBinding.instance.addPostFrameCallback((_) {
       FocusManager.instance.primaryFocus?.unfocus();
-      Provider.of<SerialProvider>(context, listen: false)
-          .getSerialSeason(widget.slug);
+      
     });
 
     super.initState();

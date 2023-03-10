@@ -57,7 +57,7 @@ class _SupportState extends State<Support> {
                   height: 18,
                 ),
                 Text(
-                  'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, ',
+                  'Savol yoki takliflar bo’yicha bizga xabar qoldirishingiz mumkin.\nSizning fikringiz biz uchun qadrli.',
                   style: textButtonTextStyle.copyWith(
                       color: ColorResources.COLOR_737373),
                 ),
@@ -119,13 +119,6 @@ class _SupportState extends State<Support> {
                           getTranslated('sent', context),
                           style: boldTitle.copyWith(
                               fontSize: Dimensions.FONT_SIZE_24),
-                        ),
-                        const SizedBox(
-                          height: 12,
-                        ),
-                        Text(
-                          message,
-                          maxLines: 3,
                         ),
                         const SizedBox(
                           height: 24,
