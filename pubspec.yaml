@@ -38,6 +38,7 @@ dependencies:
   firebase_core: ^2.4.1
   firebase_messaging: ^14.1.4
   flutter_downloader: ^1.10.2
+  flutter_windowmanager: ^0.2.0
 
 
 dev_dependencies:

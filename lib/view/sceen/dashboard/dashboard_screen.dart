@@ -4,7 +4,9 @@ import 'package:erik_haydar/view/sceen/category/category_screen.dart';
 import 'package:erik_haydar/view/sceen/favorite/favorites_screen.dart';
 import 'package:erik_haydar/view/sceen/profile/profile_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:flutter_windowmanager/flutter_windowmanager.dart';
 import 'package:persistent_bottom_nav_bar_v2/persistent-tab-view.dart';
 import 'package:provider/provider.dart';
 
@@ -22,7 +24,7 @@ class DashBoardScreen extends StatefulWidget {
 class _DashBoardScreenState extends State<DashBoardScreen> {
   PersistentTabController? _controller;
   @override
-  void initState() {
+  initState() {
     _controller = PersistentTabController(initialIndex: 0);
     super.initState();
   }
@@ -86,6 +88,7 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
 
   @override
   Widget build(BuildContext context) {
+    
     return Scaffold(
         body: PersistentTabView(
       context,

@@ -17,8 +17,9 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:erik_haydar/theme/light_theme.dart';
 import 'package:erik_haydar/util/app_constants.dart';
-import 'package:flutter_downloader/flutter_downloader.dart';
+import 'package:flutter/scheduler.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:flutter_windowmanager/flutter_windowmanager.dart';
 import 'package:provider/provider.dart';
 import 'di_container.dart' as di;
 import 'localization/app_localization.dart';
@@ -112,6 +113,10 @@ class _MyAppState extends State<MyApp> {
         ),
       );
     }
+    SchedulerBinding.instance.addPostFrameCallback((_) async {
+      print('ishladiiiiii');
+      await FlutterWindowManager.addFlags(FlutterWindowManager.FLAG_SECURE);
+    });
 
     return MaterialApp(
       home: const SplashScreen(),

@@ -143,31 +143,27 @@ class _ChangeUserInfoState extends State<ChangeUserInfo> {
                             ),
                             const SizedBox(
                               height: 60,
-                            )
+                            ),
+                            BaseUI().buttonsType(TypeButton.filled, context,
+                                () {
+                              if (_formKey.currentState!.validate()) {
+                                value
+                                    .updateUserInfo(_nameController.text,
+                                        _surNameController.text, image)
+                                    .then((result) {
+                                  if (result.status == 200) {
+                                    _showSuccessDialog(context);
+                                    value.getUserInfo();
+                                  }
+                                });
+                              }
+                            }, getTranslated('save', context))
                           ],
                         ),
                       ),
                     ),
                   ),
                 ),
-                Positioned(
-                  bottom: 40,
-                  left: 0,
-                  right: 0,
-                  child: BaseUI().buttonsType(TypeButton.filled, context, () {
-                    if (_formKey.currentState!.validate()) {
-                      value
-                          .updateUserInfo(
-                              _nameController.text, _surNameController.text,image)
-                          .then((result) {
-                        if (result.status == 200) {
-                          _showSuccessDialog(context);
-                          value.getUserInfo();
-                        }
-                      });
-                    }
-                  }, getTranslated('save', context)),
-                )
               ],
             ),
           ),
